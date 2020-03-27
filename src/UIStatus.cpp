@@ -41,7 +41,7 @@ void UIStatus::draw()
         if (show_button_)
         {
             button_medicine_->setVisible(role_->Medicine > 0);
-            button_detoxification_->setVisible(role_->Detoxification > 0);
+            button_detoxification_->setVisible(role_->Art > 0);
             button_leave_->setVisible(role_->ID != 0);
         }
     }
@@ -164,16 +164,16 @@ void UIStatus::draw()
     font->draw("醫療", font_size, x, y + 25, color_ability1);
     font->draw(convert::formatString("%5d", role_->Medicine), font_size, x + 44, y + 25, select_color1(role_->Medicine, Role::getMaxValue()->Medicine));
     font->draw("抗毒", font_size, x + 200, y + 25, color_ability1);
-    font->draw(convert::formatString("%5d", role_->Detoxification), font_size, x + 244, y + 25, select_color1(role_->Detoxification, Role::getMaxValue()->Detoxification));
+    font->draw(convert::formatString("%5d", role_->AntiPoison), font_size, x + 244, y + 25, select_color1(role_->AntiPoison, Role::getMaxValue()->AntiPoison));
     font->draw("用毒", font_size, x + 400, y + 25, color_ability1);
-    font->draw(convert::formatString("%5d", role_->UsePoison), font_size, x + 444, y + 25, select_color1(role_->UsePoison, Role::getMaxValue()->UsePoison));
+    font->draw(convert::formatString("%5d", role_->AttackWithPoison), font_size, x + 444, y + 25, select_color1(role_->AttackWithPoison, Role::getMaxValue()->AttackWithPoison));
 
 	font->draw("门派", font_size, x, y + 50, color_ability1);
 	font->draw(convert::formatString("%s", Save::getInstance()->getMenpai(role_->MenPai)->Name), font_size, x + 44, y + 50, select_color1(role_->Medicine, Role::getMaxValue()->Medicine));
 	font->draw("等级", font_size, x + 200, y + 50, color_ability1);
-	font->draw(convert::formatString("%5d", role_->Level), font_size, x + 244, y + 50, select_color1(role_->Detoxification, Role::getMaxValue()->Detoxification));
+	font->draw(convert::formatString("%5d", role_->Level), font_size, x + 244, y + 50, select_color1(role_->AntiPoison, Role::getMaxValue()->AntiPoison));
 	font->draw("师傅", font_size, x + 400, y + 50, color_ability1);
-	font->draw(convert::formatString("%s", Save::getInstance()->getRole(role_->shifu)->Name), font_size, x + 444, y + 50, select_color1(role_->UsePoison, Role::getMaxValue()->UsePoison));
+	font->draw(convert::formatString("%s", Save::getInstance()->getRole(role_->shifu)->Name), font_size, x + 444, y + 50, select_color1(role_->AttackWithPoison, Role::getMaxValue()->AttackWithPoison));
 
     x = x_ + 20;
     y = y_ + 270;

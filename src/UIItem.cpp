@@ -323,7 +323,7 @@ void UIItem::showItemProperty(Item* item)
 
     showOneProperty(item->AddMedicine, "át¯Ÿ%+d", size, c, x, y);
     showOneProperty(item->AddUsePoison, "ÓÃ¶¾%+d", size, c, x, y);
-    showOneProperty(item->AddDetoxification, "½â¶¾%+d", size, c, x, y);
+    showOneProperty(item->AddAntiPoison, "½â¶¾%+d", size, c, x, y);
     showOneProperty(item->AddAntiPoison, "¿¹¶¾%+d", size, c, x, y);
 
     showOneProperty(item->AddFist, "È­ÕÆ%+d", size, c, x, y);
@@ -337,7 +337,7 @@ void UIItem::showItemProperty(Item* item)
     showOneProperty(item->AddAttackWithPoison, "¹¥“ôŽ§¶¾%+d", size, c, x, y);
 
     showOneProperty(item->ChangeMPType == 2, "ƒÈÁ¦Õ{ºÍ", size, c, x, y);
-    showOneProperty(item->AddAttackTwice == 1, "ëp“ô", size, c, x, y);
+    //showOneProperty(item->AddAttackTwice == 1, "ëp“ô", size, c, x, y);
 
     auto magic = Save::getInstance()->getMagic(item->MagicID);
     if (magic)
@@ -373,7 +373,7 @@ void UIItem::showItemProperty(Item* item)
 
     showOneProperty(item->NeedMedicine, "át¯Ÿ%d", size, c, x, y);
     showOneProperty(item->NeedUsePoison, "ÓÃ¶¾%d", size, c, x, y);
-    showOneProperty(item->NeedDetoxification, "½â¶¾%d", size, c, x, y);
+    showOneProperty(item->NeedArt, "¼¼ÒÕ%d", size, c, x, y);
 
     showOneProperty(item->NeedFist, "È­ÕÆ%d", size, c, x, y);
     showOneProperty(item->NeedSword, "Óù„¦%d", size, c, x, y);
@@ -385,23 +385,24 @@ void UIItem::showItemProperty(Item* item)
 
     showOneProperty(item->NeedExp, "»ùµA½›òž%d", size, c, x, y);
 
-    if (item->NeedMaterial >= 0)
-    {
-        std::string str = "ºÄÙM";
-        str += Save::getInstance()->getItem(item->NeedMaterial)->Name;
-        showOneProperty(1, str, size, c, x, y);
-    }
-
+	for (int i = 0; i < 5; i++) {	
+		if (item->NeedItem[i] >= 0)
+		{
+			std::string str = "ºÄÙM";
+			str += Save::getInstance()->getItem(item->NeedItem[i])->Name;
+			showOneProperty(item->NeedItemCount[i], str, size, c, x, y);
+		}
+	}
     x = 10;
     y += size + 10;
     for (int i = 0; i < 5; i++)
     {
-        int make = item->MakeItem[i];
+        int make = item->NeedItem[i];
         if (make >= 0)
         {
             std::string str = Save::getInstance()->getItem(make)->Name;
             //str += " %d";
-            showOneProperty(item->MakeItemCount[i], str, size, c, x, y);
+            showOneProperty(item->NeedItemCount[i], str, size, c, x, y);
         }
     }
 }

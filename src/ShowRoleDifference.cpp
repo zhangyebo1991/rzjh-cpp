@@ -69,8 +69,8 @@ void ShowRoleDifference::draw()
     showOneDifference(role1_->Speed, "輕功 %7d   -> %7d", 20, color, x, y);
 
     showOneDifference(role1_->Medicine, "醫療 %7d   -> %7d", 20, color, x, y);
-    showOneDifference(role1_->UsePoison, "用毒 %7d   -> %7d", 20, color, x, y);
-    showOneDifference(role1_->Detoxification, "解毒 %7d   -> %7d", 20, color, x, y);
+    showOneDifference(role1_->AttackWithPoison, "毒术 %7d   -> %7d", 20, color, x, y);
+    showOneDifference(role1_->Art, "技艺 %7d   -> %7d", 20, color, x, y);
     showOneDifference(role1_->AntiPoison, "抗毒 %7d   -> %7d", 20, color, x, y);
     showOneDifference(role1_->AttackWithPoison, "帶毒 %7d   -> %7d", 20, color, x, y);
 

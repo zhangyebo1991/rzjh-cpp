@@ -14,11 +14,26 @@ class Save
 {
 public:
     //此处为全局数据，载入和保存使用，必须放在类开头，按照顺序，否则自己看着办
-    int InShip, InSubMap, MainMapX, MainMapY, SubMapX, SubMapY, FaceTowards, ShipX, ShipY, TimeCount, TimeEvent, RandomEvent, SubmapTowards, ShipTowards, TeamCount;
-    int Team[TEAMMATE_COUNT];
+	int InShip; // 乘船
+	int InSubMap; // 场景
+	int MainMapX; // 人X
+	int MainMapY; // 人Y
+	int SubMapX; // 内场景坐标X
+	int SubMapY; // 内场景坐标Y
+	int FaceTowards; // 人面对方向
+	int ShipX; // 船X
+	int ShipY; // 船Y
+	int TimeCount; // 计时
+	int TimeEvent; // 定时事件
+	int RandomEvent; // 随机事件
+	int SubmapTowards; // 内场景方向
+	int ShipTowards; // 船面对方向
+	int TeamCount;; // 队伍人数
+	int Team[6]; // 队友
+	int Encode; // 编码
     ItemList Items[ITEM_IN_BAG_COUNT];
-	int Encode;
 	int Unuse[5];
+	TimeSave time[1];
 
 private:
     //缓冲区，无他用
@@ -60,9 +75,9 @@ private:
     std::vector<Item> items_mem_;
     std::vector<SubMapInfo> submap_infos_mem_;
     std::vector<Shop> shops_mem_;
-	std::vector<TimeInfoSave> time_mem_;
-	std::vector<ZhaoshiInfoSave> zhaoshis_mem_;
-	std::vector<MenpaiInfoSave> menpais_mem_;
+	std::vector<TimeSave> time_mem_;
+	std::vector<Zhaoshi> zhaoshis_mem_;
+	std::vector<Menpai> menpais_mem_;
 	std::vector<RSign> rsigns_mem_;
 
     //下面保存的是指针，大部分时候使用
@@ -71,17 +86,17 @@ private:
     std::vector<Item*> items_;
     std::vector<SubMapInfo*> submap_infos_;
     std::vector<Shop*> shops_;
-	std::vector<TimeInfoSave*> time_;
-	std::vector<ZhaoshiInfoSave*> zhaoshis_;
-	std::vector<MenpaiInfoSave*> menpais_;
+	std::vector<TimeSave*> time_;
+	std::vector<Zhaoshi*> zhaoshis_;
+	std::vector<Menpai*> menpais_;
 	std::vector<RSign*> rsigns_;
 
     std::map<std::string, Role*> roles_by_name_;
     std::map<std::string, Item*> items_by_name_;
     std::map<std::string, Magic*> magics_by_name_;
     std::map<std::string, SubMapInfo*> submap_infos_by_name_;
-	std::map<std::string, ZhaoshiInfoSave*> zhaoshis_by_name_;
-	std::map<std::string, MenpaiInfoSave*> menpais_by_name_;
+	std::map<std::string, Zhaoshi*> zhaoshis_by_name_;
+	std::map<std::string, Menpai*> menpais_by_name_;
 	std::map<std::string, RSign*> rsigns_by_name_;
 
     template <class T>
@@ -148,13 +163,31 @@ public:
         return shops_[i];
     }
 
-	MenpaiInfoSave* getMenpai(int i)
+	Menpai* getMenpai(int i)
 	{
 		if (i < 0 || i >= menpais_.size())
 		{
 			return menpais_[0];
 		}
 		return menpais_[i];
+	}
+
+	Zhaoshi* getZhaoshi(int i)
+	{
+		if (i < 0 || i >= zhaoshis_.size())
+		{
+			return zhaoshis_[0];
+		}
+		return zhaoshis_[i];
+	}
+
+	RSign* getRSign(int i)
+	{
+		if (i < 0 || i >= zhaoshis_.size())
+		{
+			return rsigns_[0];
+		}
+		return rsigns_[i];
 	}
 
     Role* getTeamMate(int i);
@@ -182,6 +215,9 @@ public:
     const std::vector<Item*>& getItems() { return items_; }
     const std::vector<SubMapInfo*>& getSubMapInfos() { return submap_infos_; }
     const std::vector<Shop*>& getShops() { return shops_; }
+	const std::vector<Zhaoshi*>& getZhaoshis() { return zhaoshis_; }
+	const std::vector<Menpai*>& getMenpais() { return menpais_; }
+	const std::vector<RSign*>& getRSigns() { return rsigns_; }
 
 public:
     int MaxLevel = 30;
@@ -220,7 +256,8 @@ public:
     struct BaseInfo
     {
         int InShip, InSubMap, MainMapX, MainMapY, SubMapX, SubMapY, FaceTowards, ShipX, ShipY, TimeCount, TimeEvent, RandomEvent, SubmapTowards, ShipTowards, TeamCount;
-        int Team[TEAMMATE_COUNT];		
+        int Team[TEAMMATE_COUNT];	
+		int Encode;
     };
 
 public:

@@ -94,8 +94,8 @@ bool GameUtil::canUseItem(Role* r, Item* i)
         return test(r->Attack, i->NeedAttack)
             && test(r->Speed, i->NeedSpeed)
             && test(r->Medicine, i->NeedMedicine)
-            && test(r->UsePoison, i->NeedUsePoison)
-            && test(r->Detoxification, i->NeedDetoxification)
+            && test(r->AttackWithPoison, i->NeedUsePoison)
+            && test(r->Art, i->NeedArt)
             && test(r->Fist, i->NeedFist)
             && test(r->Sword, i->NeedSword)
             && test(r->Knife, i->NeedKnife)
@@ -137,8 +137,8 @@ void GameUtil::useItem(Role* r, Item* i)
     r->Poison += i->AddPoison;
 
     r->Medicine += i->AddMedicine;
-    r->Detoxification += i->AddDetoxification;
-    r->UsePoison += i->AddUsePoison;
+    r->Art += i->AddArt;
+    r->AttackWithPoison += i->AddUsePoison;
 
     r->Attack += i->AddAttack;
     r->Defence += i->AddDefence;
@@ -159,10 +159,7 @@ void GameUtil::useItem(Role* r, Item* i)
     {
         r->MPType = 2;
     }
-    if (i->AddAttackTwice)
-    {
-        r->AttackTwice = 1;
-    }
+
 
     int need_item_exp = getFinishedExpForItem(r, i);
     if (r->ExpForItem >= need_item_exp)
@@ -207,8 +204,8 @@ void GameUtil::levelUp(Role* r)
     };
 
     check_up(r->Medicine, 0, 3);
-    check_up(r->Detoxification, 0, 3);
-    check_up(r->UsePoison, 0, 3);
+    check_up(r->Art, 0, 3);
+    check_up(r->AttackWithPoison, 0, 3);
 
     check_up(r->Fist, 10, 3);
     check_up(r->Sword, 10, 3);
@@ -366,7 +363,7 @@ int GameUtil::detoxification(Role* r1, Role* r2)
         return 0;
     }
     auto temp = r2->Poison;
-    r2->Poison -= r1->Detoxification / 3;
+    r2->Poison -= r1->AntiPoison / 3;
     GameUtil::limit2(r2->Poison, 0, Role::getMaxValue()->Poison);
     return r2->Poison - temp;
 }
@@ -379,7 +376,7 @@ int GameUtil::usePoison(Role* r1, Role* r2)
         return 0;
     }
     auto temp = r2->Poison;
-    r2->Poison += r1->UsePoison / 3;
+    r2->Poison += r1->AttackWithPoison / 3;
     GameUtil::limit2(r2->Poison, 0, Role::getMaxValue()->Poison);
     return r2->Poison - temp;
 }
@@ -402,8 +399,8 @@ void GameUtil::setRoleMaxValue(Role* role)
     GET_VALUE_INT(Speed, 100);
 
     GET_VALUE_INT(Medicine, 100);
-    GET_VALUE_INT(UsePoison, 100);
-    GET_VALUE_INT(Detoxification, 100);
+    GET_VALUE_INT(AttackWithPoison, 100);
+    GET_VALUE_INT(Art, 100);
     GET_VALUE_INT(AntiPoison, 100);
 
     GET_VALUE_INT(Fist, 100);

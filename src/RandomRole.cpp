@@ -32,8 +32,8 @@ void RandomRole::onPressedOK()
     role_->Speed = 25 + r.rand_int(6);
     role_->Defence = 25 + r.rand_int(6);
     role_->Medicine = 25 + r.rand_int(6);
-    role_->UsePoison = 25 + r.rand_int(6);
-    role_->Detoxification = 25 + r.rand_int(6);
+    role_->AttackWithPoison = 25 + r.rand_int(6);
+    role_->Art = 25 + r.rand_int(6);
     role_->Fist = 25 + r.rand_int(6);
     role_->Sword = 25 + r.rand_int(6);
     role_->Knife = 25 + r.rand_int(6);

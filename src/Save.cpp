@@ -320,34 +320,42 @@ int Save::getRoleLearnedMagicLevelIndex(Role* r, Magic* m)
 
 void Save::saveRToCSV(int num)
 {
-    NewSave::SaveCSVBaseInfo((BaseInfo*)this, 1, num);
+    NewSave::SaveToCSVBaseInfo((BaseInfo*)this, 1, num);
     // 背包
-    NewSave::SaveCSVItemList(Items, ITEM_IN_BAG_COUNT, num);
+    NewSave::SaveToCSVItemList(Items, ITEM_IN_BAG_COUNT, num);
     // 人物
-    NewSave::SaveCSVRoleSave(roles_mem_, num);
+    NewSave::SaveToCSVRoleSave(roles_mem_, num);
     // 物品
-    NewSave::SaveCSVItemSave(items_mem_, num);
+    NewSave::SaveToCSVItemSave(items_mem_, num);
     // 场景
-    NewSave::SaveCSVSubMapInfoSave(submap_infos_mem_, num);
+    NewSave::SaveToCSVSubMapInfoSave(submap_infos_mem_, num);
     // 武功
-    NewSave::SaveCSVMagicSave(magics_mem_, num);
+    NewSave::SaveToCSVMagicSave(magics_mem_, num);
     // 商店
-    NewSave::SaveCSVShopSave(shops_mem_, num);
+    NewSave::SaveToCSVShopSave(shops_mem_, num);
+	// 时间
+	NewSave::SaveToCSVTimeSave(time, 1, num);
+	// 门派
+	NewSave::SaveToCSVMenpaiSave(menpais_mem_, num);
+	// 招式
+	NewSave::SaveToCSVZhaoshiSave(zhaoshis_mem_, num);
+	// 标签
+	NewSave::SaveToCSVRSignSave(rsigns_mem_, num);
 }
 
 void Save::loadRFromCSV(int num)
 {
-    NewSave::LoadCSVBaseInfo((BaseInfo*)this, 1, num);
-    NewSave::LoadCSVItemList(Items, ITEM_IN_BAG_COUNT, num);
-    NewSave::LoadCSVRoleSave(roles_mem_, num);
-    NewSave::LoadCSVItemSave(items_mem_, num);
-    NewSave::LoadCSVSubMapInfoSave(submap_infos_mem_, num);
-    NewSave::LoadCSVMagicSave(magics_mem_, num);
-    NewSave::LoadCSVShopSave(shops_mem_, num);
-	NewSave::LoadCSVTimeSave(time_mem_,num);
-	NewSave::LoadCSVMenpaiSave(menpais_mem_,num);
-	NewSave::LoadCSVZhaoshiSave(zhaoshis_mem_,num);
-	NewSave::LoadCSVRSignSave(rsigns_mem_,num);
+    NewSave::LoadFromCSVBaseInfo((BaseInfo*)this, 1, num);
+    NewSave::LoadFromCSVItemList(Items, ITEM_IN_BAG_COUNT, num);
+    NewSave::LoadFromCSVRoleSave(roles_mem_, num);
+    NewSave::LoadFromCSVItemSave(items_mem_, num);
+    NewSave::LoadFromCSVSubMapInfoSave(submap_infos_mem_, num);
+    NewSave::LoadFromCSVMagicSave(magics_mem_, num);
+    NewSave::LoadFromCSVShopSave(shops_mem_, num);
+	NewSave::LoadFromCSVTimeSave(time, 1, num);
+	NewSave::LoadFromCSVMenpaiSave(menpais_mem_,num);
+	NewSave::LoadFromCSVZhaoshiSave(zhaoshis_mem_,num);
+	NewSave::LoadFromCSVRSignSave(rsigns_mem_,num);
     updateAllPtrVector();
     makeMaps();
 }

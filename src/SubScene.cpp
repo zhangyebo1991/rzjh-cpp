@@ -515,6 +515,7 @@ bool SubScene::isExit(int x, int y)
 
 bool SubScene::isJumpSubScene(int x, int y)
 {
+	/*
     if (submap_info_->JumpSubMap >= 0 && man_x_ == submap_info_->unused[0] && man_y_ == submap_info_->unused[1])
     {
         int x, y;
@@ -535,6 +536,8 @@ bool SubScene::isJumpSubScene(int x, int y)
         return true;
     }
     return false;
+	*/
+	return false;
 }
 
 bool SubScene::isOutScreen(int x, int y)

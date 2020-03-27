@@ -535,7 +535,7 @@ void Event::zeroAllMP()
 
 void Event::setRoleUsePoison(int role_id, int v)
 {
-    Save::getInstance()->getRole(role_id)->UsePoison = v;
+    Save::getInstance()->getRole(role_id)->AttackWithPoison = v;
 }
 
 void Event::subMapViewFromTo(int x0, int y0, int x1, int y1)

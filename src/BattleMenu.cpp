@@ -36,13 +36,13 @@ void BattleActionMenu::setRole(Role* r)
     {
         childs_text_["武學"]->setVisible(false);
     }
-    if (role_->UsePoison <= 0 || role_->PhysicalPower < 30)
+    if (role_->AttackWithPoison <= 0 || role_->PhysicalPower < 30)
     {
-        childs_text_["用毒"]->setVisible(false);
+        childs_text_["毒术"]->setVisible(false);
     }
-    if (role_->Detoxification <= 0 || role_->PhysicalPower < 30)
+    if (role_->AntiPoison <= 0 || role_->PhysicalPower < 30)
     {
-        childs_text_["解毒"]->setVisible(false);
+        childs_text_["抗毒"]->setVisible(false);
     }
     if (role_->Medicine <= 0 || role_->PhysicalPower < 10)
     {
@@ -184,7 +184,7 @@ int BattleActionMenu::autoSelect(Role* role)
                         {
                             AIAction aa;
                             calAIActionNearest(r2, aa);                                             //计算目标，和离目标最近的点，下同
-                            int action_dis = battle_scene_->calActionStep(role->Detoxification);    //计算可以行动的距离
+                            int action_dis = battle_scene_->calActionStep(role->AntiPoison);    //计算可以行动的距离
                             if (action_dis >= calNeedActionDistance(aa))                            //与需要行动的距离比较
                             {
                                 //若在距离之内则考虑使用，以下各个都类似
@@ -224,11 +224,11 @@ int BattleActionMenu::autoSelect(Role* role)
                     auto r2 = getNearestRole(role, enemies);
                     AIAction aa;
                     calAIActionNearest(r2, aa);
-                    int action_dis = battle_scene_->calActionStep(role->UsePoison);
+                    int action_dis = battle_scene_->calActionStep(role->AttackWithPoison);
                     if (action_dis >= calNeedActionDistance(aa))
                     {
                         aa.Action = getResultFromString(action_text);
-                        aa.point = (std::min)(Save::getInstance()->MaxPosion - r2->Poison, role->UsePoison) / 2;
+                        aa.point = (std::min)(Save::getInstance()->MaxPosion - r2->Poison, role->AttackWithPoison) / 2;
                         if (r2->HP < 10)
                         {
                             aa.point = 1;

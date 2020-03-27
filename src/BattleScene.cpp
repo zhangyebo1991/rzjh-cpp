@@ -1178,7 +1178,7 @@ void BattleScene::actUseMagicSub(Role* r, Magic* magic)
 
 void BattleScene::actUsePoison(Role* r)
 {
-    calSelectLayer(r, 1, calActionStep(r->UsePoison));
+    calSelectLayer(r, 1, calActionStep(r->AttackWithPoison));
     battle_cursor_->setMode(BattleCursor::Action);
     battle_cursor_->setRoleAndMagic(r);
     r->ActTeam = 1;
@@ -1206,7 +1206,7 @@ void BattleScene::actUsePoison(Role* r)
 
 void BattleScene::actDetoxification(Role* r)
 {
-    calSelectLayer(r, 1, calActionStep(r->Detoxification));
+    calSelectLayer(r, 1, calActionStep(r->AntiPoison));
     battle_cursor_->setMode(BattleCursor::Action);
     battle_cursor_->setRoleAndMagic(r);
     r->ActTeam = 0;
@@ -1982,7 +1982,8 @@ void BattleScene::calExpGot()
                 diff->setText(convert::formatString("ÐÞŸ’%s³É¹¦", item->Name));
                 diff->run();
             }
-            if (item->MakeItem[0] >= 0 && r->ExpForItem >= item->NeedExpForMakeItem && Event::getInstance()->haveItemBool(item->NeedMaterial))
+			/*
+            if (item->NeedItem[0] >= 0 && r->ExpForItem >= item->NeedExpForMakeItem && Event::getInstance()->haveItemBool(item->NeedMaterial))
             {
                 std::vector<ItemList> make_item;
                 for (int i = 0; i < 5; i++)
@@ -1997,6 +1998,7 @@ void BattleScene::calExpGot()
                 Event::getInstance()->addItemWithoutHint(item->NeedMaterial, -1);
                 r->ExpForItem = 0;
             }
+			*/
         }
     }
 }
