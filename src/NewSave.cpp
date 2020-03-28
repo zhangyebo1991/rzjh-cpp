@@ -93,18 +93,18 @@ void NewSave::SaveToCSVRoleSave(const std::vector<Role>& data, int record) {
 	fout << ",";    fout << "外号";
 	fout << ",";    fout << "性别";
 	fout << ",";    fout << "等级";
-	fout << ",";    fout << "经验";
+	fout << ",";    fout << "经验值";
 	fout << ",";    fout << "生命";
 	fout << ",";    fout << "生命最大值";
 	fout << ",";    fout << "受伤程度";
 	fout << ",";    fout << "中毒程度";
 	fout << ",";    fout << "体力";
 	fout << ",";    fout << "战斗图编号";
+	fout << ",";    fout << "装备";
 	fout << ",";    fout << "装备1";
 	fout << ",";    fout << "装备2";
 	fout << ",";    fout << "装备3";
 	fout << ",";    fout << "装备4";
-	fout << ",";    fout << "装备5";
 	fout << ",";    fout << "功体";
 	fout << ",";    fout << "队伍状态";
 	fout << ",";    fout << "愤怒值";
@@ -139,6 +139,7 @@ void NewSave::SaveToCSVRoleSave(const std::vector<Role>& data, int record) {
 	fout << ",";    fout << "声望";
 	fout << ",";    fout << "资质";
 	fout << ",";    fout << "修练物品";
+	fout << ",";    fout << "修练点数";
 	fout << ",";    fout << "相性";
 	fout << ",";    fout << "交情";
 	fout << ",";    fout << "人物类别";
@@ -150,18 +151,19 @@ void NewSave::SaveToCSVRoleSave(const std::vector<Role>& data, int record) {
 	fout << ",";    fout << "师父";
 	fout << ",";    fout << "师承序位";
 	fout << ",";    fout << "拜师顺序";
+	fout << ",";    fout << "仇视门派";
 	fout << ",";    fout << "仇视门派1";
-	fout << ",";    fout << "仇视门派2";
 	fout << ",";    fout << "当前位置";
 	fout << ",";    fout << "内部位置";
 	fout << ",";    fout << "内部方向";
 	fout << ",";    fout << "人物状态";
 	fout << ",";    fout << "练武倾向";
 	fout << ",";    fout << "冥思倾向";
+	fout << ",";    fout << "劳动倾向";
 	fout << ",";    fout << "其他倾向";
 	fout << ",";    fout << "临时位置";
 	fout << ",";    fout << "内部临时位置";
-	fout << ",";    fout << "内部方向";
+	fout << ",";    fout << "内部方向1";
 	fout << ",";    fout << "场景X坐标";
 	fout << ",";    fout << "场景Y坐标";
 	fout << ",";    fout << "送书标记";
@@ -172,6 +174,7 @@ void NewSave::SaveToCSVRoleSave(const std::vector<Role>& data, int record) {
 	fout << ",";    fout << "未用2";
 	fout << ",";    fout << "未用3";
 	fout << ",";    fout << "战场ID";
+	fout << ",";    fout << "所会武功";
 	fout << ",";    fout << "所会武功1";
 	fout << ",";    fout << "所会武功2";
 	fout << ",";    fout << "所会武功3";
@@ -211,7 +214,7 @@ void NewSave::SaveToCSVRoleSave(const std::vector<Role>& data, int record) {
 	fout << ",";    fout << "所会武功37";
 	fout << ",";    fout << "所会武功38";
 	fout << ",";    fout << "所会武功39";
-	fout << ",";    fout << "所会武功40";
+	fout << ",";    fout << "所会武功等级";
 	fout << ",";    fout << "所会武功等级1";
 	fout << ",";    fout << "所会武功等级2";
 	fout << ",";    fout << "所会武功等级3";
@@ -251,7 +254,7 @@ void NewSave::SaveToCSVRoleSave(const std::vector<Role>& data, int record) {
 	fout << ",";    fout << "所会武功等级37";
 	fout << ",";    fout << "所会武功等级38";
 	fout << ",";    fout << "所会武功等级39";
-	fout << ",";    fout << "所会武功等级40";
+	fout << ",";    fout << "携带物品";
 	fout << ",";    fout << "携带物品1";
 	fout << ",";    fout << "携带物品2";
 	fout << ",";    fout << "携带物品3";
@@ -260,7 +263,7 @@ void NewSave::SaveToCSVRoleSave(const std::vector<Role>& data, int record) {
 	fout << ",";    fout << "携带物品6";
 	fout << ",";    fout << "携带物品7";
 	fout << ",";    fout << "携带物品8";
-	fout << ",";    fout << "携带物品9";
+	fout << ",";    fout << "携带物品数量";
 	fout << ",";    fout << "携带物品数量1";
 	fout << ",";    fout << "携带物品数量2";
 	fout << ",";    fout << "携带物品数量3";
@@ -269,7 +272,7 @@ void NewSave::SaveToCSVRoleSave(const std::vector<Role>& data, int record) {
 	fout << ",";    fout << "携带物品数量6";
 	fout << ",";    fout << "携带物品数量7";
 	fout << ",";    fout << "携带物品数量8";
-	fout << ",";    fout << "携带物品数量9";
+	fout << ",";    fout << "激活武功";
 	fout << ",";    fout << "激活武功1";
 	fout << ",";    fout << "激活武功2";
 	fout << ",";    fout << "激活武功3";
@@ -279,7 +282,7 @@ void NewSave::SaveToCSVRoleSave(const std::vector<Role>& data, int record) {
 	fout << ",";    fout << "激活武功7";
 	fout << ",";    fout << "激活武功8";
 	fout << ",";    fout << "激活武功9";
-	fout << ",";    fout << "激活武功10";
+	fout << ",";    fout << "所会招式";
 	fout << ",";    fout << "所会招式1";
 	fout << ",";    fout << "所会招式2";
 	fout << ",";    fout << "所会招式3";
@@ -319,7 +322,6 @@ void NewSave::SaveToCSVRoleSave(const std::vector<Role>& data, int record) {
 	fout << ",";    fout << "所会招式37";
 	fout << ",";    fout << "所会招式38";
 	fout << ",";    fout << "所会招式39";
-	fout << ",";    fout << "所会招式40";
 	fout << ",";    fout << "对话菜单开关";
 	fout << ",";    fout << "对话事件";
 	fout << ",";    fout << "状态事件";
@@ -331,8 +333,8 @@ void NewSave::SaveToCSVRoleSave(const std::vector<Role>& data, int record) {
 	fout << ",";    fout << "事件池3";
 	fout << ",";    fout << "离队期限";
 	fout << ",";    fout << "离队事件";
+	fout << ",";    fout << "随机值";
 	fout << ",";    fout << "随机值1";
-	fout << ",";    fout << "随机值2";
 	fout << ",";    fout << "暗箭";
 	fout << ",";    fout << "医师";
 	fout << ",";    fout << "装备特技";
@@ -365,11 +367,12 @@ void NewSave::SaveToCSVRoleSave(const std::vector<Role>& data, int record) {
 	fout << ",";    fout << "固守";
 	fout << ",";    fout << "天命";
 	fout << ",";    fout << "星宿";
+	fout << ",";    fout << "专长";
 	fout << ",";    fout << "专长1";
 	fout << ",";    fout << "专长2";
 	fout << ",";    fout << "专长3";
 	fout << ",";    fout << "专长4";
-	fout << ",";    fout << "专长5";
+	fout << ",";    fout << "特性";
 	fout << ",";    fout << "特性1";
 	fout << ",";    fout << "特性2";
 	fout << ",";    fout << "特性3";
@@ -379,8 +382,8 @@ void NewSave::SaveToCSVRoleSave(const std::vector<Role>& data, int record) {
 	fout << ",";    fout << "特性7";
 	fout << ",";    fout << "特性8";
 	fout << ",";    fout << "特性9";
-	fout << ",";    fout << "特性10";
 	fout << ",";    fout << "门派贡献";
+	fout << ",";    fout << "未使用";
 	fout << ",";    fout << "未使用1";
 	fout << ",";    fout << "未使用2";
 	fout << ",";    fout << "未使用3";
@@ -389,7 +392,6 @@ void NewSave::SaveToCSVRoleSave(const std::vector<Role>& data, int record) {
 	fout << ",";    fout << "未使用6";
 	fout << ",";    fout << "未使用7";
 	fout << ",";    fout << "未使用8";
-	fout << ",";    fout << "未使用9";
 	fout << std::endl;
 	int length = data.size();
 	for (int i = 0; i < length; i++) {
@@ -401,10 +403,14 @@ void NewSave::SaveToCSVRoleSave(const std::vector<Role>& data, int record) {
 		fout << ",";
 		fout << data[i].Fuyuan;
 		fout << ",";
-		fout << '"' << data[i].Name << '"';
+		fout << data[i].Name;
 		fout << ",";
-		fout << '"' << data[i].Nick << '"';
+		fout << data[i].Nick;
 		fout << ",";
+		//fout << '"' << data[i].Name << '"';
+		//fout << ",";
+		//fout << '"' << data[i].Nick << '"';
+		//fout << ",";
 		fout << data[i].Sexual;
 		fout << ",";
 		fout << data[i].Level;
@@ -466,7 +472,7 @@ void NewSave::SaveToCSVRoleSave(const std::vector<Role>& data, int record) {
 		fout << ",";
 		fout << data[i].Medicine;
 		fout << ",";
-		fout << data[i].Unused;
+		fout << data[i].Weiyong;
 		fout << ",";
 		fout << data[i].Art;
 		fout << ",";
@@ -497,6 +503,8 @@ void NewSave::SaveToCSVRoleSave(const std::vector<Role>& data, int record) {
 		fout << data[i].PracticeItem;
 		fout << ",";
 		fout << data[i].ExpForItem;
+		fout << ",";
+		fout << data[i].xiangxing;
 		fout << ",";
 		fout << data[i].jiaoqing;
 		fout << ",";
@@ -534,6 +542,8 @@ void NewSave::SaveToCSVRoleSave(const std::vector<Role>& data, int record) {
 		fout << data[i].lwq;
 		fout << ",";
 		fout << data[i].msq;
+		fout << ",";
+		fout << data[i].ldq;
 		fout << ",";
 		fout << data[i].qtq;
 		fout << ",";
@@ -767,18 +777,19 @@ void NewSave::SaveToCSVItemSave(const std::vector<Item>& data, int record) {
 	fout << ",";    fout << "需经验";
 	fout << ",";    fout << "数量";
 	fout << ",";    fout << "稀有度";
+	fout << ",";    fout << "所需物品";
 	fout << ",";    fout << "所需物品1";
 	fout << ",";    fout << "所需物品2";
 	fout << ",";    fout << "所需物品3";
 	fout << ",";    fout << "所需物品4";
-	fout << ",";    fout << "所需物品5";
+	fout << ",";    fout << "需要物品数量";
 	fout << ",";    fout << "需要物品数量1";
 	fout << ",";    fout << "需要物品数量2";
 	fout << ",";    fout << "需要物品数量3";
 	fout << ",";    fout << "需要物品数量4";
-	fout << ",";    fout << "需要物品数量5";
 	fout << ",";    fout << "加资质";
 	fout << ",";    fout << "加富源";
+	fout << ",";    fout << "未使用";
 	fout << ",";    fout << "未使用1";
 	fout << ",";    fout << "未使用2";
 	fout << ",";    fout << "未使用3";
@@ -786,7 +797,6 @@ void NewSave::SaveToCSVItemSave(const std::vector<Item>& data, int record) {
 	fout << ",";    fout << "未使用5";
 	fout << ",";    fout << "未使用6";
 	fout << ",";    fout << "未使用7";
-	fout << ",";    fout << "未使用8";
 	fout << std::endl;
 	int length = data.size();
 	for (int i = 0; i < length; i++) {
@@ -964,26 +974,26 @@ void NewSave::SaveToCSVSubMapInfoSave(const std::vector<SubMapInfo>& data, int r
 	fout << ",";    fout << "练武场数";
 	fout << ",";    fout << "总藏经阁数";
 	fout << ",";    fout << "藏经阁数";
+	fout << ",";    fout << "练武场X";
 	fout << ",";    fout << "练武场X1";
 	fout << ",";    fout << "练武场X2";
 	fout << ",";    fout << "练武场X3";
 	fout << ",";    fout << "练武场X4";
-	fout << ",";    fout << "练武场X5";
+	fout << ",";    fout << "练武场Y";
 	fout << ",";    fout << "练武场Y1";
 	fout << ",";    fout << "练武场Y2";
 	fout << ",";    fout << "练武场Y3";
 	fout << ",";    fout << "练武场Y4";
-	fout << ",";    fout << "练武场Y5";
+	fout << ",";    fout << "藏经阁X";
 	fout << ",";    fout << "藏经阁X1";
 	fout << ",";    fout << "藏经阁X2";
 	fout << ",";    fout << "藏经阁X3";
 	fout << ",";    fout << "藏经阁X4";
-	fout << ",";    fout << "藏经阁X5";
+	fout << ",";    fout << "藏经阁Y";
 	fout << ",";    fout << "藏经阁Y1";
 	fout << ",";    fout << "藏经阁Y2";
 	fout << ",";    fout << "藏经阁Y3";
 	fout << ",";    fout << "藏经阁Y4";
-	fout << ",";    fout << "藏经阁Y5";
 	fout << ",";    fout << "闭关室开关";
 	fout << ",";    fout << "闭关室X";
 	fout << ",";    fout << "闭关室Y";
@@ -1009,6 +1019,7 @@ void NewSave::SaveToCSVSubMapInfoSave(const std::vector<SubMapInfo>& data, int r
 	fout << ",";    fout << "异草";
 	fout << ",";    fout << "稀金";
 	fout << ",";    fout << "玄铁";
+	fout << ",";    fout << "连接";
 	fout << ",";    fout << "连接1";
 	fout << ",";    fout << "连接2";
 	fout << ",";    fout << "连接3";
@@ -1018,7 +1029,7 @@ void NewSave::SaveToCSVSubMapInfoSave(const std::vector<SubMapInfo>& data, int r
 	fout << ",";    fout << "连接7";
 	fout << ",";    fout << "连接8";
 	fout << ",";    fout << "连接9";
-	fout << ",";    fout << "连接10";
+	fout << ",";    fout << "未使用";
 	fout << ",";    fout << "未使用1";
 	fout << ",";    fout << "未使用2";
 	fout << ",";    fout << "未使用3";
@@ -1028,7 +1039,6 @@ void NewSave::SaveToCSVSubMapInfoSave(const std::vector<SubMapInfo>& data, int r
 	fout << ",";    fout << "未使用7";
 	fout << ",";    fout << "未使用8";
 	fout << ",";    fout << "未使用9";
-	fout << ",";    fout << "未使用10";
 	fout << std::endl;
 	int length = data.size();
 	for (int i = 0; i < length; i++) {
@@ -1192,6 +1202,7 @@ void NewSave::SaveToCSVMagicSave(const std::vector<Magic>& data, int record) {
 	fout << ",";    fout << "是否秘传";
 	fout << ",";    fout << "加内力比例";
 	fout << ",";    fout << "加生命比例";
+	fout << ",";    fout << "移动范围";
 	fout << ",";    fout << "移动范围1";
 	fout << ",";    fout << "移动范围2";
 	fout << ",";    fout << "移动范围3";
@@ -1201,7 +1212,7 @@ void NewSave::SaveToCSVMagicSave(const std::vector<Magic>& data, int record) {
 	fout << ",";    fout << "移动范围7";
 	fout << ",";    fout << "移动范围8";
 	fout << ",";    fout << "移动范围9";
-	fout << ",";    fout << "移动范围10";
+	fout << ",";    fout << "杀伤范围";
 	fout << ",";    fout << "杀伤范围1";
 	fout << ",";    fout << "杀伤范围2";
 	fout << ",";    fout << "杀伤范围3";
@@ -1211,22 +1222,21 @@ void NewSave::SaveToCSVMagicSave(const std::vector<Magic>& data, int record) {
 	fout << ",";    fout << "杀伤范围7";
 	fout << ",";    fout << "杀伤范围8";
 	fout << ",";    fout << "杀伤范围9";
-	fout << ",";    fout << "杀伤范围10";
+	fout << ",";    fout << "加生命";
 	fout << ",";    fout << "加生命1";
 	fout << ",";    fout << "加生命2";
-	fout << ",";    fout << "加生命3";
+	fout << ",";    fout << "加内力";
 	fout << ",";    fout << "加内力1";
 	fout << ",";    fout << "加内力2";
-	fout << ",";    fout << "加内力3";
+	fout << ",";    fout << "加攻击";
 	fout << ",";    fout << "加攻击1";
 	fout << ",";    fout << "加攻击2";
-	fout << ",";    fout << "加攻击3";
+	fout << ",";    fout << "加防御";
 	fout << ",";    fout << "加防御1";
 	fout << ",";    fout << "加防御2";
-	fout << ",";    fout << "加防御3";
+	fout << ",";    fout << "加轻功";
 	fout << ",";    fout << "加轻功1";
 	fout << ",";    fout << "加轻功2";
-	fout << ",";    fout << "加轻功3";
 	fout << ",";    fout << "最小封穴几率";
 	fout << ",";    fout << "最大封穴几率";
 	fout << ",";    fout << "最小内伤几率";
@@ -1246,11 +1256,12 @@ void NewSave::SaveToCSVMagicSave(const std::vector<Magic>& data, int record) {
 	fout << ",";    fout << "需经验3";
 	fout << ",";    fout << "最高等级";
 	fout << ",";    fout << "说明";
+	fout << ",";    fout << "招式";
 	fout << ",";    fout << "招式1";
 	fout << ",";    fout << "招式2";
 	fout << ",";    fout << "招式3";
 	fout << ",";    fout << "招式4";
-	fout << ",";    fout << "招式5";
+	fout << ",";    fout << "特殊";
 	fout << ",";    fout << "特殊1";
 	fout << ",";    fout << "特殊2";
 	fout << ",";    fout << "特殊3";
@@ -1260,7 +1271,7 @@ void NewSave::SaveToCSVMagicSave(const std::vector<Magic>& data, int record) {
 	fout << ",";    fout << "特殊7";
 	fout << ",";    fout << "特殊8";
 	fout << ",";    fout << "特殊9";
-	fout << ",";    fout << "特殊10";
+	fout << ",";    fout << "特殊类型";
 	fout << ",";    fout << "特殊类型1";
 	fout << ",";    fout << "特殊类型2";
 	fout << ",";    fout << "特殊类型3";
@@ -1270,7 +1281,7 @@ void NewSave::SaveToCSVMagicSave(const std::vector<Magic>& data, int record) {
 	fout << ",";    fout << "特殊类型7";
 	fout << ",";    fout << "特殊类型8";
 	fout << ",";    fout << "特殊类型9";
-	fout << ",";    fout << "特殊类型10";
+	fout << ",";    fout << "未使用";
 	fout << ",";    fout << "未使用1";
 	fout << ",";    fout << "未使用2";
 	fout << ",";    fout << "未使用3";
@@ -1280,7 +1291,6 @@ void NewSave::SaveToCSVMagicSave(const std::vector<Magic>& data, int record) {
 	fout << ",";    fout << "未使用7";
 	fout << ",";    fout << "未使用8";
 	fout << ",";    fout << "未使用9";
-	fout << ",";    fout << "未使用10";
 	fout << std::endl;
 	int length = data.size();
 	for (int i = 0; i < length; i++) {
@@ -1431,7 +1441,8 @@ void NewSave::SaveToCSVMagicSave(const std::vector<Magic>& data, int record) {
 // 商店
 void NewSave::SaveToCSVShopSave(const std::vector<Shop>& data, int record) {
 	std::ofstream fout("../game/save/csv/" + std::to_string(record) + "_商店.csv");
-	fout << "物品编号1";
+	fout << "物品编号";
+	fout << ",";    fout << "物品编号1";
 	fout << ",";    fout << "物品编号2";
 	fout << ",";    fout << "物品编号3";
 	fout << ",";    fout << "物品编号4";
@@ -1465,7 +1476,7 @@ void NewSave::SaveToCSVShopSave(const std::vector<Shop>& data, int record) {
 	fout << ",";    fout << "物品编号32";
 	fout << ",";    fout << "物品编号33";
 	fout << ",";    fout << "物品编号34";
-	fout << ",";    fout << "物品编号35";
+	fout << ",";    fout << "物品总量";
 	fout << ",";    fout << "物品总量1";
 	fout << ",";    fout << "物品总量2";
 	fout << ",";    fout << "物品总量3";
@@ -1500,7 +1511,6 @@ void NewSave::SaveToCSVShopSave(const std::vector<Shop>& data, int record) {
 	fout << ",";    fout << "物品总量32";
 	fout << ",";    fout << "物品总量33";
 	fout << ",";    fout << "物品总量34";
-	fout << ",";    fout << "物品总量35";
 	fout << std::endl;
 	int length = data.size();
 	for (int i = 0; i < length; i++) {
@@ -1518,7 +1528,7 @@ void NewSave::SaveToCSVShopSave(const std::vector<Shop>& data, int record) {
 }
 // 时间
 void NewSave::SaveToCSVTimeSave(TimeSave* data, int length, int record) {
-	std::ofstream fout("../game/save/csv/" + std::to_string(record) + "_时间.csv");
+	std::ofstream fout("../game/save/csv/" + std::to_string(record) + "_日期.csv");
 	fout << "甲子";
 	fout << ",";    fout << "年";
 	fout << ",";    fout << "月";
@@ -1551,6 +1561,7 @@ void NewSave::SaveToCSVZhaoshiSave(const std::vector<Zhaoshi>& data, int record)
 	fout << ",";    fout << "是否防御";
 	fout << ",";    fout << "防御加成";
 	fout << ",";    fout << "说明";
+	fout << ",";    fout << "特效类型";
 	fout << ",";    fout << "特效类型1";
 	fout << ",";    fout << "特效类型2";
 	fout << ",";    fout << "特效类型3";
@@ -1574,7 +1585,7 @@ void NewSave::SaveToCSVZhaoshiSave(const std::vector<Zhaoshi>& data, int record)
 	fout << ",";    fout << "特效类型21";
 	fout << ",";    fout << "特效类型22";
 	fout << ",";    fout << "特效类型23";
-	fout << ",";    fout << "特效类型24";
+	fout << ",";    fout << "特效数据";
 	fout << ",";    fout << "特效数据1";
 	fout << ",";    fout << "特效数据2";
 	fout << ",";    fout << "特效数据3";
@@ -1598,7 +1609,6 @@ void NewSave::SaveToCSVZhaoshiSave(const std::vector<Zhaoshi>& data, int record)
 	fout << ",";    fout << "特效数据21";
 	fout << ",";    fout << "特效数据22";
 	fout << ",";    fout << "特效数据23";
-	fout << ",";    fout << "特效数据24";
 	fout << std::endl;
 	int length = data.size();
 	for (int i = 0; i < length; i++) {
@@ -1663,6 +1673,7 @@ void NewSave::SaveToCSVMenpaiSave(const std::vector<Menpai>& data, int record) {
 	fout << ",";    fout << "异草+";
 	fout << ",";    fout << "稀金+";
 	fout << ",";    fout << "玄铁+";
+	fout << ",";    fout << "门派内功";
 	fout << ",";    fout << "门派内功1";
 	fout << ",";    fout << "门派内功2";
 	fout << ",";    fout << "门派内功3";
@@ -1682,7 +1693,7 @@ void NewSave::SaveToCSVMenpaiSave(const std::vector<Menpai>& data, int record) {
 	fout << ",";    fout << "门派内功17";
 	fout << ",";    fout << "门派内功18";
 	fout << ",";    fout << "门派内功19";
-	fout << ",";    fout << "门派内功20";
+	fout << ",";    fout << "门派关系";
 	fout << ",";    fout << "门派关系1";
 	fout << ",";    fout << "门派关系2";
 	fout << ",";    fout << "门派关系3";
@@ -1722,7 +1733,7 @@ void NewSave::SaveToCSVMenpaiSave(const std::vector<Menpai>& data, int record) {
 	fout << ",";    fout << "门派关系37";
 	fout << ",";    fout << "门派关系38";
 	fout << ",";    fout << "门派关系39";
-	fout << ",";    fout << "门派关系40";
+	fout << ",";    fout << "门派职务";
 	fout << ",";    fout << "门派职务1";
 	fout << ",";    fout << "门派职务2";
 	fout << ",";    fout << "门派职务3";
@@ -1732,7 +1743,6 @@ void NewSave::SaveToCSVMenpaiSave(const std::vector<Menpai>& data, int record) {
 	fout << ",";    fout << "门派职务7";
 	fout << ",";    fout << "门派职务8";
 	fout << ",";    fout << "门派职务9";
-	fout << ",";    fout << "门派职务10";
 	fout << ",";    fout << "扩张倾向";
 	fout << ",";    fout << "招弟子倾向";
 	fout << ",";    fout << "弟子成长速度";
@@ -1867,6 +1877,7 @@ void NewSave::SaveToCSVRSignSave(const std::vector<RSign>& data, int record) {
 	fout << ",";    fout << "说明";
 	fout << ",";    fout << "备用";
 	fout << ",";    fout << "是否隐藏";
+	fout << ",";    fout << "特效类型";
 	fout << ",";    fout << "特效类型1";
 	fout << ",";    fout << "特效类型2";
 	fout << ",";    fout << "特效类型3";
@@ -1890,7 +1901,7 @@ void NewSave::SaveToCSVRSignSave(const std::vector<RSign>& data, int record) {
 	fout << ",";    fout << "特效类型21";
 	fout << ",";    fout << "特效类型22";
 	fout << ",";    fout << "特效类型23";
-	fout << ",";    fout << "特效类型24";
+	fout << ",";    fout << "特效数据";
 	fout << ",";    fout << "特效数据1";
 	fout << ",";    fout << "特效数据2";
 	fout << ",";    fout << "特效数据3";
@@ -1914,7 +1925,6 @@ void NewSave::SaveToCSVRSignSave(const std::vector<RSign>& data, int record) {
 	fout << ",";    fout << "特效数据21";
 	fout << ",";    fout << "特效数据22";
 	fout << ",";    fout << "特效数据23";
-	fout << ",";    fout << "特效数据24";
 	fout << std::endl;
 	int length = data.size();
 	for (int i = 0; i < length; i++) {
@@ -1963,12 +1973,12 @@ void NewSave::LoadFromCSVBaseInfo(Save::BaseInfo* data, int length, int record) 
 		"内场景方向",
 		"船面对方向",
 		"队伍人数",
+		"队友",
 		"队友1",
 		"队友2",
 		"队友3",
 		"队友4",
 		"队友5",
-		"队友6",
 		"编码"
 	);
 	auto getDefault = []() {
@@ -2054,11 +2064,11 @@ void NewSave::LoadFromCSVItemList(ItemList* data, int length, int record) {
 // 人物
 void NewSave::LoadFromCSVRoleSave(std::vector<Role>& data, int record) {
 	data.clear();
-	io::CSVReader<305, io::trim_chars<>, io::double_quote_escape<',', '\"'>> in("../game/save/csv/" + std::to_string(record) + "_人物.csv");
+	io::CSVReader<307, io::trim_chars<>, io::double_quote_escape<',', '\"'>> in("../game/save/csv/" + std::to_string(record) + "_人物.csv");
 	in.read_header(io::ignore_missing_column | io::ignore_extra_column,
 		"编号",
 		"头像/战斗代号",
-		"生命成长",
+		"生命增长",
 		"福缘",
 		"姓名",
 		"外号",
@@ -2071,11 +2081,11 @@ void NewSave::LoadFromCSVRoleSave(std::vector<Role>& data, int record) {
 		"中毒程度",
 		"体力",
 		"战斗图编号",
+		"装备",
 		"装备1",
 		"装备2",
 		"装备3",
 		"装备4",
-		"装备5",
 		"功体",
 		"队伍状态",
 		"愤怒值",
@@ -2110,6 +2120,7 @@ void NewSave::LoadFromCSVRoleSave(std::vector<Role>& data, int record) {
 		"声望",
 		"资质",
 		"修练物品",
+		"修练点数",
 		"相性",
 		"交情",
 		"人物类别",
@@ -2129,10 +2140,11 @@ void NewSave::LoadFromCSVRoleSave(std::vector<Role>& data, int record) {
 		"人物状态",
 		"练武倾向",
 		"冥思倾向",
+		"劳动倾向",
 		"其他倾向",
 		"临时位置",
 		"内部临时位置",
-		"内部方向",
+		"内部方向1",
 		"场景X坐标",
 		"场景Y坐标",
 		"送书标记",
@@ -2143,6 +2155,7 @@ void NewSave::LoadFromCSVRoleSave(std::vector<Role>& data, int record) {
 		"未用2",
 		"未用3",
 		"战场ID",
+		"所会武功",
 		"所会武功1",
 		"所会武功2",
 		"所会武功3",
@@ -2182,7 +2195,7 @@ void NewSave::LoadFromCSVRoleSave(std::vector<Role>& data, int record) {
 		"所会武功37",
 		"所会武功38",
 		"所会武功39",
-		"所会武功40",
+		"所会武功等级",
 		"所会武功等级1",
 		"所会武功等级2",
 		"所会武功等级3",
@@ -2222,7 +2235,7 @@ void NewSave::LoadFromCSVRoleSave(std::vector<Role>& data, int record) {
 		"所会武功等级37",
 		"所会武功等级38",
 		"所会武功等级39",
-		"所会武功等级40",
+		"携带物品",
 		"携带物品1",
 		"携带物品2",
 		"携带物品3",
@@ -2231,7 +2244,7 @@ void NewSave::LoadFromCSVRoleSave(std::vector<Role>& data, int record) {
 		"携带物品6",
 		"携带物品7",
 		"携带物品8",
-		"携带物品9",
+		"携带物品数量",
 		"携带物品数量1",
 		"携带物品数量2",
 		"携带物品数量3",
@@ -2240,7 +2253,7 @@ void NewSave::LoadFromCSVRoleSave(std::vector<Role>& data, int record) {
 		"携带物品数量6",
 		"携带物品数量7",
 		"携带物品数量8",
-		"携带物品数量9",
+		"激活武功",
 		"激活武功1",
 		"激活武功2",
 		"激活武功3",
@@ -2250,7 +2263,7 @@ void NewSave::LoadFromCSVRoleSave(std::vector<Role>& data, int record) {
 		"激活武功7",
 		"激活武功8",
 		"激活武功9",
-		"激活武功10",
+		"所会招式",
 		"所会招式1",
 		"所会招式2",
 		"所会招式3",
@@ -2290,7 +2303,6 @@ void NewSave::LoadFromCSVRoleSave(std::vector<Role>& data, int record) {
 		"所会招式37",
 		"所会招式38",
 		"所会招式39",
-		"所会招式40",
 		"对话菜单开关",
 		"对话事件",
 		"状态事件",
@@ -2302,8 +2314,8 @@ void NewSave::LoadFromCSVRoleSave(std::vector<Role>& data, int record) {
 		"事件池3",
 		"离队期限",
 		"离队事件",
+		"随机值",
 		"随机值1",
-		"随机值2",
 		"暗箭",
 		"医师",
 		"装备特技",
@@ -2336,11 +2348,12 @@ void NewSave::LoadFromCSVRoleSave(std::vector<Role>& data, int record) {
 		"固守",
 		"天命",
 		"星宿",
+		"专长",
 		"专长1",
 		"专长2",
 		"专长3",
 		"专长4",
-		"专长5",
+		"特性",
 		"特性1",
 		"特性2",
 		"特性3",
@@ -2350,8 +2363,8 @@ void NewSave::LoadFromCSVRoleSave(std::vector<Role>& data, int record) {
 		"特性7",
 		"特性8",
 		"特性9",
-		"特性10",
 		"门派贡献",
+		"未使用",
 		"未使用1",
 		"未使用2",
 		"未使用3",
@@ -2359,8 +2372,8 @@ void NewSave::LoadFromCSVRoleSave(std::vector<Role>& data, int record) {
 		"未使用5",
 		"未使用6",
 		"未使用7",
-		"未使用8",
-		"未使用9"
+		"未使用8"
+
 	);
 	auto getDefault = []() {
 		Role nextLineData;
@@ -2417,6 +2430,7 @@ void NewSave::LoadFromCSVRoleSave(std::vector<Role>& data, int record) {
 		nextLineData.IQ = 0;
 		nextLineData.PracticeItem = -1;
 		nextLineData.ExpForItem = 0;
+		nextLineData.xiangxing = 0;
 		nextLineData.jiaoqing = 0;
 		nextLineData.Rtype = 0;
 		nextLineData.swq = 0;
@@ -2436,6 +2450,7 @@ void NewSave::LoadFromCSVRoleSave(std::vector<Role>& data, int record) {
 		nextLineData.OnStatus = 0;
 		nextLineData.lwq = 0;
 		nextLineData.msq = 0;
+		nextLineData.ldq = 0;
 		nextLineData.qtq = 0;
 		nextLineData.lsweizhi = 0;
 		nextLineData.lsnweizhi = 0;
@@ -2569,7 +2584,7 @@ void NewSave::LoadFromCSVRoleSave(std::vector<Role>& data, int record) {
 		nextLineData.Speed,
 		nextLineData.Defence,
 		nextLineData.Medicine,
-		nextLineData.Unused,
+		nextLineData.Weiyong,
 		nextLineData.Art,
 		nextLineData.AntiPoison,
 		nextLineData.Fist,
@@ -2585,6 +2600,7 @@ void NewSave::LoadFromCSVRoleSave(std::vector<Role>& data, int record) {
 		nextLineData.IQ,
 		nextLineData.PracticeItem,
 		nextLineData.ExpForItem,
+		nextLineData.xiangxing,
 		nextLineData.jiaoqing,
 		nextLineData.Rtype,
 		nextLineData.swq,
@@ -2603,6 +2619,7 @@ void NewSave::LoadFromCSVRoleSave(std::vector<Role>& data, int record) {
 		nextLineData.OnStatus,
 		nextLineData.lwq,
 		nextLineData.msq,
+		nextLineData.ldq,
 		nextLineData.qtq,
 		nextLineData.lsweizhi,
 		nextLineData.lsnweizhi,
@@ -2910,26 +2927,26 @@ void NewSave::LoadFromCSVItemSave(std::vector<Item>& data, int record) {
 		"需经验",
 		"数量",
 		"稀有度",
+		"所需物品",
 		"所需物品1",
 		"所需物品2",
 		"所需物品3",
 		"所需物品4",
-		"所需物品5",
+		"需要物品数量",
 		"需要物品数量1",
 		"需要物品数量2",
 		"需要物品数量3",
 		"需要物品数量4",
-		"需要物品数量5",
 		"加资质",
 		"加富源",
+		"未使用",
 		"未使用1",
 		"未使用2",
 		"未使用3",
 		"未使用4",
 		"未使用5",
 		"未使用6",
-		"未使用7",
-		"未使用8"
+		"未使用7"
 	);
 	auto getDefault = []() {
 		Item nextLineData;
@@ -3134,26 +3151,26 @@ void NewSave::LoadFromCSVSubMapInfoSave(std::vector<SubMapInfo>& data, int recor
 		"练武场数",
 		"总藏经阁数",
 		"藏经阁数",
+		"练武场X",
 		"练武场X1",
 		"练武场X2",
 		"练武场X3",
 		"练武场X4",
-		"练武场X5",
+		"练武场Y",
 		"练武场Y1",
 		"练武场Y2",
 		"练武场Y3",
 		"练武场Y4",
-		"练武场Y5",
+		"藏经阁X",
 		"藏经阁X1",
 		"藏经阁X2",
 		"藏经阁X3",
 		"藏经阁X4",
-		"藏经阁X5",
+		"藏经阁Y",
 		"藏经阁Y1",
 		"藏经阁Y2",
 		"藏经阁Y3",
 		"藏经阁Y4",
-		"藏经阁Y5",
 		"闭关室开关",
 		"闭关室X",
 		"闭关室Y",
@@ -3179,6 +3196,7 @@ void NewSave::LoadFromCSVSubMapInfoSave(std::vector<SubMapInfo>& data, int recor
 		"异草",
 		"稀金",
 		"玄铁",
+		"连接",
 		"连接1",
 		"连接2",
 		"连接3",
@@ -3188,7 +3206,7 @@ void NewSave::LoadFromCSVSubMapInfoSave(std::vector<SubMapInfo>& data, int recor
 		"连接7",
 		"连接8",
 		"连接9",
-		"连接10",
+		"未使用",
 		"未使用1",
 		"未使用2",
 		"未使用3",
@@ -3197,8 +3215,7 @@ void NewSave::LoadFromCSVSubMapInfoSave(std::vector<SubMapInfo>& data, int recor
 		"未使用6",
 		"未使用7",
 		"未使用8",
-		"未使用9",
-		"未使用10"
+		"未使用9"
 	);
 	auto getDefault = []() {
 		SubMapInfo nextLineData;
@@ -3405,6 +3422,7 @@ void NewSave::LoadFromCSVMagicSave(std::vector<Magic>& data, int record) {
 		"是否秘传",
 		"加内力比例",
 		"加生命比例",
+		"移动范围",
 		"移动范围1",
 		"移动范围2",
 		"移动范围3",
@@ -3414,7 +3432,7 @@ void NewSave::LoadFromCSVMagicSave(std::vector<Magic>& data, int record) {
 		"移动范围7",
 		"移动范围8",
 		"移动范围9",
-		"移动范围10",
+		"杀伤范围",
 		"杀伤范围1",
 		"杀伤范围2",
 		"杀伤范围3",
@@ -3424,22 +3442,21 @@ void NewSave::LoadFromCSVMagicSave(std::vector<Magic>& data, int record) {
 		"杀伤范围7",
 		"杀伤范围8",
 		"杀伤范围9",
-		"杀伤范围10",
+		"加生命",
 		"加生命1",
 		"加生命2",
-		"加生命3",
+		"加内力",
 		"加内力1",
 		"加内力2",
-		"加内力3",
+		"加攻击",
 		"加攻击1",
 		"加攻击2",
-		"加攻击3",
+		"加防御",
 		"加防御1",
 		"加防御2",
-		"加防御3",
+		"加轻功",
 		"加轻功1",
 		"加轻功2",
-		"加轻功3",
 		"最小封穴几率",
 		"最大封穴几率",
 		"最小内伤几率",
@@ -3459,11 +3476,12 @@ void NewSave::LoadFromCSVMagicSave(std::vector<Magic>& data, int record) {
 		"需经验3",
 		"最高等级",
 		"说明",
+		"招式",
 		"招式1",
 		"招式2",
 		"招式3",
 		"招式4",
-		"招式5",
+		"特殊",
 		"特殊1",
 		"特殊2",
 		"特殊3",
@@ -3473,7 +3491,7 @@ void NewSave::LoadFromCSVMagicSave(std::vector<Magic>& data, int record) {
 		"特殊7",
 		"特殊8",
 		"特殊9",
-		"特殊10",
+		"特殊类型",
 		"特殊类型1",
 		"特殊类型2",
 		"特殊类型3",
@@ -3483,7 +3501,7 @@ void NewSave::LoadFromCSVMagicSave(std::vector<Magic>& data, int record) {
 		"特殊类型7",
 		"特殊类型8",
 		"特殊类型9",
-		"特殊类型10",
+		"未使用",
 		"未使用1",
 		"未使用2",
 		"未使用3",
@@ -3492,8 +3510,7 @@ void NewSave::LoadFromCSVMagicSave(std::vector<Magic>& data, int record) {
 		"未使用6",
 		"未使用7",
 		"未使用8",
-		"未使用9",
-		"未使用10"
+		"未使用9"
 	);
 	auto getDefault = []() {
 		Magic nextLineData;
@@ -3708,6 +3725,7 @@ void NewSave::LoadFromCSVShopSave(std::vector<Shop>& data, int record) {
 	data.clear();
 	io::CSVReader<70, io::trim_chars<>, io::double_quote_escape<',', '\"'>> in("../game/save/csv/" + std::to_string(record) + "_商店.csv");
 	in.read_header(io::ignore_missing_column | io::ignore_extra_column,
+		"物品编号",
 		"物品编号1",
 		"物品编号2",
 		"物品编号3",
@@ -3742,7 +3760,7 @@ void NewSave::LoadFromCSVShopSave(std::vector<Shop>& data, int record) {
 		"物品编号32",
 		"物品编号33",
 		"物品编号34",
-		"物品编号35",
+		"物品总量",
 		"物品总量1",
 		"物品总量2",
 		"物品总量3",
@@ -3776,8 +3794,7 @@ void NewSave::LoadFromCSVShopSave(std::vector<Shop>& data, int record) {
 		"物品总量31",
 		"物品总量32",
 		"物品总量33",
-		"物品总量34",
-		"物品总量35"
+		"物品总量34"
 	);
 	auto getDefault = []() {
 		Shop nextLineData;
@@ -3870,7 +3887,7 @@ void NewSave::LoadFromCSVShopSave(std::vector<Shop>& data, int record) {
 }
 // 时间
 void NewSave::LoadFromCSVTimeSave(TimeSave* data, int length, int record) {
-	io::CSVReader<5, io::trim_chars<>, io::double_quote_escape<',', '\"'>> in("../game/save/csv/" + std::to_string(record) + "_时间.csv");
+	io::CSVReader<5, io::trim_chars<>, io::double_quote_escape<',', '\"'>> in("../game/save/csv/" + std::to_string(record) + "_日期.csv");
 	in.read_header(io::ignore_missing_column | io::ignore_extra_column,
 		"甲子",
 		"年",
@@ -3916,6 +3933,7 @@ void NewSave::LoadFromCSVZhaoshiSave(std::vector<Zhaoshi>& data, int record) {
 		"是否防御",
 		"防御加成",
 		"说明",
+		"特效类型",
 		"特效类型1",
 		"特效类型2",
 		"特效类型3",
@@ -3939,7 +3957,7 @@ void NewSave::LoadFromCSVZhaoshiSave(std::vector<Zhaoshi>& data, int record) {
 		"特效类型21",
 		"特效类型22",
 		"特效类型23",
-		"特效类型24",
+		"特效数据",
 		"特效数据1",
 		"特效数据2",
 		"特效数据3",
@@ -3962,8 +3980,7 @@ void NewSave::LoadFromCSVZhaoshiSave(std::vector<Zhaoshi>& data, int record) {
 		"特效数据20",
 		"特效数据21",
 		"特效数据22",
-		"特效数据23",
-		"特效数据24"
+		"特效数据23"
 	);
 	auto getDefault = []() {
 		Zhaoshi nextLineData;
@@ -4087,6 +4104,7 @@ void NewSave::LoadFromCSVMenpaiSave(std::vector<Menpai>& data, int record) {
 		"异草+",
 		"稀金+",
 		"玄铁+",
+		"门派内功",
 		"门派内功1",
 		"门派内功2",
 		"门派内功3",
@@ -4106,7 +4124,7 @@ void NewSave::LoadFromCSVMenpaiSave(std::vector<Menpai>& data, int record) {
 		"门派内功17",
 		"门派内功18",
 		"门派内功19",
-		"门派内功20",
+		"门派关系",
 		"门派关系1",
 		"门派关系2",
 		"门派关系3",
@@ -4146,7 +4164,7 @@ void NewSave::LoadFromCSVMenpaiSave(std::vector<Menpai>& data, int record) {
 		"门派关系37",
 		"门派关系38",
 		"门派关系39",
-		"门派关系40",
+		"门派职务",
 		"门派职务1",
 		"门派职务2",
 		"门派职务3",
@@ -4156,7 +4174,6 @@ void NewSave::LoadFromCSVMenpaiSave(std::vector<Menpai>& data, int record) {
 		"门派职务7",
 		"门派职务8",
 		"门派职务9",
-		"门派职务10",
 		"扩张倾向",
 		"招弟子倾向",
 		"弟子成长速度",
@@ -4368,6 +4385,7 @@ void NewSave::LoadFromCSVRSignSave(std::vector<RSign>& data, int record) {
 		"说明",
 		"备用",
 		"是否隐藏",
+		"特效类型",
 		"特效类型1",
 		"特效类型2",
 		"特效类型3",
@@ -4391,7 +4409,7 @@ void NewSave::LoadFromCSVRSignSave(std::vector<RSign>& data, int record) {
 		"特效类型21",
 		"特效类型22",
 		"特效类型23",
-		"特效类型24",
+		"特效数据",
 		"特效数据1",
 		"特效数据2",
 		"特效数据3",
@@ -4414,8 +4432,7 @@ void NewSave::LoadFromCSVRSignSave(std::vector<RSign>& data, int record) {
 		"特效数据20",
 		"特效数据21",
 		"特效数据22",
-		"特效数据23",
-		"特效数据24"
+		"特效数据23"
 	);
 	auto getDefault = []() {
 		RSign nextLineData;
@@ -4783,7 +4800,7 @@ void NewSave::InsertRSignAt(std::vector<RSign>& data, int idx) {
 	Save::getInstance()->updateAllPtrVector();
 }
 
-NewSave NewNew_save_;
+NewSave NewSave::new_save_;
 
 #define GET_OFFSET(field) (int((char*)(&(a.field)) - (char*)(&a)))
 #define BIND_FIELD_INT(key, field) FieldInfo(key, 0, GET_OFFSET(field), sizeof(a.field))
@@ -4832,7 +4849,7 @@ void NewSave::initDBFieldInfo()
         {
             BIND_FIELD_INT("编号", ID),
             BIND_FIELD_INT("头像", HeadID),
-            BIND_FIELD_INT("生命成长", IncLife),
+            BIND_FIELD_INT("生命增长", IncLife),
             BIND_FIELD_INT("富源", Fuyuan),
             BIND_FIELD_TEXT("名字", Name),
             BIND_FIELD_TEXT("外号", Nick),

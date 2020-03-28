@@ -71,7 +71,7 @@ bool Save::load(int num)
     //loadR(num);
     //loadRFromDB(num);
 	loadRFromCSV(num);
-	Encode = 936; //CSV读取默认是cp936
+	//Encode = 936; //CSV读取默认是cp936
     loadSD(num);
 	
 
@@ -141,9 +141,10 @@ void Save::loadSD(int num)
 
 bool Save::save(int num)
 {
-    saveR(num);
+    //saveR(num);
+	saveRToCSV(num);
     saveSD(num);
-    saveRToDB(num);
+    //saveRToDB(num);
     return true;
 }
 

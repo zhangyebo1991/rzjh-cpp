@@ -7,46 +7,46 @@ class NewSave
 {
 public:
 	// 基本
-	static void NewSave::SaveToCSVBaseInfo (Save::BaseInfo* data, int length, int record);
-	static void NewSave::LoadFromCSVBaseInfo (Save::BaseInfo* data, int length, int record);
+	static void SaveToCSVBaseInfo (Save::BaseInfo* data, int length, int record);
+	static void LoadFromCSVBaseInfo (Save::BaseInfo* data, int length, int record);
 	// 背包
-	static void NewSave::SaveToCSVItemList (ItemList* data, int length, int record);
-	static void NewSave::LoadFromCSVItemList (ItemList* data, int length, int record);
+	static void SaveToCSVItemList (ItemList* data, int length, int record);
+	static void LoadFromCSVItemList (ItemList* data, int length, int record);
 	// 人物
-	static void NewSave::SaveToCSVRoleSave (const std::vector<Role>& data, int record);
-	static void NewSave::LoadFromCSVRoleSave (std::vector<Role>& data, int record);
-	static void NewSave::InsertRoleAt(std::vector<Role>& data, int idx);
+	static void SaveToCSVRoleSave (const std::vector<Role>& data, int record);
+	static void LoadFromCSVRoleSave (std::vector<Role>& data, int record);
+	static void InsertRoleAt(std::vector<Role>& data, int idx);
 	// 物品
-	static void NewSave::SaveToCSVItemSave (const std::vector<Item>& data, int record);
-	static void NewSave::LoadFromCSVItemSave (std::vector<Item>& data, int record);
-	static void NewSave::InsertItemAt(std::vector<Item>& data, int idx);
+	static void SaveToCSVItemSave (const std::vector<Item>& data, int record);
+	static void LoadFromCSVItemSave (std::vector<Item>& data, int record);
+	static void InsertItemAt(std::vector<Item>& data, int idx);
 	// 场景
-	static void NewSave::SaveToCSVSubMapInfoSave (const std::vector<SubMapInfo>& data, int record);
-	static void NewSave::LoadFromCSVSubMapInfoSave (std::vector<SubMapInfo>& data, int record);
-	static void NewSave::InsertSubMapInfoAt(std::vector<SubMapInfo>& data, int idx);
+	static void SaveToCSVSubMapInfoSave (const std::vector<SubMapInfo>& data, int record);
+	static void LoadFromCSVSubMapInfoSave (std::vector<SubMapInfo>& data, int record);
+	static void InsertSubMapInfoAt(std::vector<SubMapInfo>& data, int idx);
 	// 武功
-	static void NewSave::SaveToCSVMagicSave (const std::vector<Magic>& data, int record);
-	static void NewSave::LoadFromCSVMagicSave (std::vector<Magic>& data, int record);
-	static void NewSave::InsertMagicAt(std::vector<Magic>& data, int idx);
+	static void SaveToCSVMagicSave (const std::vector<Magic>& data, int record);
+	static void LoadFromCSVMagicSave (std::vector<Magic>& data, int record);
+	static void InsertMagicAt(std::vector<Magic>& data, int idx);
 	// 商店
-	static void NewSave::SaveToCSVShopSave (const std::vector<Shop>& data, int record);
-	static void NewSave::LoadFromCSVShopSave (std::vector<Shop>& data, int record);
-	static void NewSave::InsertShopAt(std::vector<Shop>& data, int idx);
+	static void SaveToCSVShopSave (const std::vector<Shop>& data, int record);
+	static void LoadFromCSVShopSave (std::vector<Shop>& data, int record);
+	static void InsertShopAt(std::vector<Shop>& data, int idx);
 	// 时间
-	static void NewSave::SaveToCSVTimeSave (TimeSave* data, int length, int record);
-	static void NewSave::LoadFromCSVTimeSave (TimeSave* data, int length, int record);
+	static void SaveToCSVTimeSave (TimeSave* data, int length, int record);
+	static void LoadFromCSVTimeSave (TimeSave* data, int length, int record);
 	// 招式
-	static void NewSave::SaveToCSVZhaoshiSave(const std::vector<Zhaoshi>& data, int record);
-	static void NewSave::LoadFromCSVZhaoshiSave(std::vector<Zhaoshi>& data, int record);
-	static void NewSave::InsertZhaoshiAt(std::vector<Zhaoshi>& data, int idx);
+	static void SaveToCSVZhaoshiSave(const std::vector<Zhaoshi>& data, int record);
+	static void LoadFromCSVZhaoshiSave(std::vector<Zhaoshi>& data, int record);
+	static void InsertZhaoshiAt(std::vector<Zhaoshi>& data, int idx);
 	// 门派
-	static void NewSave::SaveToCSVMenpaiSave(const std::vector<Menpai>& data, int record);
-	static void NewSave::LoadFromCSVMenpaiSave(std::vector<Menpai>& data, int record);
-	static void NewSave::InsertMenpaiAt(std::vector<Menpai>& data, int idx);
+	static void SaveToCSVMenpaiSave(const std::vector<Menpai>& data, int record);
+	static void LoadFromCSVMenpaiSave(std::vector<Menpai>& data, int record);
+	static void InsertMenpaiAt(std::vector<Menpai>& data, int idx);
 	// 标签
-	static void NewSave::SaveToCSVRSignSave(const std::vector<RSign>& data, int record);
-	static void NewSave::LoadFromCSVRSignSave(std::vector<RSign>& data, int record);
-	static void NewSave::InsertRSignAt(std::vector<RSign>& data, int idx);
+	static void SaveToCSVRSignSave(const std::vector<RSign>& data, int record);
+	static void LoadFromCSVRSignSave(std::vector<RSign>& data, int record);
+	static void InsertRSignAt(std::vector<RSign>& data, int idx);
 
 private:
     struct FieldInfo
@@ -59,7 +59,7 @@ private:
         FieldInfo() {}
         FieldInfo(const std::string& n, int t, int o, size_t l, int c = -1) : name(n), type(t), offset(o), length(l), col(c) {}
     };
-    std::vector<FieldInfo> base_, item_list_, role_, item_, submap_, magic_, shop_;
+    std::vector<FieldInfo> base_, item_list_, role_, item_, submap_, magic_, shop_, zhaoshi_, menpai_, RSign_;
     //std::map<std::string, FieldInfo> base_map_;
     static NewSave new_save_;
 

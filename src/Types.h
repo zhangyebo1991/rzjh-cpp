@@ -154,7 +154,8 @@ public:
 	int Fame; // 声望
 	int IQ; // 资质
 	int PracticeItem; // 修练物品
-	int ExpForItem; // 相性
+	int ExpForItem;	//练出点数 
+	int xiangxing; // 相性
 	int jiaoqing; // 交情
 	int Rtype; // 人物类别
 	int swq; // 声望倾向
@@ -172,6 +173,7 @@ public:
 	int OnStatus; // 人物状态
 	int lwq; // 练武倾向
 	int msq; // 冥思倾向
+	int ldq; //劳动倾向
 	int qtq; // 其他倾向
 	int lsweizhi; // 临时位置
 	int lsnweizhi; // 内部临时位置
