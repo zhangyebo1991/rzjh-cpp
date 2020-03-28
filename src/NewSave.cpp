@@ -87,7 +87,7 @@ void NewSave::SaveToCSVRoleSave(const std::vector<Role>& data, int record) {
 	std::ofstream fout("../game/save/csv/" + std::to_string(record) + "_人物.csv");
 	fout << "编号";
 	fout << ",";    fout << "头像/战斗代号";
-	fout << ",";    fout << "生命成长";
+	fout << ",";    fout << "生命增长";
 	fout << ",";    fout << "福缘";
 	fout << ",";    fout << "姓名";
 	fout << ",";    fout << "外号";
@@ -2074,7 +2074,7 @@ void NewSave::LoadFromCSVRoleSave(std::vector<Role>& data, int record) {
 		"外号",
 		"性别",
 		"等级",
-		"经验",
+		"经验值",
 		"生命",
 		"生命最大值",
 		"受伤程度",
@@ -2132,8 +2132,8 @@ void NewSave::LoadFromCSVRoleSave(std::vector<Role>& data, int record) {
 		"师父",
 		"师承序位",
 		"拜师顺序",
+		"仇视门派",
 		"仇视门派1",
-		"仇视门派2",
 		"当前位置",
 		"内部位置",
 		"内部方向",
