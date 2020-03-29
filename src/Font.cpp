@@ -22,6 +22,7 @@ BP_Rect Font::getBoxSize(int textLen, int size, int x, int y)
 
 void Font::draw(const std::string& text, int size, int x, int y, BP_Color color, uint8_t alpha)
 {
+
     int p = 0;
     int char_count = 0;
     int s1;
@@ -30,20 +31,22 @@ void Font::draw(const std::string& text, int size, int x, int y, BP_Color color,
     {
         s1 = getBufferSize();
     }
-    while (p < text.size())
+    auto fakeText = PotConv::utf8tocp936(text);
+    while (p < fakeText.size())
     {
         int w = size, h = size;
-        uint16_t c = (uint8_t)text[p];
+        uint16_t c = (uint8_t)fakeText[p];
         p++;
         if (c > 128)
         {
-            c += (uint8_t)text[p] * 256;
+            c += (uint8_t)fakeText[p] * 256;
             p++;
         }
         if (buffer_[c].count(size) == 0)
         {
             uint16_t c2[2] = { 0 };
             c2[0] = c;
+            std::string ttt{ (char*)c2 };
             auto s = PotConv::cp936toutf8((char*)(c2));
             buffer_[c][size] = Engine::getInstance()->createTextTexture(fontnamec_, s, size, { 255, 255, 255, 255 });
         }
@@ -90,7 +93,7 @@ void Font::drawWithBox(const std::string& text, int size, int x, int y, BP_Color
     draw(text, size, x, y, color, alpha);
 }
 
-//此处仅接受utf8
+//姝ゅ浠呮帴鍙梪tf8
 void Font::drawText(const std::string& fontname, std::string& text, int size, int x, int y, uint8_t alpha, int align, BP_Color c)
 {
     if (alpha == 0)

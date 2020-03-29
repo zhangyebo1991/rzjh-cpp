@@ -14,7 +14,7 @@ private:
 
     int stat_message_ = 0;
 
-    std::map<uint16_t, std::map<int, BP_Texture*>> buffer_;    //»º´æ»­¹ýµÄ×ÖÌå
+    std::map<uint16_t, std::map<int, BP_Texture*>> buffer_;    //ç¼“å­˜ç”»è¿‡çš„å­—ä½“
 
 public:
     static Font* getInstance()

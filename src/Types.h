@@ -22,7 +22,7 @@ struct MapSquare
             delete[] data_;
         }
     }
-    //²»»á±£ÁôÔ­Ê¼Êı¾İ
+    //ä¸ä¼šä¿ç•™åŸå§‹æ•°æ®
     void resize(int x)
     {
         if (data_)
@@ -66,7 +66,7 @@ private:
 
 using MapSquareInt = MapSquare<MAP_INT>;
 
-//Ç°ÖÃÉùÃ÷
+//å‰ç½®å£°æ˜
 struct Role;
 struct Item;
 struct Magic;
@@ -79,9 +79,9 @@ enum
     SUBMAP_COORD_COUNT = 64,
     SUBMAP_LAYER_COUNT = 6,
     MAINMAP_COORD_COUNT = 480,
-    SUBMAP_EVENT_COUNT = 200,    //µ¥³¡¾°×î´óÊÂ¼şÊı
-    ITEM_IN_BAG_COUNT = 400,     //×î´óÎïÆ·Êı
-    TEAMMATE_COUNT = 6,          //×î´ó¶ÓÎéÈËÔ±Êı
+    SUBMAP_EVENT_COUNT = 200,    //å•åœºæ™¯æœ€å¤§äº‹ä»¶æ•°
+    ITEM_IN_BAG_COUNT = 400,     //æœ€å¤§ç‰©å“æ•°
+    TEAMMATE_COUNT = 6,          //æœ€å¤§é˜Ÿä¼äººå‘˜æ•°
 };
 
 enum
@@ -98,155 +98,155 @@ enum
     SHOP_ITEM_COUNT = 36,
 };
 
-//³ÉÔ±º¯ÊıÈôÊÇ¿ªÍ·´óĞ´£¬²¢ÇÒÎŞÏÂ»®Ïß£¬Ôò¿ÉÒÔÖ±½Ó·ÃÎÊ²¢ĞŞ¸Ä
+//æˆå‘˜å‡½æ•°è‹¥æ˜¯å¼€å¤´å¤§å†™ï¼Œå¹¶ä¸”æ— ä¸‹åˆ’çº¿ï¼Œåˆ™å¯ä»¥ç›´æ¥è®¿é—®å¹¶ä¿®æ”¹
 
-//´æµµÖĞµÄ½ÇÉ«Êı¾İ
+//å­˜æ¡£ä¸­çš„è§’è‰²æ•°æ®
 struct RoleSave
 {
 public:
-	int ID; // ±àºÅ
-	int HeadID; // Í·Ïñ/Õ½¶·´úºÅ
-	int IncLife; // ÉúÃü³É³¤
-	int Fuyuan; // ¸£Ôµ
-	char Name[20]; // ĞÕÃû
-	char Nick[20]; // ÍâºÅ
-	int Sexual; // ĞÔ±ğ
-	int Level; // µÈ¼¶
-	int Exp; // ¾­Ñé
-	int HP; // ÉúÃü
-	int MaxHP; // ÉúÃü×î´óÖµ
-	int Hurt; // ÊÜÉË³Ì¶È
-	int Poison; // ÖĞ¶¾³Ì¶È
-	int PhysicalPower; // ÌåÁ¦
-	int FightNum; // Õ½¶·Í¼±àºÅ
-	int Equip[5]; // ×°±¸
-	int Gongti; // ¹¦Ìå
-	int TeamState; // ¶ÓÎé×´Ì¬
-	int Angry; // ·ßÅ­Öµ
-	int isRandomed; // ²éÕÒ±ê¼Ç
-	int Moveable; // ĞĞ¶¯ÄÜÁ¦
-	int skillPoint; // ¼¼ÄÜµã
-	int ZhanLueAI; // Õ½ÂÔAI×´Ì¬
-	int Impression; // Íâ¹Û
-	int dtime; // ĞĞ¶¯Ê±¼ä
-	int difficulty; // ÄÑ¶È
-	int Zhongcheng; // ÖÒ³Ï¶È
-	int reHurt; // Ò©Îï
-	int MPType; // ÄÚÁ¦ĞÔÖÊ
-	int MP; // ÄÚÁ¦
-	int MaxMP; // ÄÚÁ¦×î´óÖµ
-	int Attack; // ¹¥»÷Á¦
-	int Speed; // Çá¹¦
-	int Defence; // ·ÀÓùÁ¦
-	int Medicine; // Ò½ÁÆ
-	int Weiyong; // ÔİÈ±
-	int Art; // ¼¼ÒÕ
-	int AntiPoison; // ¿¹¶¾
-	int Fist; // È­ÕÆ
-	int Sword; // Óù½£
-	int Knife; // Ë£µ¶
-	int Unusual; // ÌØÊâ±øÆ÷
-	int HiddenWeapon; // °µÆ÷¼¼ÇÉ
-	int Knowledge; // ÎäÑ§³£Ê¶
-	int Morality; // Æ·µÂ
-	int AttackWithPoison; // ¶¾Êõ
-	int AttackTwice; // ×óÓÒ»¥²«
-	int Fame; // ÉùÍû
-	int IQ; // ×ÊÖÊ
-	int PracticeItem; // ĞŞÁ·ÎïÆ·
-	int ExpForItem;	//Á·³öµãÊı 
-	int xiangxing; // ÏàĞÔ
-	int jiaoqing; // ½»Çé
-	int Rtype; // ÈËÎïÀà±ğ
-	int swq; // ÉùÍûÇãÏò
-	int pdq; // Æ·µÂÇãÏò
-	int xxq; // ÏàĞÔÇãÏò
-	int jqq; // ½»ÇéÇãÏò
-	int MenPai; // ËùÊôÃÅÅÉ
-	int shifu; // Ê¦¸¸
-	int scsx; // Ê¦³ĞĞòÎ»
-	int bssx; // °İÊ¦Ë³Ğò
-	int Choushi[2]; // ³ğÊÓÃÅÅÉ
-	int weizhi; // µ±Ç°Î»ÖÃ
-	int nweizhi; // ÄÚ²¿Î»ÖÃ
-	int nfangxiang; // ÄÚ²¿·½Ïò
-	int OnStatus; // ÈËÎï×´Ì¬
-	int lwq; // Á·ÎäÇãÏò
-	int msq; // Ú¤Ë¼ÇãÏò
-	int ldq; //ÀÍ¶¯ÇãÏò
-	int qtq; // ÆäËûÇãÏò
-	int lsweizhi; // ÁÙÊ±Î»ÖÃ
-	int lsnweizhi; // ÄÚ²¿ÁÙÊ±Î»ÖÃ
-	int lsfangxiang; // ÄÚ²¿·½Ïò
-	int Sx; // ³¡¾°X×ø±ê
-	int Sy; // ³¡¾°Y×ø±ê
-	int songshu; // ËÍÊé±ê¼Ç
-	int gongxian; // ¹Ù¸®¹±Ï×
-	int fuqi; // ·òÆŞ
-	int age; // ÄêÁä
-	int weiyong1; // Î´ÓÃ1
-	int weiyong2; // Î´ÓÃ2
-	int weiyong3; // Î´ÓÃ3
-	int btnum; // Õ½³¡ID
-	int MagicID[40]; // Ëù»áÎä¹¦
-	int MagicLevel[40]; // Ëù»áÎä¹¦µÈ¼¶
-	int TakingItem[9]; // Ğ¯´øÎïÆ·
-	int TakingItemCount[9]; // Ğ¯´øÎïÆ·ÊıÁ¿
-	int JhMagic[10]; // ¼¤»îÎä¹¦
-	int LZhaoshi[40]; // Ëù»áÕĞÊ½
-	int IsEvent; // ¶Ô»°²Ëµ¥¿ª¹Ø
-	int TalkEvent; // ¶Ô»°ÊÂ¼ş
-	int StateEvent; // ×´Ì¬ÊÂ¼ş
-	int JoinEvent; // Èë¶ÓÊÂ¼ş
-	int TestEvent; // ÇĞ´èÊÂ¼ş
-	int LearnEvent; // Ñ§Ï°ÊÂ¼ş
-	int unusedEvent1; // ÊÂ¼ş³Ø1
-	int unusedEvent2; // ÊÂ¼ş³Ø2
-	int unusedEvent3; // ÊÂ¼ş³Ø3
-	int LeaveTime; // Àë¶ÓÆÚÏŞ
-	int LeaveEvent; // Àë¶ÓÊÂ¼ş
-	int RandomNum1; // Ëæ»úÖµ1
-	int RandomNum2; // Ëæ»úÖµ2
-	int anjian; // °µ¼ı
-	int yishi; // Ò½Ê¦
-	int zbtj; // ×°±¸ÌØ¼¼
-	int huixue; // »ØÑª
-	int huinei; // »ØÄÚ
-	int huiti; // »ØÌå
-	int baozhao; // ±©Ôê
-	int peihe; // ÅäºÏ
-	int wuxue; // ÎäÑ§
-	int tupo; // Í»ÆÆ
-	int lengjing; // Àä¾²
-	int baibian; // °Ù±ä
-	int poqi; // ÆÆÆø
-	int zhaomen; // ÕÖÃÅ
-	int bianhuan; // ±ä»Ã
-	int fangong; // ·´¹¥
-	int qigong; // Æø¹¦
-	int yinggong; // Ó²¹¦
-	int linghuo; // Áé»î
-	int xingqi; // ĞĞÆø
-	int shenfa; // Éí·¨
-	int gjql; // ¹¥»÷Ç±Á¦
-	int fyql; // ·ÀÓùÇ±Á¦
-	int qgql; // Çá¹¦Ç±Á¦
-	int qzql; // È­ÕÆÇ±Á¦
-	int yjql; // Óù½£Ç±Á¦
-	int sdql; // Ë£µ¶Ç±Á¦
-	int qmql; // ÆæÃÅÇ±Á¦
-	int aqql; // °µÆ÷Ç±Á¦
-	int gushou; // ¹ÌÊØ
-	int tianmin; // ÌìÃü
-	int xingxiu; // ĞÇËŞ
-	int zhuanchang[5]; // ×¨³¤
-	int texing[10]; // ÌØĞÔ
-	int menpaiContribution; // ÃÅÅÉ¹±Ï×
-	int Unused[9]; // Î´Ê¹ÓÃ
+	int ID; // ç¼–å·
+	int HeadID; // å¤´åƒ/æˆ˜æ–—ä»£å·
+	int IncLife; // ç”Ÿå‘½æˆé•¿
+	int Fuyuan; // ç¦ç¼˜
+	char Name[20]; // å§“å
+	char Nick[20]; // å¤–å·
+	int Sexual; // æ€§åˆ«
+	int Level; // ç­‰çº§
+	int Exp; // ç»éªŒ
+	int HP; // ç”Ÿå‘½
+	int MaxHP; // ç”Ÿå‘½æœ€å¤§å€¼
+	int Hurt; // å—ä¼¤ç¨‹åº¦
+	int Poison; // ä¸­æ¯’ç¨‹åº¦
+	int PhysicalPower; // ä½“åŠ›
+	int FightNum; // æˆ˜æ–—å›¾ç¼–å·
+	int Equip[5]; // è£…å¤‡
+	int Gongti; // åŠŸä½“
+	int TeamState; // é˜Ÿä¼çŠ¶æ€
+	int Angry; // æ„¤æ€’å€¼
+	int isRandomed; // æŸ¥æ‰¾æ ‡è®°
+	int Moveable; // è¡ŒåŠ¨èƒ½åŠ›
+	int skillPoint; // æŠ€èƒ½ç‚¹
+	int ZhanLueAI; // æˆ˜ç•¥AIçŠ¶æ€
+	int Impression; // å¤–è§‚
+	int dtime; // è¡ŒåŠ¨æ—¶é—´
+	int difficulty; // éš¾åº¦
+	int Zhongcheng; // å¿ è¯šåº¦
+	int reHurt; // è¯ç‰©
+	int MPType; // å†…åŠ›æ€§è´¨
+	int MP; // å†…åŠ›
+	int MaxMP; // å†…åŠ›æœ€å¤§å€¼
+	int Attack; // æ”»å‡»åŠ›
+	int Speed; // è½»åŠŸ
+	int Defence; // é˜²å¾¡åŠ›
+	int Medicine; // åŒ»ç–—
+	int Weiyong; // æš‚ç¼º
+	int Art; // æŠ€è‰º
+	int AntiPoison; // æŠ—æ¯’
+	int Fist; // æ‹³æŒ
+	int Sword; // å¾¡å‰‘
+	int Knife; // è€åˆ€
+	int Unusual; // ç‰¹æ®Šå…µå™¨
+	int HiddenWeapon; // æš—å™¨æŠ€å·§
+	int Knowledge; // æ­¦å­¦å¸¸è¯†
+	int Morality; // å“å¾·
+	int AttackWithPoison; // æ¯’æœ¯
+	int AttackTwice; // å·¦å³äº’æ
+	int Fame; // å£°æœ›
+	int IQ; // èµ„è´¨
+	int PracticeItem; // ä¿®ç»ƒç‰©å“
+	int ExpForItem;	//ç»ƒå‡ºç‚¹æ•° 
+	int xiangxing; // ç›¸æ€§
+	int jiaoqing; // äº¤æƒ…
+	int Rtype; // äººç‰©ç±»åˆ«
+	int swq; // å£°æœ›å€¾å‘
+	int pdq; // å“å¾·å€¾å‘
+	int xxq; // ç›¸æ€§å€¾å‘
+	int jqq; // äº¤æƒ…å€¾å‘
+	int MenPai; // æ‰€å±é—¨æ´¾
+	int shifu; // å¸ˆçˆ¶
+	int scsx; // å¸ˆæ‰¿åºä½
+	int bssx; // æ‹œå¸ˆé¡ºåº
+	int Choushi[2]; // ä»‡è§†é—¨æ´¾
+	int weizhi; // å½“å‰ä½ç½®
+	int nweizhi; // å†…éƒ¨ä½ç½®
+	int nfangxiang; // å†…éƒ¨æ–¹å‘
+	int OnStatus; // äººç‰©çŠ¶æ€
+	int lwq; // ç»ƒæ­¦å€¾å‘
+	int msq; // å†¥æ€å€¾å‘
+	int ldq; //åŠ³åŠ¨å€¾å‘
+	int qtq; // å…¶ä»–å€¾å‘
+	int lsweizhi; // ä¸´æ—¶ä½ç½®
+	int lsnweizhi; // å†…éƒ¨ä¸´æ—¶ä½ç½®
+	int lsfangxiang; // å†…éƒ¨æ–¹å‘
+	int Sx; // åœºæ™¯Xåæ ‡
+	int Sy; // åœºæ™¯Yåæ ‡
+	int songshu; // é€ä¹¦æ ‡è®°
+	int gongxian; // å®˜åºœè´¡çŒ®
+	int fuqi; // å¤«å¦»
+	int age; // å¹´é¾„
+	int weiyong1; // æœªç”¨1
+	int weiyong2; // æœªç”¨2
+	int weiyong3; // æœªç”¨3
+	int btnum; // æˆ˜åœºID
+	int MagicID[40]; // æ‰€ä¼šæ­¦åŠŸ
+	int MagicLevel[40]; // æ‰€ä¼šæ­¦åŠŸç­‰çº§
+	int TakingItem[9]; // æºå¸¦ç‰©å“
+	int TakingItemCount[9]; // æºå¸¦ç‰©å“æ•°é‡
+	int JhMagic[10]; // æ¿€æ´»æ­¦åŠŸ
+	int LZhaoshi[40]; // æ‰€ä¼šæ‹›å¼
+	int IsEvent; // å¯¹è¯èœå•å¼€å…³
+	int TalkEvent; // å¯¹è¯äº‹ä»¶
+	int StateEvent; // çŠ¶æ€äº‹ä»¶
+	int JoinEvent; // å…¥é˜Ÿäº‹ä»¶
+	int TestEvent; // åˆ‡ç£‹äº‹ä»¶
+	int LearnEvent; // å­¦ä¹ äº‹ä»¶
+	int unusedEvent1; // äº‹ä»¶æ± 1
+	int unusedEvent2; // äº‹ä»¶æ± 2
+	int unusedEvent3; // äº‹ä»¶æ± 3
+	int LeaveTime; // ç¦»é˜ŸæœŸé™
+	int LeaveEvent; // ç¦»é˜Ÿäº‹ä»¶
+	int RandomNum1; // éšæœºå€¼1
+	int RandomNum2; // éšæœºå€¼2
+	int anjian; // æš—ç®­
+	int yishi; // åŒ»å¸ˆ
+	int zbtj; // è£…å¤‡ç‰¹æŠ€
+	int huixue; // å›è¡€
+	int huinei; // å›å†…
+	int huiti; // å›ä½“
+	int baozhao; // æš´èº
+	int peihe; // é…åˆ
+	int wuxue; // æ­¦å­¦
+	int tupo; // çªç ´
+	int lengjing; // å†·é™
+	int baibian; // ç™¾å˜
+	int poqi; // ç ´æ°”
+	int zhaomen; // ç½©é—¨
+	int bianhuan; // å˜å¹»
+	int fangong; // åæ”»
+	int qigong; // æ°”åŠŸ
+	int yinggong; // ç¡¬åŠŸ
+	int linghuo; // çµæ´»
+	int xingqi; // è¡Œæ°”
+	int shenfa; // èº«æ³•
+	int gjql; // æ”»å‡»æ½œåŠ›
+	int fyql; // é˜²å¾¡æ½œåŠ›
+	int qgql; // è½»åŠŸæ½œåŠ›
+	int qzql; // æ‹³æŒæ½œåŠ›
+	int yjql; // å¾¡å‰‘æ½œåŠ›
+	int sdql; // è€åˆ€æ½œåŠ›
+	int qmql; // å¥‡é—¨æ½œåŠ›
+	int aqql; // æš—å™¨æ½œåŠ›
+	int gushou; // å›ºå®ˆ
+	int tianmin; // å¤©å‘½
+	int xingxiu; // æ˜Ÿå®¿
+	int zhuanchang[5]; // ä¸“é•¿
+	int texing[10]; // ç‰¹æ€§
+	int menpaiContribution; // é—¨æ´¾è´¡çŒ®
+	int Unused[9]; // æœªä½¿ç”¨
 
 };
 
-//Êµ¼ÊµÄ½ÇÉ«Êı¾İ£¬»ùÀàÖ®ÍâµÄÍ¨³£ÊÇÕ½¶·ÊôĞÔ
+//å®é™…çš„è§’è‰²æ•°æ®ï¼ŒåŸºç±»ä¹‹å¤–çš„é€šå¸¸æ˜¯æˆ˜æ–—å±æ€§
 struct Role : public RoleSave
 {
 public:
@@ -257,7 +257,7 @@ public:
     int FightFrame[5] = { -1 };
     int FightingFrame;
     int Moved, Acted;
-    int ActTeam;    //Ñ¡ÔñĞĞ¶¯ÕóÓª 0-ÎÒ·½£¬1-·ÇÎÒ·½£¬»­Ğ§¹û²ãÊ±ÓĞĞ§
+    int ActTeam;    //é€‰æ‹©è¡ŒåŠ¨é˜µè¥ 0-æˆ‘æ–¹ï¼Œ1-éæˆ‘æ–¹ï¼Œç”»æ•ˆæœå±‚æ—¶æœ‰æ•ˆ
 
     int SelectedMagic;
 
@@ -269,7 +269,7 @@ public:
         BP_Color Color;
         int Size;
     };
-    //ÏÔÊ¾ÎÄ×ÖĞ§¹ûÊ¹ÓÃ
+    //æ˜¾ç¤ºæ–‡å­—æ•ˆæœä½¿ç”¨
     struct ActionShowInfo
     {
         std::vector<ShowString> ShowStrings;
@@ -312,7 +312,7 @@ public:
     int X() { return X_; }
     int Y() { return Y_; }
 
-    //´øroleµÄ£¬±íÊ¾ºóÃæµÄ²ÎÊıÊÇÈËÎïÎä¹¦À¸
+    //å¸¦roleçš„ï¼Œè¡¨ç¤ºåé¢çš„å‚æ•°æ˜¯äººç‰©æ­¦åŠŸæ 
     int getRoleShowLearnedMagicLevel(int i);
     int getRoleMagicLevelIndex(int i);
 
@@ -359,79 +359,79 @@ private:
     static Role max_role_value_;
 };
 
-//´æµµÖĞµÄÎïÆ·Êı¾İ
+//å­˜æ¡£ä¸­çš„ç‰©å“æ•°æ®
 struct ItemSave
 {
-	int ID; // ±àºÅ
-	char Name[40]; // ÎïÆ·Ãû
-	int ExpofMagic; // ÎïÆ·Îä¹¦¾­Ñé
-	int SetNum; // Ì××°ºÅ
-	int BattleBattleEffect; // Õ½¶·ÌØĞ§
-	int AddSign; // Ôö¼Ó±êÇ©
-	int needSex; // ÒªÇóĞÔ±ğ
-	int rehurt; // »Ö¸´ÉËÊÆ
-	int NeedEthics; // ĞèÆ·µÂ
-	int NeedRepute; // ĞèÉùÍû
-	int AddQianli; // Ôö¼ÓÇ±Á¦Öµ
-	int BattleNum; // Õ½³¡ºÅ
-	char Introduction[60]; // ÎïÆ·ËµÃ÷
-	int MagicID; // Á·³öÎä¹¦
-	int HiddenWeaponEffectID; // °µÆ÷¶¯»­±àºÅ
-	int User; // Ê¹ÓÃÈË
-	int EquipType; // ×°±¸ÀàĞÍ
-	int ShowIntroduction; // ÏÔÊ¾ÎïÆ·ËµÃ÷
-	int ItemType; // ÀàĞÍ
-	int Inventory; // ÉÌµê¿â´æ
-	int Price; // ÊÛ¼Û
-	int EventNum; // µ÷ÓÃÊÂ¼ş
-	int AddHP; // ¼ÓÉúÃü
-	int AddMaxHP; // ¼ÓÉúÃü×î´óÖµ
-	int AddPoison; // ¼ÓÖĞ¶¾½â¶¾
-	int AddPhysicalPower; // ¼ÓÌåÁ¦
-	int ChangeMPType; // ¸Ä±äÄÚÁ¦ĞÔÖÊ
-	int AddMP; // ¼ÓÄÚÁ¦
-	int AddMaxMP; // ¼ÓÄÚÁ¦×î´óÖµ
-	int AddAttack; // ¼Ó¹¥»÷Á¦
-	int AddSpeed; // ¼ÓÇá¹¦
-	int AddDefence; // ¼Ó·ÀÓùÁ¦
-	int AddMedicine; // ¼ÓÒ½ÁÆ
-	int AddUsePoison; // ¼ÓÊ¹¶¾
-	int AddArt; // ¼Ó¼¼ÒÕ
-	int AddAntiPoison; // ¼Ó¿¹¶¾
-	int AddFist; // ¼ÓÈ­ÕÆ
-	int AddSword; // ¼ÓÓù½£
-	int AddKnife; // ¼ÓË£µ¶
-	int AddUnusual; // ¼ÓÌØÊâ±øÆ÷
-	int AddHiddenWeapon; // ¼Ó°µÆ÷¼¼ÇÉ
-	int AddKnowledge; // ¼ÓÎäÑ§³£Ê¶
-	int AddMorality; // ¼ÓÆ·µÂ
-	int NeedHP; // ĞèÉúÃü
-	int AddAttackWithPoison; // ¼Ó¹¥»÷´ø¶¾
-	int OnlySuitableRole; // ½öĞŞÁ¶ÈËÎï
-	int NeedMPType; // ĞèÄÚÁ¦ĞÔÖÊ
-	int NeedMP; // ĞèÄÚÁ¦
-	int NeedAttack; // Ğè¹¥»÷Á¦
-	int NeedSpeed; // ĞèÇá¹¦
-	int NeedUsePoison; // Ğè¶¾Êõ
-	int NeedMedicine; // ĞèÒ½ÁÆ
-	int NeedArt; // Ğè¼¼ÒÕ
-	int NeedFist; // ĞèÈ­ÕÆ
-	int NeedSword; // ĞèÓù½£
-	int NeedKnife; // ĞèË£µ¶
-	int NeedUnusual; // ĞèÌØÊâ±øÆ÷
-	int NeedHiddenWeapon; // Ğè°µÆ÷
-	int NeedIQ; // Ğè×ÊÖÊ
-	int NeedExp; // Ğè¾­Ñé
-	int Count; // ÊıÁ¿
-	int Rarity; // Ï¡ÓĞ¶È
-	int NeedItem[5]; // ËùĞèÎïÆ·
-	int NeedItemCount[5]; // ĞèÒªÎïÆ·ÊıÁ¿
-	int AddIQ; // ¼Ó×ÊÖÊ
-	int AddFuyuan; // ¼Ó¸»Ô´
-	int Unused[8]; // Î´Ê¹ÓÃ
+	int ID; // ç¼–å·
+	char Name[40]; // ç‰©å“å
+	int ExpofMagic; // ç‰©å“æ­¦åŠŸç»éªŒ
+	int SetNum; // å¥—è£…å·
+	int BattleBattleEffect; // æˆ˜æ–—ç‰¹æ•ˆ
+	int AddSign; // å¢åŠ æ ‡ç­¾
+	int needSex; // è¦æ±‚æ€§åˆ«
+	int rehurt; // æ¢å¤ä¼¤åŠ¿
+	int NeedEthics; // éœ€å“å¾·
+	int NeedRepute; // éœ€å£°æœ›
+	int AddQianli; // å¢åŠ æ½œåŠ›å€¼
+	int BattleNum; // æˆ˜åœºå·
+	char Introduction[60]; // ç‰©å“è¯´æ˜
+	int MagicID; // ç»ƒå‡ºæ­¦åŠŸ
+	int HiddenWeaponEffectID; // æš—å™¨åŠ¨ç”»ç¼–å·
+	int User; // ä½¿ç”¨äºº
+	int EquipType; // è£…å¤‡ç±»å‹
+	int ShowIntroduction; // æ˜¾ç¤ºç‰©å“è¯´æ˜
+	int ItemType; // ç±»å‹
+	int Inventory; // å•†åº—åº“å­˜
+	int Price; // å”®ä»·
+	int EventNum; // è°ƒç”¨äº‹ä»¶
+	int AddHP; // åŠ ç”Ÿå‘½
+	int AddMaxHP; // åŠ ç”Ÿå‘½æœ€å¤§å€¼
+	int AddPoison; // åŠ ä¸­æ¯’è§£æ¯’
+	int AddPhysicalPower; // åŠ ä½“åŠ›
+	int ChangeMPType; // æ”¹å˜å†…åŠ›æ€§è´¨
+	int AddMP; // åŠ å†…åŠ›
+	int AddMaxMP; // åŠ å†…åŠ›æœ€å¤§å€¼
+	int AddAttack; // åŠ æ”»å‡»åŠ›
+	int AddSpeed; // åŠ è½»åŠŸ
+	int AddDefence; // åŠ é˜²å¾¡åŠ›
+	int AddMedicine; // åŠ åŒ»ç–—
+	int AddUsePoison; // åŠ ä½¿æ¯’
+	int AddArt; // åŠ æŠ€è‰º
+	int AddAntiPoison; // åŠ æŠ—æ¯’
+	int AddFist; // åŠ æ‹³æŒ
+	int AddSword; // åŠ å¾¡å‰‘
+	int AddKnife; // åŠ è€åˆ€
+	int AddUnusual; // åŠ ç‰¹æ®Šå…µå™¨
+	int AddHiddenWeapon; // åŠ æš—å™¨æŠ€å·§
+	int AddKnowledge; // åŠ æ­¦å­¦å¸¸è¯†
+	int AddMorality; // åŠ å“å¾·
+	int NeedHP; // éœ€ç”Ÿå‘½
+	int AddAttackWithPoison; // åŠ æ”»å‡»å¸¦æ¯’
+	int OnlySuitableRole; // ä»…ä¿®ç‚¼äººç‰©
+	int NeedMPType; // éœ€å†…åŠ›æ€§è´¨
+	int NeedMP; // éœ€å†…åŠ›
+	int NeedAttack; // éœ€æ”»å‡»åŠ›
+	int NeedSpeed; // éœ€è½»åŠŸ
+	int NeedUsePoison; // éœ€æ¯’æœ¯
+	int NeedMedicine; // éœ€åŒ»ç–—
+	int NeedArt; // éœ€æŠ€è‰º
+	int NeedFist; // éœ€æ‹³æŒ
+	int NeedSword; // éœ€å¾¡å‰‘
+	int NeedKnife; // éœ€è€åˆ€
+	int NeedUnusual; // éœ€ç‰¹æ®Šå…µå™¨
+	int NeedHiddenWeapon; // éœ€æš—å™¨
+	int NeedIQ; // éœ€èµ„è´¨
+	int NeedExp; // éœ€ç»éªŒ
+	int Count; // æ•°é‡
+	int Rarity; // ç¨€æœ‰åº¦
+	int NeedItem[5]; // æ‰€éœ€ç‰©å“
+	int NeedItemCount[5]; // éœ€è¦ç‰©å“æ•°é‡
+	int AddIQ; // åŠ èµ„è´¨
+	int AddFuyuan; // åŠ å¯Œæº
+	int Unused[8]; // æœªä½¿ç”¨
 };
 
-//Êµ¼ÊµÄÎïÆ·Êı¾İ
+//å®é™…çš„ç‰©å“æ•°æ®
 struct Item : ItemSave
 {
 public:
@@ -442,62 +442,62 @@ public:
     bool isCompass();
 };
 
-//´æµµÖĞµÄÎäÑ§Êı¾İ£¨ÎŞÊÊºÏ¶ÔÓ¦·­Òë£¬¶øÇÒÎäÏÀĞ¡ËµÖĞµÄÎäÑ§½üÓÚÄ§·¨£¬ÔİÇÒÈç´Ë£©
+//å­˜æ¡£ä¸­çš„æ­¦å­¦æ•°æ®ï¼ˆæ— é€‚åˆå¯¹åº”ç¿»è¯‘ï¼Œè€Œä¸”æ­¦ä¾ å°è¯´ä¸­çš„æ­¦å­¦è¿‘äºé­”æ³•ï¼Œæš‚ä¸”å¦‚æ­¤ï¼‰
 struct MagicSave
 {
-	int ID; // ±àºÅ
-	char Name[20]; // Ãû³Æ
-	int Wuyong; // ÎŞÓÃ
-	int miji; // ÃØ¼®
-	int NeedHP; // ĞèÒªÉúÃü
-	int MinDistance; // ×îĞ¡¾àÀë
-	int bigami; // ÊÇ·ñµ¥Í¼ÌØĞ§
-	int EventNum; // ÊÂ¼ş
-	int SoundID; // ³öÕĞÒôĞ§
-	int MagicType; // Îä¹¦ÀàĞÍ
-	int EffectID; // Îä¹¦¶¯»­&ÒôĞ§
-	int HurtType; // ÄÚÁ¦ÀàĞÍ
-	int AttackAreaType; // ¹¥»÷·¶Î§
-	int NeedMP; // ÏûºÄÄÚÁ¦
-	int WithPoison; // µĞÈËÖĞ¶¾µãÊı
-	int MinHurt; // ×îĞ¡¹¥»÷Á¦
-	int MaxHurt; // ×î´ó¹¥»÷Á¦
-	int HurtModulus; // ÍşÁ¦ÏµÊı
-	int AttackModulus; // ¹¥»÷Á¦±ÈÖØ
-	int MPModulus; // ÄÚÁ¦±ÈÖØ
-	int SpeedModulus; // Çá¹¦±ÈÖØ
-	int WeaponModulus; // ±øÆ÷Öµ±ÈÖØ
-	int Ismichuan; // ÊÇ·ñÃØ´«
-	int AddMpScale; // ¼ÓÄÚÁ¦±ÈÀı
-	int AddHpScale; // ¼ÓÉúÃü±ÈÀı
-	int SelectDistance[10]; // ÒÆ¶¯·¶Î§
-	int AttackDistance[10]; // É±ÉË·¶Î§
-	int AddHP[3]; // ¼ÓÉúÃü
-	int AddMP[3]; // ¼ÓÄÚÁ¦
-	int AddAttack[3]; // ¼Ó¹¥»÷
-	int AddDefence[3]; // ¼Ó·ÀÓù
-	int AddSpeed[3]; // ¼ÓÇá¹¦
-	int MinPeg; // ×îĞ¡·âÑ¨¼¸ÂÊ
-	int MaxPeg; // ×î´ó·âÑ¨¼¸ÂÊ
-	int MinInjury; // ×îĞ¡ÄÚÉË¼¸ÂÊ
-	int MaxInjury; // ×î´óÄÚÉË¼¸ÂÊ
-	int AddMedcine; // Ôö¼ÓÒ½ÁÆ
-	int AddUsePoi; // Ôö¼Ó¶¾Êõ
-	int AddArt; // Ôö¼Ó¼¼ÒÕ
-	int AddDefPoi; // Ôö¼Ó¿¹¶¾
-	int AddFist; // Ôö¼ÓÈ­ÕÆ
-	int AddSword; // Ôö¼ÓÓù½£
-	int AddKnife; // Ôö¼ÓË£µ¶
-	int AddUnusual; // Ôö¼ÓÌØÊâ
-	int AddHidWeapon; // Ôö¼Ó°µÆ÷
-	int BattleState;; // ×´Ì¬
-	int NeedExp[3]; // Ğè¾­Ñé
-	int MaxLevel; // ×î¸ßµÈ¼¶
-	char Introduction[120]; // ËµÃ÷
-	int Zhaoshi[5]; // ÕĞÊ½
-	int Teshu[10]; // ÌØÊâ
-	int Teshumod[10]; // ÌØÊâÀàĞÍ
-	int unused[10]; // Î´Ê¹ÓÃ
+	int ID; // ç¼–å·
+	char Name[20]; // åç§°
+	int Wuyong; // æ— ç”¨
+	int miji; // ç§˜ç±
+	int NeedHP; // éœ€è¦ç”Ÿå‘½
+	int MinDistance; // æœ€å°è·ç¦»
+	int bigami; // æ˜¯å¦å•å›¾ç‰¹æ•ˆ
+	int EventNum; // äº‹ä»¶
+	int SoundID; // å‡ºæ‹›éŸ³æ•ˆ
+	int MagicType; // æ­¦åŠŸç±»å‹
+	int EffectID; // æ­¦åŠŸåŠ¨ç”»&éŸ³æ•ˆ
+	int HurtType; // å†…åŠ›ç±»å‹
+	int AttackAreaType; // æ”»å‡»èŒƒå›´
+	int NeedMP; // æ¶ˆè€—å†…åŠ›
+	int WithPoison; // æ•Œäººä¸­æ¯’ç‚¹æ•°
+	int MinHurt; // æœ€å°æ”»å‡»åŠ›
+	int MaxHurt; // æœ€å¤§æ”»å‡»åŠ›
+	int HurtModulus; // å¨åŠ›ç³»æ•°
+	int AttackModulus; // æ”»å‡»åŠ›æ¯”é‡
+	int MPModulus; // å†…åŠ›æ¯”é‡
+	int SpeedModulus; // è½»åŠŸæ¯”é‡
+	int WeaponModulus; // å…µå™¨å€¼æ¯”é‡
+	int Ismichuan; // æ˜¯å¦ç§˜ä¼ 
+	int AddMpScale; // åŠ å†…åŠ›æ¯”ä¾‹
+	int AddHpScale; // åŠ ç”Ÿå‘½æ¯”ä¾‹
+	int SelectDistance[10]; // ç§»åŠ¨èŒƒå›´
+	int AttackDistance[10]; // æ€ä¼¤èŒƒå›´
+	int AddHP[3]; // åŠ ç”Ÿå‘½
+	int AddMP[3]; // åŠ å†…åŠ›
+	int AddAttack[3]; // åŠ æ”»å‡»
+	int AddDefence[3]; // åŠ é˜²å¾¡
+	int AddSpeed[3]; // åŠ è½»åŠŸ
+	int MinPeg; // æœ€å°å°ç©´å‡ ç‡
+	int MaxPeg; // æœ€å¤§å°ç©´å‡ ç‡
+	int MinInjury; // æœ€å°å†…ä¼¤å‡ ç‡
+	int MaxInjury; // æœ€å¤§å†…ä¼¤å‡ ç‡
+	int AddMedcine; // å¢åŠ åŒ»ç–—
+	int AddUsePoi; // å¢åŠ æ¯’æœ¯
+	int AddArt; // å¢åŠ æŠ€è‰º
+	int AddDefPoi; // å¢åŠ æŠ—æ¯’
+	int AddFist; // å¢åŠ æ‹³æŒ
+	int AddSword; // å¢åŠ å¾¡å‰‘
+	int AddKnife; // å¢åŠ è€åˆ€
+	int AddUnusual; // å¢åŠ ç‰¹æ®Š
+	int AddHidWeapon; // å¢åŠ æš—å™¨
+	int BattleState;; // çŠ¶æ€
+	int NeedExp[3]; // éœ€ç»éªŒ
+	int MaxLevel; // æœ€é«˜ç­‰çº§
+	char Introduction[120]; // è¯´æ˜
+	int Zhaoshi[5]; // æ‹›å¼
+	int Teshu[10]; // ç‰¹æ®Š
+	int Teshumod[10]; // ç‰¹æ®Šç±»å‹
+	int unused[10]; // æœªä½¿ç”¨
 };
 
 struct Magic : MagicSave
@@ -506,76 +506,76 @@ struct Magic : MagicSave
     int calMaxLevelIndexByMP(int mp, int max_level);
 };
 
-//´æµµÖĞµÄ×Ó³¡¾°Êı¾İ
-//Ô¼¶¨£ºScene±íÊ¾ÓÎÏ·ÖĞÔËĞĞµÄÄ³¸öElementÊµÀı£¬¶øMap±íÊ¾´æ´¢µÄÊı¾İ
+//å­˜æ¡£ä¸­çš„å­åœºæ™¯æ•°æ®
+//çº¦å®šï¼šSceneè¡¨ç¤ºæ¸¸æˆä¸­è¿è¡Œçš„æŸä¸ªElementå®ä¾‹ï¼Œè€ŒMapè¡¨ç¤ºå­˜å‚¨çš„æ•°æ®
 struct SubMapInfoSave
 {
-	int ID; // ±àºÅ
-	char Name[20]; // Ãû³Æ
-	int ExitMusic; // ³öÃÅÒôÀÖ
-	int EntranceMusic; // ½øÃÅÒôÀÖ
-	int SubMapColor; // ³¡¾°µ÷É«°å
-	int EntranceCondition; // ½øÈëÌõ¼ş
-	int MainEntranceX1; // Íâ¾°Èë¿ÚX1
-	int MainEntranceY1; // Íâ¾°Èë¿ÚY1
-	int MainEntranceX2; // Íâ¾°Èë¿ÚX2
-	int MainEntranceY2; // Íâ¾°Èë¿ÚY2
-	int EntranceX; // Èë¿ÚX
-	int EntranceY; // Èë¿ÚY
-	int ExitX[3]; // ³ö¿ÚX
-	int ExitY[3]; // ³ö¿ÚY
-	int Environment; // »·¾³
-	int Weiyong; // Î´ÓÃ
-	int menpai; // ËùÊôÃÅÅÉ
-	int inbattle; // Õ½¶·ÖĞ
-	int zlwc; // ×ÜÁ·Îä³¡Êı
-	int lwc; // Á·Îä³¡Êı
-	int zcjg; // ×Ü²Ø¾­¸óÊı
-	int cjg; // ²Ø¾­¸óÊı
-	int lwcx[5]; // Á·Îä³¡X
-	int lwcY[5]; // Á·Îä³¡Y
-	int cjgx[5]; // ²Ø¾­¸óX
-	int cjgY[5]; // ²Ø¾­¸óY
-	int bgskg; // ±Õ¹ØÊÒ¿ª¹Ø
-	int bgsx; // ±Õ¹ØÊÒX
-	int bgsy; // ±Õ¹ØÊÒY
-	int ldlkg; // Á¶µ¤Â¯¿ª¹Ø
-	int ldlx; // Á¶µ¤Â¯X
-	int ldly; // Á¶µ¤Â¯Y
-	int bqckg; // ±øÆ÷³¡¿ª¹Ø
-	int bqcx; // ±øÆ÷³¡X
-	int bqcy; // ±øÆ÷³¡Y
-	int qizhix; // ÆìÖÄX
-	int qizhiy; // ÆìÖÄY
-	int ldjd; // Á¶µ¤½ø¶È
-	int dzjd; // ¶ÍÔì½ø¶È
-	int fyjc; // ·ÀÓù¼Ó³É
-	int fyss; // ·ÀÓùÉèÊ©
-	int addtk; // Ìú¿ó
-	int addsl; // Ê¯ÁÏ
-	int addmc; // Ä¾²Ä
-	int addsw; // Ê³Îï
-	int addjt; // ½¹Ì¿
-	int addcy; // ²İÒ©
-	int addwm; // ÎÚÄ¾
-	int addyc; // Òì²İ
-	int addxj; // Ï¡½ğ
-	int addxt; // ĞşÌú
-	int lianjie[10]; // Á¬½Ó
-	int Unused[10]; // Î´Ê¹ÓÃ
+	int ID; // ç¼–å·
+	char Name[20]; // åç§°
+	int ExitMusic; // å‡ºé—¨éŸ³ä¹
+	int EntranceMusic; // è¿›é—¨éŸ³ä¹
+	int SubMapColor; // åœºæ™¯è°ƒè‰²æ¿
+	int EntranceCondition; // è¿›å…¥æ¡ä»¶
+	int MainEntranceX1; // å¤–æ™¯å…¥å£X1
+	int MainEntranceY1; // å¤–æ™¯å…¥å£Y1
+	int MainEntranceX2; // å¤–æ™¯å…¥å£X2
+	int MainEntranceY2; // å¤–æ™¯å…¥å£Y2
+	int EntranceX; // å…¥å£X
+	int EntranceY; // å…¥å£Y
+	int ExitX[3]; // å‡ºå£X
+	int ExitY[3]; // å‡ºå£Y
+	int Environment; // ç¯å¢ƒ
+	int Weiyong; // æœªç”¨
+	int menpai; // æ‰€å±é—¨æ´¾
+	int inbattle; // æˆ˜æ–—ä¸­
+	int zlwc; // æ€»ç»ƒæ­¦åœºæ•°
+	int lwc; // ç»ƒæ­¦åœºæ•°
+	int zcjg; // æ€»è—ç»é˜æ•°
+	int cjg; // è—ç»é˜æ•°
+	int lwcx[5]; // ç»ƒæ­¦åœºX
+	int lwcY[5]; // ç»ƒæ­¦åœºY
+	int cjgx[5]; // è—ç»é˜X
+	int cjgY[5]; // è—ç»é˜Y
+	int bgskg; // é—­å…³å®¤å¼€å…³
+	int bgsx; // é—­å…³å®¤X
+	int bgsy; // é—­å…³å®¤Y
+	int ldlkg; // ç‚¼ä¸¹ç‚‰å¼€å…³
+	int ldlx; // ç‚¼ä¸¹ç‚‰X
+	int ldly; // ç‚¼ä¸¹ç‚‰Y
+	int bqckg; // å…µå™¨åœºå¼€å…³
+	int bqcx; // å…µå™¨åœºX
+	int bqcy; // å…µå™¨åœºY
+	int qizhix; // æ——å¸œX
+	int qizhiy; // æ——å¸œY
+	int ldjd; // ç‚¼ä¸¹è¿›åº¦
+	int dzjd; // é”»é€ è¿›åº¦
+	int fyjc; // é˜²å¾¡åŠ æˆ
+	int fyss; // é˜²å¾¡è®¾æ–½
+	int addtk; // é“çŸ¿
+	int addsl; // çŸ³æ–™
+	int addmc; // æœ¨æ
+	int addsw; // é£Ÿç‰©
+	int addjt; // ç„¦ç‚­
+	int addcy; // è‰è¯
+	int addwm; // ä¹Œæœ¨
+	int addyc; // å¼‚è‰
+	int addxj; // ç¨€é‡‘
+	int addxt; // ç„é“
+	int lianjie[10]; // è¿æ¥
+	int Unused[10]; // æœªä½¿ç”¨
 };
 
-//´æµµÖĞµÄÊ±¼äÊı¾İ
+//å­˜æ¡£ä¸­çš„æ—¶é—´æ•°æ®
 struct TimeSave
 {
-	int Jiazi; // ¼××Ó
-	int Year; // Äê
-	int Month; // ÔÂ
-	int Day; // ÈÕ
-	int Hour; // •r
+	int Jiazi; // ç”²å­
+	int Year; // å¹´
+	int Month; // æœˆ
+	int Day; // æ—¥
+	int Hour; // æ™‚
 };
 
-//ÌØĞ§Êı¾İ
+//ç‰¹æ•ˆæ•°æ®
 struct Ttexiao
 {
 public:
@@ -583,76 +583,76 @@ public:
 	int Value;
 };
 
-//´æµµÖĞµÄÕĞÊ½Êı¾İ
+//å­˜æ¡£ä¸­çš„æ‹›å¼æ•°æ®
 struct ZhaoshiSave
 {
-	int ID; // ±àºÅ
-	int congshu; // ´ÓÊô
-	int shunwei; // Ë³Î»
-	char Name[40]; // Ãû³Æ
-	int ygongji; // ÊÇ·ñ¹¥»÷
-	int gongji; // ¹¥»÷¼Ó³É
-	int yfangyu; // ÊÇ·ñ·ÀÓù
-	int fangyu; // ·ÀÓù¼Ó³É
-	char Introduction[90]; // ËµÃ÷
+	int ID; // ç¼–å·
+	int congshu; // ä»å±
+	int shunwei; // é¡ºä½
+	char Name[40]; // åç§°
+	int ygongji; // æ˜¯å¦æ”»å‡»
+	int gongji; // æ”»å‡»åŠ æˆ
+	int yfangyu; // æ˜¯å¦é˜²å¾¡
+	int fangyu; // é˜²å¾¡åŠ æˆ
+	char Introduction[90]; // è¯´æ˜
 	Ttexiao texiao[24]; //89
 };
 
 
 
-//´æµµÖĞµÄÃÅÅÉÊı¾İ
+//å­˜æ¡£ä¸­çš„é—¨æ´¾æ•°æ®
 struct MenpaiSave
 {
-	int ID; // ±àºÅ
-	char Name[40]; // Ãû³Æ
-	int jvdian; // ¾İµã¸öÊı
-	int zongduo; // ×Ü¶æ
-	int zmr; // ÕÆÃÅÈË
-	int dizi; // µÜ×Ó¸öÊı
-	int shengwang; // ÃÅÅÉÉùÍû
-	int shane; // ÃÅÅÉÉÆ¶ñ
-	int tiekuang; // Ìú¿ó
-	int shiliao; // Ê¯ÁÏ
-	int muchai; // Ä¾²Ä
-	int shiwu; // Ê³Îï
-	int jiaotan; // ½¹Ì¿
-	int caoyao; // ²İÒ©
-	int wumu; // ÎÚÄ¾
-	int yicao; // Òì²İ
-	int xijin; // Ï¡½ğ
-	int xuantie; // ĞşÌú
-	int addtiekuang; // Ìú¿ó+
-	int addshiliao; // Ê¯ÁÏ+
-	int addmuchai; // Ä¾²Ä+
-	int addshiwu; // Ê³Îï+
-	int addjiaotan; // ½¹Ì¿+
-	int addcaoyao; // ²İÒ©+
-	int addwumu; // ÎÚÄ¾+
-	int addyicao; // Òì²İ+
-	int addxijin; // Ï¡½ğ+
-	int addxuantie; // ĞşÌú+
-	int neigong[20]; // ÃÅÅÉÄÚ¹¦
-	int guanxi[40]; // ÃÅÅÉ¹ØÏµ
-	int zhiwu[10]; // ÃÅÅÉÖ°Îñ
-	int kzq; // À©ÕÅÇãÏò
-	int dzq; // ÕĞµÜ×ÓÇãÏò
-	int czsd; // µÜ×Ó³É³¤ËÙ¶È
-	int qizhi; // ÆìÖÄ
-	int mdizigrp; // ÄĞµÜ×ÓÆğÍ¼
-	int mdizipic; // ÄĞµÜ×ÓÍ·Ïñ
-	int fdizigrp; // Å®µÜ×ÓÆğÍ¼
-	int fdizipic; // Å®µÜ×ÓÍ·Ïñ
-	int sexy; // µÜ×ÓĞÔ±ğ
-	int identity; // µÜ×ÓÉí·İ
-	int endevent; // ÃğÃÅÊÂ¼ş
-	int tongmeng; // Í¬ÃË
-	int israndomed; // ²éÕÒ±ê¼Ç
-	int unuse2; // Î´¶¨Òå2
-	int unuse3; // Î´¶¨Òå3
-	int unuse4; // Î´¶¨Òå4
+	int ID; // ç¼–å·
+	char Name[40]; // åç§°
+	int jvdian; // æ®ç‚¹ä¸ªæ•°
+	int zongduo; // æ€»èˆµ
+	int zmr; // æŒé—¨äºº
+	int dizi; // å¼Ÿå­ä¸ªæ•°
+	int shengwang; // é—¨æ´¾å£°æœ›
+	int shane; // é—¨æ´¾å–„æ¶
+	int tiekuang; // é“çŸ¿
+	int shiliao; // çŸ³æ–™
+	int muchai; // æœ¨æ
+	int shiwu; // é£Ÿç‰©
+	int jiaotan; // ç„¦ç‚­
+	int caoyao; // è‰è¯
+	int wumu; // ä¹Œæœ¨
+	int yicao; // å¼‚è‰
+	int xijin; // ç¨€é‡‘
+	int xuantie; // ç„é“
+	int addtiekuang; // é“çŸ¿+
+	int addshiliao; // çŸ³æ–™+
+	int addmuchai; // æœ¨æ+
+	int addshiwu; // é£Ÿç‰©+
+	int addjiaotan; // ç„¦ç‚­+
+	int addcaoyao; // è‰è¯+
+	int addwumu; // ä¹Œæœ¨+
+	int addyicao; // å¼‚è‰+
+	int addxijin; // ç¨€é‡‘+
+	int addxuantie; // ç„é“+
+	int neigong[20]; // é—¨æ´¾å†…åŠŸ
+	int guanxi[40]; // é—¨æ´¾å…³ç³»
+	int zhiwu[10]; // é—¨æ´¾èŒåŠ¡
+	int kzq; // æ‰©å¼ å€¾å‘
+	int dzq; // æ‹›å¼Ÿå­å€¾å‘
+	int czsd; // å¼Ÿå­æˆé•¿é€Ÿåº¦
+	int qizhi; // æ——å¸œ
+	int mdizigrp; // ç”·å¼Ÿå­èµ·å›¾
+	int mdizipic; // ç”·å¼Ÿå­å¤´åƒ
+	int fdizigrp; // å¥³å¼Ÿå­èµ·å›¾
+	int fdizipic; // å¥³å¼Ÿå­å¤´åƒ
+	int sexy; // å¼Ÿå­æ€§åˆ«
+	int identity; // å¼Ÿå­èº«ä»½
+	int endevent; // ç­é—¨äº‹ä»¶
+	int tongmeng; // åŒç›Ÿ
+	int israndomed; // æŸ¥æ‰¾æ ‡è®°
+	int unuse2; // æœªå®šä¹‰2
+	int unuse3; // æœªå®šä¹‰3
+	int unuse4; // æœªå®šä¹‰4
 };
 
-//´æµµÖĞµÄ±êÇ©Àà±ğ
+//å­˜æ¡£ä¸­çš„æ ‡ç­¾ç±»åˆ«
 struct SignType
 {
 	int num;
@@ -660,25 +660,25 @@ struct SignType
 	char Introduction[120]; //41
 };
 
-//´æµµÖĞµÄ±êÇ©Êı¾İ
+//å­˜æ¡£ä¸­çš„æ ‡ç­¾æ•°æ®
 struct RSignSave
 {
-	int ID; // ±àºÅ
-	char Name[40]; // Ãû³Æ
-	int effert; // Ğ§¹û
-	int TypeNum; // Àà±ğ
-	char Introduction[90]; // ËµÃ÷
-	int beiyong; // ±¸ÓÃ
-	int isshow; // ÊÇ·ñÒş²Ø
+	int ID; // ç¼–å·
+	char Name[40]; // åç§°
+	int effert; // æ•ˆæœ
+	int TypeNum; // ç±»åˆ«
+	char Introduction[90]; // è¯´æ˜
+	int beiyong; // å¤‡ç”¨
+	int isshow; // æ˜¯å¦éšè—
 	Ttexiao texiao[24]; //92
 };
 
 
 
-//³¡¾°ÊÂ¼şÊı¾İ
+//åœºæ™¯äº‹ä»¶æ•°æ®
 struct SubMapEvent
 {
-    //event1ÎªÖ÷¶¯´¥·¢£¬event2ÎªÎïÆ·´¥·¢£¬event3Îª¾­¹ı´¥·¢
+    //event1ä¸ºä¸»åŠ¨è§¦å‘ï¼Œevent2ä¸ºç‰©å“è§¦å‘ï¼Œevent3ä¸ºç»è¿‡è§¦å‘
     MAP_INT CannotWalk, Index, Event1, Event2, Event3, CurrentPic, EndPic, BeginPic, PicDelay;
 
 private:
@@ -699,7 +699,7 @@ public:
     }
 };
 
-//Êµ¼ÊµÄ³¡¾°Êı¾İ
+//å®é™…çš„åœºæ™¯æ•°æ®
 struct SubMapInfo : public SubMapInfoSave
 {
 public:
@@ -758,28 +758,28 @@ private:
     SubMapEvent events_[SUBMAP_EVENT_COUNT];
 };
 
-//´æµµÖĞµÄÉÌµêÊı¾İ
+//å­˜æ¡£ä¸­çš„å•†åº—æ•°æ®
 struct ShopSave
 {
     int ItemID[SHOP_ITEM_COUNT], Total[SHOP_ITEM_COUNT];
 };
 
-//Êµ¼ÊÉÌµêÊı¾İ
+//å®é™…å•†åº—æ•°æ®
 struct Shop : ShopSave
 {
 };
 
-//Êµ¼ÊÕĞÊ½Êı¾İ
+//å®é™…æ‹›å¼æ•°æ®
 struct Zhaoshi : ZhaoshiSave
 {
 };
 
-//Êµ¼ÊÃÅÅÉÊı¾İ
+//å®é™…é—¨æ´¾æ•°æ®
 struct Menpai : MenpaiSave
 {
 };
 
-//Êµ¼Ê±êÇ©Êı¾İ
+//å®é™…æ ‡ç­¾æ•°æ®
 struct RSign : RSignSave
 {
 };

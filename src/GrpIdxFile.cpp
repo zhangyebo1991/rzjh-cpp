@@ -1,4 +1,4 @@
-﻿#include "GrpIdxFile.h"
+#include "GrpIdxFile.h"
 #include "File.h"
 
 std::string GrpIdxFile::getIdxContent(const std::string& filename_idx, const std::string& filename_grp, std::vector<int>* offset, std::vector<int>* length)

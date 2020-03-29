@@ -1,4 +1,4 @@
-﻿#include "TextureManager.h"
+#include "TextureManager.h"
 #include "File.h"
 #include "RunNode.h"
 #include "convert.h"

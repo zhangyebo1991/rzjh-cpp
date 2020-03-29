@@ -25,7 +25,7 @@ Console::Console()
 {
     std::string code;
     {
-        auto input = std::make_shared<InputBox>("ÉñÃØ´ú´a£º", 30);
+        auto input = std::make_shared<InputBox>("ç¥ç§˜ä»£ç¢¼ï¼š", 30);
         input->setInputPosition(350, 300);
         input->run();
         if (input->getResult() >= 0)
@@ -33,7 +33,7 @@ Console::Console()
             code = input->getText();
         }
     }
-    // ÎæÁ³
+    // æ‚è„¸
     code = PotConv::conv(code, "cp936", "utf-8");
     auto splits = convert::splitString(code, " ");
     //if (splits.empty()) return;
@@ -44,7 +44,7 @@ Console::Console()
         {
             generated.emplace_back(i, "a" + std::to_string(i));
         }
-        auto smt = std::make_shared<SuperMenuText>("ÉÙ·Ï»°", 28, generated, 10);
+        auto smt = std::make_shared<SuperMenuText>("å°‘åºŸè¯", 28, generated, 10);
         smt->setInputPosition(180, 80);
         smt->run();
         int id = smt->getResult();
@@ -55,11 +55,11 @@ Console::Console()
         std::vector<std::pair<int, std::string>> locs;
         for (const auto& info : Save::getInstance()->getSubMapInfos())
         {
-            // »¹ÓĞÆäËûÒªÇó ÕâÀï×÷ÎªÒ»¸ödemo¾ÍÒâË¼ÒâË¼
+            // è¿˜æœ‰å…¶ä»–è¦æ±‚ è¿™é‡Œä½œä¸ºä¸€ä¸ªdemoå°±æ„æ€æ„æ€
             if (info->MainEntranceX1 != 0 && info->MainEntranceY1 != 0)
             {
                 std::string name(info->Name);
-                // ÓĞ¿Õ¸ñ·½±ãÍê³ÉË«»÷È·ÈÏ
+                // æœ‰ç©ºæ ¼æ–¹ä¾¿å®ŒæˆåŒå‡»ç¡®è®¤
                 locs.emplace_back(info->ID, name);
             }
         }
@@ -78,8 +78,8 @@ Console::Console()
             int fontSize = 28;
             TextureManager::getInstance()->renderTexture("title", 126, { nx, ny, 400, 400 }, { 192, 192, 192, 255 }, 255);
             //Engine::getInstance()->fillColor({ 0, 0, 0, 192 }, nx, ny, 400, 400);
-            Font::getInstance()->draw(convert::formatString("%s£¬%d", scene->Name, scene->ID), fontSize, nx + 20, ny + 20);
-            Font::getInstance()->draw(convert::formatString("£¨%d£¬%d£©", scene->MainEntranceX1, scene->MainEntranceY1),
+            Font::getInstance()->draw(convert::formatString("%sï¼Œ%d", scene->Name, scene->ID), fontSize, nx + 20, ny + 20);
+            Font::getInstance()->draw(convert::formatString("ï¼ˆ%dï¼Œ%dï¼‰", scene->MainEntranceX1, scene->MainEntranceY1),
                 fontSize, nx + 20, ny + 20 + fontSize * 1.5);
 
             int man_x_ = scene->MainEntranceX1;
@@ -90,7 +90,7 @@ Console::Console()
             {
                 return;
             }
-            // ²»»á»­³¡¾°£¬ĞèÒªÂıÂıÑ§Ï°£¬²»ĞĞÎÒ¸´ÖÆ¸ö´úÂë Ç¿ĞĞ¸ã
+            // ä¸ä¼šç”»åœºæ™¯ï¼Œéœ€è¦æ…¢æ…¢å­¦ä¹ ï¼Œä¸è¡Œæˆ‘å¤åˆ¶ä¸ªä»£ç  å¼ºè¡Œæ
 
             struct DrawInfo
             {
@@ -114,9 +114,9 @@ Console::Console()
                     p.y += ny;
                     if (mainScene->building_layer_.data(ix, iy).getTexture())
                     {
-                        //¸ù¾İÍ¼Æ¬µÄ¿í¶È¼ÆËãÍ¼µÄÖĞµã, Îª±ÜÃâ³öÏÖĞ¡Êı, Êµ¼ÊÊÇÖĞµã×ø±êµÄ2±¶
-                        //´ÎÒªÅÅĞòÒÀ¾İÊÇy×ø±ê
-                        //Ö±½ÓÉèÖÃzÖá
+                        //æ ¹æ®å›¾ç‰‡çš„å®½åº¦è®¡ç®—å›¾çš„ä¸­ç‚¹, ä¸ºé¿å…å‡ºç°å°æ•°, å®é™…æ˜¯ä¸­ç‚¹åæ ‡çš„2å€
+                        //æ¬¡è¦æ’åºä¾æ®æ˜¯yåæ ‡
+                        //ç›´æ¥è®¾ç½®zè½´
                         auto tex = mainScene->building_layer_.data(ix, iy).getTexture();
                         if (tex == nullptr)
                         {
@@ -144,7 +144,7 @@ Console::Console()
             }
         };
         std::shared_ptr<DrawableOnCall> doc = std::make_shared<DrawableOnCall>(drawScene);
-        auto smt = std::make_shared<SuperMenuText>("¿Éİ”Èë‚÷ËÍµØÃû£¬¾Ì–»òÆ´ÒôËÑË÷£º", 28, locs, 15);
+        auto smt = std::make_shared<SuperMenuText>("å¯è¼¸å…¥å‚³é€åœ°åï¼Œç·¨è™Ÿæˆ–æ‹¼éŸ³æœç´¢ï¼š", 28, locs, 15);
         smt->setInputPosition(dx, dy);
         smt->addDrawableOnCall(doc);
 
@@ -155,7 +155,7 @@ Console::Console()
             auto scene = Save::getInstance()->getSubMapInfos()[id];
             MainScene::getInstance()->forceEnterSubScene(id, scene->EntranceX, scene->EntranceY);
             MainScene::getInstance()->setManPosition(scene->MainEntranceX1, scene->MainEntranceY1);
-            printf("‚÷ËÍµ½%d\n", id);
+            printf("å‚³é€åˆ°%d\n", id);
         }
     }
     else if (splits[0] == u8"newsave" && splits.size() >= 2)

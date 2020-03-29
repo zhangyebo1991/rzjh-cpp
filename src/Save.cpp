@@ -71,11 +71,11 @@ bool Save::load(int num)
     //loadR(num);
     //loadRFromDB(num);
 	loadRFromCSV(num);
-	//Encode = 936; //CSV¶ÁÈ¡Ä¬ÈÏÊÇcp936
+	//Encode = 936; //CSVè¯»å–é»˜è®¤æ˜¯cp936
     loadSD(num);
 	
 
-    //ÄÚ²¿±àÂëÎªcp936
+    //å†…éƒ¨ç¼–ç ä¸ºcp936
     if (Encode != 936)
     {
         Encode = 936;
@@ -267,7 +267,7 @@ void Save::makeMaps()
 	menpais_by_name_.clear();
 	rsigns_by_name_.clear();
 
-    //ÓĞÖØÃûµÄ£¬Õå×ÃÊ¹ÓÃ
+    //æœ‰é‡åçš„ï¼Œæ–Ÿé…Œä½¿ç”¨
     for (auto& i : roles_)
     {
         roles_by_name_[i->Name] = i;
@@ -322,25 +322,25 @@ int Save::getRoleLearnedMagicLevelIndex(Role* r, Magic* m)
 void Save::saveRToCSV(int num)
 {
     NewSave::SaveToCSVBaseInfo((BaseInfo*)this, 1, num);
-    // ±³°ü
+    // èƒŒåŒ…
     NewSave::SaveToCSVItemList(Items, ITEM_IN_BAG_COUNT, num);
-    // ÈËÎï
+    // äººç‰©
     NewSave::SaveToCSVRoleSave(roles_mem_, num);
-    // ÎïÆ·
+    // ç‰©å“
     NewSave::SaveToCSVItemSave(items_mem_, num);
-    // ³¡¾°
+    // åœºæ™¯
     NewSave::SaveToCSVSubMapInfoSave(submap_infos_mem_, num);
-    // Îä¹¦
+    // æ­¦åŠŸ
     NewSave::SaveToCSVMagicSave(magics_mem_, num);
-    // ÉÌµê
+    // å•†åº—
     NewSave::SaveToCSVShopSave(shops_mem_, num);
-	// Ê±¼ä
+	// æ—¶é—´
 	NewSave::SaveToCSVTimeSave(time, 1, num);
-	// ÃÅÅÉ
+	// é—¨æ´¾
 	NewSave::SaveToCSVMenpaiSave(menpais_mem_, num);
-	// ÕĞÊ½
+	// æ‹›å¼
 	NewSave::SaveToCSVZhaoshiSave(zhaoshis_mem_, num);
-	// ±êÇ©
+	// æ ‡ç­¾
 	NewSave::SaveToCSVRSignSave(rsigns_mem_, num);
 }
 
@@ -399,7 +399,7 @@ void Save::saveRToDB(int num)
         return;
     }
     sqlite3* db;
-    //´Ë´¦×îºÃ¸´ÖÆÒ»¸ö£¬ÏÈ¸ã¸ãÔÙËµ
+    //æ­¤å¤„æœ€å¥½å¤åˆ¶ä¸€ä¸ªï¼Œå…ˆææå†è¯´
     std::string filename = "../game/save/" + std::to_string(num) + ".db";
     convert::writeStringToFile(convert::readStringFromFile(filename0), filename);
     sqlite3_open(filename.c_str(), &db);

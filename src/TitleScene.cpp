@@ -67,7 +67,7 @@ void TitleScene::dealEvent(BP_Event& e)
         //Script::getInstance()->runScript("../game/script/0.lua");
         std::string name = "";
 #ifdef _MSC_VER
-        auto input = std::make_shared<InputBox>("Õˆİ”ÈëĞÕÃû£º", 30);
+        auto input = std::make_shared<InputBox>("è«‹è¼¸å…¥å§“åï¼š", 30);
         input->setInputPosition(350, 300);
         input->run();
         if (input->getResult() >= 0)
@@ -95,7 +95,7 @@ void TitleScene::dealEvent(BP_Event& e)
     {
         if (menu_load_->run() >= 0)
         {
-            //Save::getInstance()->getRole(0)->MagicLevel[0] = 900;    //²âÊÔÓÃ
+            //Save::getInstance()->getRole(0)->MagicLevel[0] = 900;    //æµ‹è¯•ç”¨
             //Script::getInstance()->runScript("../game/script/0.lua");
             MainScene::getInstance()->run();
         }
@@ -108,6 +108,6 @@ void TitleScene::dealEvent(BP_Event& e)
 
 void TitleScene::onEntrance()
 {
-    Engine::getInstance()->playVideo("../game/movie/1.mp4");
+    // Engine::getInstance()->playVideo("../game/movie/1.mp4");
     Audio::getInstance()->playMusic(16);
 }

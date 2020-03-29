@@ -1,4 +1,4 @@
-﻿#include "Application.h"
+#include "Application.h"
 #include "Audio.h"
 #include "Engine.h"
 #include "Font.h"

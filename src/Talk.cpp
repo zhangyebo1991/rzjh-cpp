@@ -55,7 +55,7 @@ void Talk::onEntrance()
 
         auto line = content_.substr(i, len);
 
-        //¼ÆËãÓ¢ÎÄ¸öÊı
+        //è®¡ç®—è‹±æ–‡ä¸ªæ•°
         int eng_count = 0;
         for (int j = 0; j < line.size();)
         {
@@ -69,7 +69,7 @@ void Talk::onEntrance()
                 j++;
             }
         }
-        //ÈôÓ¢ÎÄ×Ö·ûÎªÆæÊı¸ö£¬ÇÒ×îºóÒ»¸ö×ÖÎªÖĞÎÄ£¬Ôò¶àËãÒ»¸ö×Ö·û
+        //è‹¥è‹±æ–‡å­—ç¬¦ä¸ºå¥‡æ•°ä¸ªï¼Œä¸”æœ€åä¸€ä¸ªå­—ä¸ºä¸­æ–‡ï¼Œåˆ™å¤šç®—ä¸€ä¸ªå­—ç¬¦
         if (eng_count % 2 == 1 && len == width_ && uint8_t(content_.at(i + len)) >= 128)
         {
             len++;

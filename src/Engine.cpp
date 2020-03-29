@@ -1,4 +1,4 @@
-﻿#include "Engine.h"
+#include "Engine.h"
 #ifdef _MSC_VER
 #define NOMINMAX
 #include <windows.h>

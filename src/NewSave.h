@@ -6,44 +6,44 @@
 class NewSave
 {
 public:
-	// »ù±¾
+	// åŸºæœ¬
 	static void SaveToCSVBaseInfo (Save::BaseInfo* data, int length, int record);
 	static void LoadFromCSVBaseInfo (Save::BaseInfo* data, int length, int record);
-	// ±³°ü
+	// èƒŒåŒ…
 	static void SaveToCSVItemList (ItemList* data, int length, int record);
 	static void LoadFromCSVItemList (ItemList* data, int length, int record);
-	// ÈËÎï
+	// äººç‰©
 	static void SaveToCSVRoleSave (const std::vector<Role>& data, int record);
 	static void LoadFromCSVRoleSave (std::vector<Role>& data, int record);
 	static void InsertRoleAt(std::vector<Role>& data, int idx);
-	// ÎïÆ·
+	// ç‰©å“
 	static void SaveToCSVItemSave (const std::vector<Item>& data, int record);
 	static void LoadFromCSVItemSave (std::vector<Item>& data, int record);
 	static void InsertItemAt(std::vector<Item>& data, int idx);
-	// ³¡¾°
+	// åœºæ™¯
 	static void SaveToCSVSubMapInfoSave (const std::vector<SubMapInfo>& data, int record);
 	static void LoadFromCSVSubMapInfoSave (std::vector<SubMapInfo>& data, int record);
 	static void InsertSubMapInfoAt(std::vector<SubMapInfo>& data, int idx);
-	// Îä¹¦
+	// æ­¦åŠŸ
 	static void SaveToCSVMagicSave (const std::vector<Magic>& data, int record);
 	static void LoadFromCSVMagicSave (std::vector<Magic>& data, int record);
 	static void InsertMagicAt(std::vector<Magic>& data, int idx);
-	// ÉÌµê
+	// å•†åº—
 	static void SaveToCSVShopSave (const std::vector<Shop>& data, int record);
 	static void LoadFromCSVShopSave (std::vector<Shop>& data, int record);
 	static void InsertShopAt(std::vector<Shop>& data, int idx);
-	// Ê±¼ä
+	// æ—¶é—´
 	static void SaveToCSVTimeSave (TimeSave* data, int length, int record);
 	static void LoadFromCSVTimeSave (TimeSave* data, int length, int record);
-	// ÕĞÊ½
+	// æ‹›å¼
 	static void SaveToCSVZhaoshiSave(const std::vector<Zhaoshi>& data, int record);
 	static void LoadFromCSVZhaoshiSave(std::vector<Zhaoshi>& data, int record);
 	static void InsertZhaoshiAt(std::vector<Zhaoshi>& data, int idx);
-	// ÃÅÅÉ
+	// é—¨æ´¾
 	static void SaveToCSVMenpaiSave(const std::vector<Menpai>& data, int record);
 	static void LoadFromCSVMenpaiSave(std::vector<Menpai>& data, int record);
 	static void InsertMenpaiAt(std::vector<Menpai>& data, int idx);
-	// ±êÇ©
+	// æ ‡ç­¾
 	static void SaveToCSVRSignSave(const std::vector<RSign>& data, int record);
 	static void LoadFromCSVRSignSave(std::vector<RSign>& data, int record);
 	static void InsertRSignAt(std::vector<RSign>& data, int idx);
@@ -67,22 +67,22 @@ public:
     static void initDBFieldInfo();
     static void SaveDBBaseInfo(sqlite3* db, Save::BaseInfo* data, int length);
     static void LoadDBBaseInfo(sqlite3* db, Save::BaseInfo* data, int length);
-    // ±³°ü
+    // èƒŒåŒ…
     static void SaveDBItemList(sqlite3* db, ItemList* data, int length);
     static void LoadDBItemList(sqlite3* db, ItemList* data, int length);
-    // ÈËÎï
+    // äººç‰©
     static void SaveDBRoleSave(sqlite3* db, const std::vector<Role>& data);
     static void LoadDBRoleSave(sqlite3* db, std::vector<Role>& data);
-    // ÎïÆ·
+    // ç‰©å“
     static void SaveDBItemSave(sqlite3* db, const std::vector<Item>& data);
     static void LoadDBItemSave(sqlite3* db, std::vector<Item>& data);
-    // ³¡¾°
+    // åœºæ™¯
     static void SaveDBSubMapInfoSave(sqlite3* db, const std::vector<SubMapInfo>& data);
     static void LoadDBSubMapInfoSave(sqlite3* db, std::vector<SubMapInfo>& data);
-    // Îä¹¦
+    // æ­¦åŠŸ
     static void SaveDBMagicSave(sqlite3* db, const std::vector<Magic>& data);
     static void LoadDBMagicSave(sqlite3* db, std::vector<Magic>& data);
-    // ÉÌµê
+    // å•†åº—
     static void SaveDBShopSave(sqlite3* db, const std::vector<Shop>& data);
     static void LoadDBShopSave(sqlite3* db, std::vector<Shop>& data);
 
@@ -118,8 +118,8 @@ private:
         std::string strSql = "select * from " + table_name;
         sqlite3_prepare(db, strSql.c_str(), -1, &statement, NULL);
 
-        //ÖØÕûÁĞĞò
-        //ÔÚÓÎÏ·×î³õ±ØĞëÔËĞĞÒ»´Î¶ÁÈ¡
+        //é‡æ•´åˆ—åº
+        //åœ¨æ¸¸æˆæœ€åˆå¿…é¡»è¿è¡Œä¸€æ¬¡è¯»å–
         if (infos[0].col == -1)
         {
             for (int i = 0; i < sqlite3_column_count(statement); i++)
@@ -136,7 +136,7 @@ private:
             }
             //std::sort(infos.begin(), infos.end(), [](FieldInfo & f1, FieldInfo & f2) { return f1.col < f2.col; });
         }
-        //¶ÁÈ¡
+        //è¯»å–
         data.clear();
         while (sqlite3_step(statement) == SQLITE_ROW)
         {

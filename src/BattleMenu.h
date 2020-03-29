@@ -5,7 +5,7 @@
 
 class BattleScene;
 
-//注意，AI选择行动的行为也在这里面
+//娉ㄦ剰锛孉I閫夋嫨琛屽姩鐨勮涓轰篃鍦ㄨ繖閲岄潰
 class BattleActionMenu : public MenuText
 {
 public:
