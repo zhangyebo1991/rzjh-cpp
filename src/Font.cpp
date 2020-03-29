@@ -88,7 +88,7 @@ void Font::drawWithBox(const std::string& text, int size, int x, int y, BP_Color
     //{
     //TextureManager::getInstance()->renderTexture("title", 20, x + 10 * i, y - 3);
     //}
-    auto r = getBoxSize(text.size(), size, x, y);
+    auto r = getBoxSize(getTextDrawSize(text), size, x, y);
     TextureManager::getInstance()->renderTexture("menu", 67, r, { 255, 255, 255, 255 }, alpha_box);
     draw(text, size, x, y, color, alpha);
 }
@@ -145,4 +145,24 @@ int Font::getBufferSize()
         sum += f.second.size();
     }
     return sum;
+}
+
+int Font::getTextDrawSize(const std::string& text)
+{
+    int len = 0;
+    for (int i = 0; i < text.size();)
+    {
+        uint8_t v = text[i];
+        if (v < 128)
+        {
+            len++;
+            i++;
+        }
+        else
+        {
+            len += 2;
+            i += 3;
+        }
+    }
+    return len;
 }

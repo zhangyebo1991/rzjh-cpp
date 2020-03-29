@@ -29,4 +29,5 @@ public:
     void drawText(const std::string& fontname, std::string& text, int size, int x, int y, uint8_t alpha, int align, BP_Color c);
     void clearBuffer();
     int getBufferSize();
+    static int getTextDrawSize(const std::string& text);
 };
