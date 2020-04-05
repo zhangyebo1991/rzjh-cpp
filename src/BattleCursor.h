@@ -3,6 +3,7 @@
 #include "Head.h"
 #include "Types.h"
 #include "UIStatus.h"
+#include "BattleMenu.h"
 
 class BattleScene;
 
@@ -24,6 +25,9 @@ public:
     std::shared_ptr<Head> head_selected_;
     //void setHead(Head* h) { head_selected_ = h; }
     std::shared_ptr<Head> getHead() { return head_selected_; }
+
+    std::shared_ptr<BattleStateMenu> state_menu_selected_;
+    std::shared_ptr<BattleStateMenu> getStateMenu() { return state_menu_selected_; }
 
     std::shared_ptr<UIStatus> ui_status_;
     std::shared_ptr<UIStatus> getUIStatus() { return ui_status_; }

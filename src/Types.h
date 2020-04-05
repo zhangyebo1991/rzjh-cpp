@@ -259,6 +259,8 @@ public:
     int Moved, Acted;
     int ActTeam;    //选择行动阵营 0-我方，1-非我方，画效果层时有效
 
+	int qf_, yg_, lh_, xq_, sf_, ff_, zy_, jz_, js_, sd_;
+
     int SelectedMagic;
 
     int Progress;

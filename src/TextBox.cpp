@@ -57,7 +57,7 @@ void TextBox::draw()
 {
     if (!texture_path_.empty())
     {
-        TextureManager::getInstance()->renderTexture(texture_path_, texture_normal_id_, x_, y_, { 255, 255, 255, 255 }, 255);
+        TextureManager::getInstance()->renderTexture(texture_path_, texture_normal_id_, { x_, y_ ,w_, h_}, { 255, 255, 255, 255 }, 255);
     }
     if (have_alpha_box_) {
         auto rect = Font::getBoxSize(text_.size(), font_size_, x_ + text_x_, y_ + text_y_);

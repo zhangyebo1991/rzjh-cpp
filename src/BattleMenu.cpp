@@ -6,9 +6,10 @@
 #include "Save.h"
 #include "convert.h"
 
+
 BattleActionMenu::BattleActionMenu(BattleScene* b)
 {
-    setStrings({ "移動", "武學", "用毒", "解毒", "醫療", "暗器", "藥品", "等待", "狀態", "自動", "結束" });
+    setStrings({ "移動", "武學", "毒术", "抗毒", "醫療", "暗器", "藥品", "等待", "狀態", "自動", "結束" });
     distance_layer_.resize(BATTLEMAP_COORD_COUNT);
     battle_scene_ = b;
 }
@@ -26,6 +27,9 @@ void BattleActionMenu::setRole(Role* r)
         c->setVisible(true);
         c->setState(Normal);
     }
+
+    //显示人物状态
+
 
     //移动过则不可移动
     if (role_->Moved || role_->PhysicalPower < 10)
@@ -174,7 +178,7 @@ int BattleActionMenu::autoSelect(Role* role)
             //解毒，医疗，用毒的行为与道德相关
             if (role->Morality > 50)
             {
-                action_text = "解毒";
+                action_text = "抗毒";
                 //会解毒的，检查队友中有无中毒较深者，接近并解毒
                 if (childs_text_[action_text]->getVisible())
                 {
@@ -218,7 +222,7 @@ int BattleActionMenu::autoSelect(Role* role)
             else
             {
                 //考虑用毒
-                action_text = "用毒";
+                action_text = "毒术";
                 if (childs_text_[action_text]->getVisible())
                 {
                     auto r2 = getNearestRole(role, enemies);
@@ -600,3 +604,148 @@ std::vector<Item*> BattleItemMenu::getAvaliableItems(Role* role, int type)
     item_menu.setForceItemType(type);
     return item_menu.getAvaliableItems();
 }
+
+
+BattleStateMenu::BattleStateMenu()
+{
+
+    setTexture("menu", 68);
+    //setHaveBox(true);
+    int x = 20;
+    int y = 25;
+    int x_bias = 70;
+    int y_bias = 30;
+
+    //显示名字
+    txt_name_ = std::make_shared<TextBox>();
+    txt_name_->setText("");
+    addChild(txt_name_, x+90, y-30);
+    //显示战斗属性
+    txt_qf_ = std::make_shared<TextBox>();
+    txt_qf_->setText("气防");
+    addChild(txt_qf_, x, y);
+    txt_qf_value_ = std::make_shared<TextBox>();
+    txt_qf_value_->setText("0");
+    addChild(txt_qf_value_, x+ x_bias, y);
+    txt_yg_ = std::make_shared<TextBox>();
+    txt_yg_->setText("硬功");
+    addChild(txt_yg_, x, y+y_bias);
+    txt_yg_value_ = std::make_shared<TextBox>();
+    txt_yg_value_->setText("0");
+    addChild(txt_yg_value_, x+x_bias, y+y_bias);
+    txt_lh_ = std::make_shared<TextBox>();
+    txt_lh_->setText("灵活");
+    addChild(txt_lh_, x, y + 2*y_bias);
+    txt_lh_value_ = std::make_shared<TextBox>();
+    txt_lh_value_->setText("0");
+    addChild(txt_lh_value_, x + x_bias, y + 2*y_bias);
+    txt_xq_ = std::make_shared<TextBox>();
+    txt_xq_->setText("行气");
+    addChild(txt_xq_, x, y + 3 * y_bias);
+    txt_xq_value_ = std::make_shared<TextBox>();
+    txt_xq_value_->setText("0");
+    addChild(txt_xq_value_, x + x_bias, y + 3 * y_bias);
+    txt_sf_ = std::make_shared<TextBox>();
+    txt_sf_->setText("身法");
+    addChild(txt_sf_, x, y + 4 * y_bias);
+    txt_sf_value_ = std::make_shared<TextBox>();
+    txt_sf_value_->setText("0");
+    addChild(txt_sf_value_, x + x_bias, y + 4 * y_bias);
+
+    txt_ff_ = std::make_shared<TextBox>();
+    txt_ff_->setText("奋发");
+    addChild(txt_ff_, x+2*x_bias, y);
+    txt_ff_value_ = std::make_shared<TextBox>();
+    txt_ff_value_->setText("0");
+    addChild(txt_ff_value_, x + 3*x_bias, y);
+    txt_zy_ = std::make_shared<TextBox>();
+    txt_zy_->setText("战意");
+    addChild(txt_zy_, x + 2 * x_bias, y + y_bias);
+    txt_zy_value_ = std::make_shared<TextBox>();
+    txt_zy_value_->setText("0");
+    addChild(txt_zy_value_, x + 3*x_bias, y + y_bias);
+    txt_jz_ = std::make_shared<TextBox>();
+    txt_jz_->setText("精准");
+    addChild(txt_jz_, x + 2 * x_bias, y + 2 * y_bias);
+    txt_jz_value_ = std::make_shared<TextBox>();
+    txt_jz_value_->setText("0");
+    addChild(txt_jz_value_, x + 3*x_bias, y + 2 * y_bias);
+    txt_js_ = std::make_shared<TextBox>();
+    txt_js_->setText("急速");
+    addChild(txt_js_, x + 2 * x_bias, y + 3 * y_bias);
+    txt_js_value_ = std::make_shared<TextBox>();
+    txt_js_value_->setText("0");
+    addChild(txt_js_value_, x + 3*x_bias, y + 3 * y_bias);
+    txt_sd_ = std::make_shared<TextBox>();
+    txt_sd_->setText("闪躲");
+    addChild(txt_sd_, x + 2 * x_bias, y + 4 * y_bias);
+    txt_sd_value_ = std::make_shared<TextBox>();
+    txt_sd_value_->setText("0");
+    addChild(txt_sd_value_, x + 3*x_bias, y + 4 * y_bias);
+
+
+}
+void BattleStateMenu::draw() {
+    if (role_ == nullptr) {
+        setAllChildVisible(false);
+        return;
+    }
+    else {
+        setAllChildVisible(true);
+        Menu::draw();
+    }
+}
+
+void BattleStateMenu::setRole(Role* r)
+{
+    role_ = r;
+    if (role_ == nullptr) {return;}
+
+    txt_name_->setText(convert::formatString("%s", role_->Name));
+
+    BP_Color c_red = { 255, 0, 0 };
+    txt_qf_value_->setText(convert::formatString("%d", role_->qf_));
+    txt_yg_value_->setText(convert::formatString("%d", role_->yg_));
+    txt_lh_value_->setText(convert::formatString("%d", role_->lh_));
+    txt_xq_value_->setText(convert::formatString("%d", role_->xq_));
+    txt_sf_value_->setText(convert::formatString("%d", role_->sf_));
+    txt_ff_value_->setText(convert::formatString("%d", role_->ff_));
+    txt_zy_value_->setText(convert::formatString("%d", role_->zy_));
+    txt_jz_value_->setText(convert::formatString("%d", role_->jz_));
+    txt_js_value_->setText(convert::formatString("%d", role_->js_));
+    txt_sd_value_->setText(convert::formatString("%d", role_->sd_));
+
+    //颜色随数值大小变化，0为大红，100为绿
+    if (role_->qf_ <= 100) {
+        txt_qf_value_->setTextColor({ (Uint8)(200 - 2 * role_->qf_), (Uint8)(2 * role_->qf_), 0 });
+    }
+    if (role_->yg_ <= 100) {
+        txt_yg_value_->setTextColor({ (Uint8)(200 - 2 * role_->yg_), (Uint8)(2 * role_->yg_), 0 });
+    }
+    if (role_->lh_ <= 100) {
+        txt_lh_value_->setTextColor({ (Uint8)(200 - 2 * role_->lh_), (Uint8)(2 * role_->lh_), 0 });
+    }
+    if (role_->xq_ <= 100) {
+        txt_xq_value_->setTextColor({ (Uint8)(200 - 2 * role_->xq_), (Uint8)(2 * role_->xq_), 0 });
+    }
+    if (role_->sf_ <= 100) {
+        txt_sf_value_->setTextColor({ (Uint8)(200 - 2 * role_->sf_), (Uint8)(2 * role_->sf_), 0 });
+    }
+    if (role_->ff_ <= 100) {
+        txt_ff_value_->setTextColor({ (Uint8)(200 - 2 * role_->ff_), (Uint8)(2 * role_->ff_), 0 });
+    }
+    if (role_->zy_ <= 100) {
+        txt_zy_value_->setTextColor({ (Uint8)(200 - 2 * role_->zy_), (Uint8)(2 * role_->zy_), 0 });
+    }
+    if (role_->jz_ <= 100) {
+        txt_jz_value_->setTextColor({ (Uint8)(200 - 2 * role_->jz_), (Uint8)(2 * role_->jz_), 0 });
+    }
+    if (role_->js_ <= 100) {
+        txt_js_value_->setTextColor({ (Uint8)(200 - 2 * role_->js_), (Uint8)(2 * role_->js_), 0 });
+    }
+    if (role_->sd_ <= 100) {
+        txt_sd_value_->setTextColor({ (Uint8)(200 - 2 * role_->sd_), (Uint8)(2 * role_->sd_), 0 });
+    }
+}
+
+

@@ -6,6 +6,8 @@ BattleCursor::BattleCursor(BattleScene* b)
 {
     head_selected_ = std::make_shared<Head>();
     addChild(head_selected_);
+    state_menu_selected_ = std::make_shared<BattleStateMenu>();
+    addChild(state_menu_selected_);
     ui_status_ = std::make_shared<UIStatus>();
     ui_status_->setVisible(false);
     ui_status_->setShowButton(false);
@@ -23,6 +25,7 @@ void BattleCursor::setRoleAndMagic(Role* r, Magic* m /*= nullptr*/, int l /*= 0*
     magic_ = m;
     level_index_ = l;
     head_selected_->setRole(r);
+    state_menu_selected_->setRole(r);
 }
 
 void BattleCursor::dealEvent(BP_Event& e)
@@ -75,6 +78,10 @@ void BattleCursor::setCursor(int x, int y)
         {
             head_selected_->setRole(battle_scene_->getRoleLayer()->data(x, y));
         }
+        if (state_menu_selected_->getVisible())
+        {
+            state_menu_selected_->setRole(battle_scene_->getRoleLayer()->data(x, y));
+        }
         //ui的设定
         if (ui_status_->getVisible())
         {
@@ -102,6 +109,8 @@ void BattleCursor::onEntrance()
     int w, h;
     Engine::getInstance()->getWindowSize(w, h);
     head_selected_->setPosition(w - 400, h - 150);
+    state_menu_selected_->setPosition(50, h - 220);
+    state_menu_selected_->setSize(280, 180);
     battle_scene_->towards_ = role_->FaceTowards;
 
     if (role_->isAuto() || role_->Networked)

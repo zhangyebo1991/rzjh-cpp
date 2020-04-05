@@ -37,6 +37,9 @@ BattleScene::BattleScene()
 
     battle_menu_ = std::make_shared<BattleActionMenu>(this);
     battle_menu_->setPosition(160, 200);
+    battle_state_menu_ = std::make_shared<BattleStateMenu>();
+    //battle_state_menu_->setPosition(160, 600);
+    addChild(battle_state_menu_);
     head_self_ = std::make_shared<Head>();
     addChild(head_self_);
     battle_cursor_ = std::make_shared<BattleCursor>(this);
@@ -278,6 +281,8 @@ void BattleScene::dealEvent(BP_Event& e)
     select_y_ = role->Y();
     head_self_->setRole(role);
     head_self_->setState(RunNode::Pass);
+    battle_state_menu_->setRole(role);
+    battle_state_menu_->setState(RunNode::Pass);
 
     //行动
     action(role);
@@ -335,7 +340,9 @@ void BattleScene::onEntrance()
     calViewRegion();
     Audio::getInstance()->playMusic(info_->Music);
     //注意此时才能得到窗口的大小，用来设置头像的位置
-    head_self_->setPosition(80, 100);
+    head_self_->setPosition(10, 20);
+    battle_state_menu_->setPosition(720, 20);
+    battle_state_menu_->setSize(280, 180);
 
     //RunElement::addOnRootTop(MainScene::getInstance()->getWeather());
     addChild(MainScene::getInstance()->getWeather());
@@ -529,6 +536,8 @@ void BattleScene::readBattleInfo()
     }
 }
 
+
+//初始化战场状态
 void BattleScene::setRoleInitState(Role* r)
 {
     r->Acted = 0;
@@ -541,6 +550,19 @@ void BattleScene::setRoleInitState(Role* r)
     r->Show.BattleHurt = 0;
     r->Show.ProgressChange = 0;
     r->Progress = 0;
+
+
+    r->qf_ = 0; 
+    r->yg_ = 0; 
+    r->lh_ = 0; 
+    r->xq_ = 0; 
+    r->sf_ = 0; 
+    r->ff_ = 0; 
+    r->zy_ = 0; 
+    r->jz_ = 0; 
+    r->js_ = 0; 
+    r->sd_ = 0;
+
 
     GameUtil::limit2(r->HP, r->MaxHP / 10, r->MaxHP);
     GameUtil::limit2(r->MP, r->MaxMP / 10, r->MaxMP);
@@ -976,11 +998,11 @@ void BattleScene::action(Role* r)
     {
         actUseMagic(r);
     }
-    else if (str == "用毒")
+    else if (str == "毒术")
     {
         actUsePoison(r);
     }
-    else if (str == "解毒")
+    else if (str == "抗毒")
     {
         actDetoxification(r);
     }
@@ -1346,8 +1368,11 @@ void BattleScene::actWait(Role* r)
 void BattleScene::actStatus(Role* r)
 {
     head_self_->setVisible(false);
+    battle_state_menu_->setVisible(false);
     battle_cursor_->getHead()->setVisible(false);
+    battle_cursor_->getStateMenu()->setVisible(false);
     battle_cursor_->getUIStatus()->setVisible(true);
+
 
     calSelectLayer(r, 2, 0);
     battle_cursor_->setRoleAndMagic(r);
@@ -1355,7 +1380,9 @@ void BattleScene::actStatus(Role* r)
     battle_cursor_->run();
 
     head_self_->setVisible(true);
+    battle_state_menu_->setVisible(true);
     battle_cursor_->getHead()->setVisible(true);
+    battle_cursor_->getStateMenu()->setVisible(true);
     battle_cursor_->getUIStatus()->setVisible(false);
 }
 
@@ -1881,6 +1908,7 @@ int BattleScene::checkResult()
 void BattleScene::calExpGot()
 {
     head_self_->setVisible(false);
+    battle_state_menu_->setAllChildVisible(false);
 
     std::vector<Role*> alive_teammate;
     if (result_ == 0)

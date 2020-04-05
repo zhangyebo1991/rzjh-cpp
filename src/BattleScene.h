@@ -42,6 +42,7 @@ protected:
     std::shared_ptr<BattleActionMenu> battle_menu_;    //战斗行动菜单
     std::shared_ptr<BattleCursor> battle_cursor_;      //战斗时的光标
     std::shared_ptr<Head> head_self_;                  //头像
+    std::shared_ptr<BattleStateMenu> battle_state_menu_; //人物战斗状态
 
     //地面层，建筑层，选择层（负值为不可选，0和正值为可选），效果层
     MapSquareInt earth_layer_, building_layer_, select_layer_, effect_layer_;

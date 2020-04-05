@@ -10,6 +10,7 @@
 #include "SuperMenuText.h"
 #include "TextureManager.h"
 #include "convert.h"
+#include "Event.h"
 
 #include <algorithm>
 #include <functional>
@@ -196,6 +197,21 @@ Console::Console()
         {
             main_scene->forceEnterSubScene(save->InSubMap, save->SubMapX, save->SubMapY);
         }
+    }
+    else if (splits[0] == u8"battle" && splits.size() >= 2)
+    {
+        int rec;
+        try
+        {
+            rec = std::stoi(splits[1]);
+        }
+        catch (...)
+        {
+            return;
+        }
+        auto event = Event::getInstance();
+        event->tryBattle(rec, 1);
+
     }
     else if (splits[0] == u8"rinsert" && splits.size() >= 3)
     {

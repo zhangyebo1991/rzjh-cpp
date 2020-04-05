@@ -8,7 +8,8 @@ enum
     BATTLEMAP_SAVE_LAYER_COUNT = 2,                 //数据文件存储地图数据层数
     BATTLEMAP_LAYER_COUNT = 8,                      //战场需要地图层数
     BATTLEMAP_COORD_COUNT = 64,                     //战场最大坐标
-    BATTLE_ENEMY_COUNT = 20,
+    BATTLE_ENEMY_COUNT = 30,
+    TEAMMATE_BATTLE_COUNT = 12,  //最大战场队友数 
 };
 
 struct BattleInfo
@@ -16,8 +17,11 @@ struct BattleInfo
     MAP_INT ID;
     char Name[10];
     MAP_INT BattleFieldID, Exp, Music;
-    MAP_INT TeamMate[TEAMMATE_COUNT], AutoTeamMate[TEAMMATE_COUNT], TeamMateX[TEAMMATE_COUNT], TeamMateY[TEAMMATE_COUNT];
+    MAP_INT TeamMate[TEAMMATE_BATTLE_COUNT], AutoTeamMate[TEAMMATE_BATTLE_COUNT], TeamMateX[TEAMMATE_BATTLE_COUNT], TeamMateY[TEAMMATE_BATTLE_COUNT];
     MAP_INT Enemy[BATTLE_ENEMY_COUNT], EnemyX[BATTLE_ENEMY_COUNT], EnemyY[BATTLE_ENEMY_COUNT];
+    MAP_INT round_event, action_event;
+    MAP_INT get_book[3], get_item[3];
+    MAP_INT get_money;
 };
 
 //这个仅保存战场前两层

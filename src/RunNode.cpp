@@ -41,15 +41,15 @@ void RunNode::setPosition(int x, int y)
     y_ = y;
 }
 
-//设置大小，自动调节子节点的大小
+//设置大小，不改变子节点大小
 void RunNode::setSize(int w, int h)
 {
-	double w_rate = w_ / w;
-	double h_rate = h_ / h;
-	for (auto c : childs_)
-	{
-		c->setSize(c->w_ * w_rate, c->y_ * h_rate);
-	}
+    //double w_rate = w_ / w;
+    //double h_rate = h_ / h;
+    //for (auto c : childs_)
+    //{
+    //    c->setSize(c->w_ * w_rate, c->y_ * h_rate);
+    //}
 	w_ = w;
 	h_ = h;
 }
