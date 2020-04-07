@@ -166,7 +166,7 @@ void BattleScene::draw()
                 auto r = role_layer_.data(ix, iy);
                 if (r)
                 {
-                    std::string path = convert::formatString("fight/fight%03d", r->HeadID);
+                    std::string path = convert::formatString("fight/fight%04d", r->HeadID);
                     BP_Color color = { 255, 255, 255, 255 };
                     uint8_t alpha = 255;
                     if (battle_cursor_->isRunning() && !acting_role_->isAuto())
@@ -190,6 +190,7 @@ void BattleScene::draw()
                     {
                         alpha = dead_alpha_;
                     }
+
                     TextureManager::getInstance()->renderTexture(path, pic, p.x, p.y, color, alpha);
                     renderExtraRoleInfo(r, p.x, p.y);
                 }
@@ -563,6 +564,11 @@ void BattleScene::setRoleInitState(Role* r)
     r->js_ = 0; 
     r->sd_ = 0;
 
+    r->zhenfa = 0;
+    r->zhenfaxishu = 0;
+    r->reborn = 0;
+    r->lianzhao = 0;
+    r->isLianzhao = 0;
 
     GameUtil::limit2(r->HP, r->MaxHP / 10, r->MaxHP);
     GameUtil::limit2(r->MP, r->MaxMP / 10, r->MaxMP);
@@ -631,7 +637,8 @@ void BattleScene::readFightFrame(Role* r)
     {
         r->FightFrame[i] = 0;
     }
-    std::string text_group = convert::formatString("fight/fight%03d", r->HeadID);
+    
+    std::string text_group = convert::formatString("fight/fight%04d", r->HeadID);
     std::string frame_txt = TextureManager::getInstance()->getTextureGroup(text_group)->getFileContent("fightframe.txt");
     std::vector<int> frames;
     convert::findNumbers(frame_txt, &frames);
@@ -639,6 +646,8 @@ void BattleScene::readFightFrame(Role* r)
     {
         r->FightFrame[frames[i * 2]] = frames[i * 2 + 1];
     }
+    
+
 }
 
 void BattleScene::sortRoles()
@@ -716,7 +725,8 @@ int BattleScene::calRolePic(Role* r, int style, int frame)
                 return total + r->FightFrame[style] * r->FaceTowards + frame;
             }
             total += r->FightFrame[i] * 4;
-        }
+        }        
+        //return r->FightFrame[style] * r->FaceTowards + frame;
     }
     return r->FaceTowards;
 }
@@ -1457,6 +1467,149 @@ void BattleScene::moveAnimation(Role* r, int x, int y)
     select_layer_.setAll(-1);
 }
 
+
+
+//获取功体特效加成
+int BattleScene::getGongtiState(Role* r, int state_type) {
+
+    int result = 0;
+    //内功的攻击范围用来存特效数据
+    auto rgt_magic = Save::getInstance()->getMagic(r->MagicID[r->Gongti]);
+    if (r->Gongti < 0)
+        result += 0;
+    else if (rgt_magic->MaxLevel > r->getGongtiLevel(rgt_magic))
+        result += 0;
+    else
+    {
+        for (int i = 0; i < 9;  i++){
+            if (state_type == rgt_magic->SelectDistance[i])
+                result += rgt_magic->AttackDistance[i];
+        }
+    }
+    //特技同理
+    auto rtj_magic = Save::getInstance()->getMagic(r->MagicID[r->zbtj]);
+    if (r->zbtj < 0) {
+        result += 0;
+    }
+    else if (rtj_magic->MaxLevel > r->getGongtiLevel(rtj_magic))
+        result += 0;
+    else
+    {
+        for (int i = 0; i < 9; i++) {
+            if (state_type == rtj_magic->SelectDistance[i])
+                result += rtj_magic->AttackDistance[i];
+        }
+    }
+
+    //标签特效
+    for (auto i: r->texing){
+        if (i > 0) {
+            auto rsign = Save::getInstance()->getRSign(i);
+            for (auto i1 : rsign->texiao) {
+                if (rsign->beiyong == 0) {
+                    if (i1.Type == state_type) {
+                        result += i1.Value;
+                    }
+                }
+            }
+        }
+    }
+    return result;
+
+}
+
+//获取装备特效加成
+int BattleScene::getEquipeState(Role* r, int state_type) {
+    int result = 0;
+    for (auto i : r->Equip) {
+        if (i > 0) {
+            if (state_type == Save::getInstance()->getItem(i)->BattleEffect / 100) { //计算特效ID
+                result += Save::getInstance()->getItem(i)->BattleEffect % 100; //计算特效数值
+            }
+        }
+
+    }
+    return result;
+}
+
+//获取阵法特效加成
+int BattleScene::getZhenfaState(Role* r, int state_type) {
+    int result = 0;
+    if (r->zhenfa > 0) {
+        auto rsign = Save::getInstance()->getRSign(r->zhenfa);
+        for (auto i : rsign->texiao) {
+            if (i.Type == state_type) {
+                result += i.Value * r->zhenfaxishu;
+            }
+        }
+    }
+    result += getGuanghuanState(r, state_type);
+    return result;
+}
+
+//获取光环特效加成
+int BattleScene::getGuanghuanState(Role* r, int state_type) {
+
+    int haveGuanghuan[100] = {0};
+    bool isChufa, isHave;
+    int result = 0;
+    int temp = 0;
+    for (auto i : battle_roles_) {
+        if (i->Team == r->Team && i->Dead == 0) {
+            for (auto k : i->texing) {
+                if (k > 0) {
+                    auto rsign = Save::getInstance()->getRSign(k);
+                    if (rsign->beiyong > 0) {
+                        isHave = false;
+                        for (int k1 = 0; k1 < temp; k1++)
+                        {
+                            if (haveGuanghuan[k1] == k) {//有相同光环生效,屏蔽
+                               isHave = true;
+                            }
+                            isChufa = false;
+                            if (!isHave) {  //如果没有该光环，开始计算
+                                switch (Save::getInstance()->getRSign(k)->beiyong) {
+                                case 1:
+                                    isChufa = true;
+                                    break;
+                                case 2:
+                                    if(i->MenPai == r->MenPai){
+                                        isChufa = true;
+                                    }
+                                    break;
+                                case 3:
+                                    if (r->Sexual == 1) {
+                                        isChufa = true;
+                                    }
+                                    break;
+                                case 4:
+                                    if (r->Sexual == 0) {
+                                        isChufa = true;
+                                    }
+                                    break;
+                                }
+                                
+                            }
+                            if (isChufa) {
+                                for (auto i1 : rsign->texiao) {
+                                    if (i1.Type > 0 && i1.Type == state_type) {
+                                        haveGuanghuan[temp] = k;
+                                        temp++;
+                                        result += i1.Value;
+                                    }                                
+                                }
+
+                            }
+                        }
+                    }                    
+                }
+            }
+        }
+    }
+    return result;
+}
+
+
 //使用武学动画
 void BattleScene::useMagicAnimation(Role* r, Magic* m)
 {
@@ -1552,7 +1705,7 @@ int BattleScene::calMagicHurt(Role* r1, Role* r2, Magic* magic)
 {
     int level_index = Save::getInstance()->getRoleLearnedMagicLevelIndex(r1, magic);
     level_index = magic->calMaxLevelIndexByMP(r1->MP, level_index);
-    if (magic->HurtType == 0)
+    if (magic->HurtType < 3)
     {
         if (r1->MP <= 10)
         {
@@ -1572,6 +1725,22 @@ int BattleScene::calMagicHurt(Role* r1, Role* r2, Magic* magic)
             auto i = Save::getInstance()->getItem(r1->Equip[1]);
             attack += i->AddAttack;
         }
+        if (r1->Equip[2] >= 0)
+        {
+            auto i = Save::getInstance()->getItem(r1->Equip[2]);
+            attack += i->AddAttack;
+        }
+        if (r1->Equip[3] >= 0)
+        {
+            auto i = Save::getInstance()->getItem(r1->Equip[3]);
+            attack += i->AddAttack;
+        }
+        if (r1->Equip[4] >= 0)
+        {
+            auto i = Save::getInstance()->getItem(r1->Equip[4]);
+            attack += i->AddAttack;
+        }
+
         if (r2->Equip[0] >= 0)
         {
             auto i = Save::getInstance()->getItem(r2->Equip[0]);
@@ -1580,6 +1749,21 @@ int BattleScene::calMagicHurt(Role* r1, Role* r2, Magic* magic)
         if (r2->Equip[1] >= 0)
         {
             auto i = Save::getInstance()->getItem(r2->Equip[1]);
+            defence += i->AddDefence;
+        }
+        if (r2->Equip[2] >= 0)
+        {
+            auto i = Save::getInstance()->getItem(r2->Equip[2]);
+            defence += i->AddDefence;
+        }
+        if (r2->Equip[3] >= 0)
+        {
+            auto i = Save::getInstance()->getItem(r2->Equip[3]);
+            defence += i->AddDefence;
+        }
+        if (r2->Equip[4] >= 0)
+        {
+            auto i = Save::getInstance()->getItem(r2->Equip[4]);
             defence += i->AddDefence;
         }
 
@@ -1596,7 +1780,7 @@ int BattleScene::calMagicHurt(Role* r1, Role* r2, Magic* magic)
         //v = 999;  //测试用
         return v;
     }
-    else if (magic->HurtType == 1)
+    else if (magic->HurtType < 5)
     {
         int v = magic->MaxInjury*(level_index / 10);
         v += rng_.rand_int(10) - rng_.rand_int(10);

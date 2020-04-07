@@ -812,7 +812,7 @@ void NewSave::SaveToCSVItemSave(const std::vector<Item>& data, int record) {
 		fout << ",";
 		fout << data[i].SetNum;
 		fout << ",";
-		fout << data[i].BattleBattleEffect;
+		fout << data[i].BattleEffect;
 		fout << ",";
 		fout << data[i].AddSign;
 		fout << ",";
@@ -2961,7 +2961,7 @@ void NewSave::LoadFromCSVItemSave(std::vector<Item>& data, int record) {
 		memset(nextLineData.Name, '\0', sizeof(nextLineData.Name));
 		nextLineData.ExpofMagic = 0;
 		nextLineData.SetNum = 0;
-		nextLineData.BattleBattleEffect = 0;
+		nextLineData.BattleEffect = 0;
 		nextLineData.AddSign = 0;
 		nextLineData.needSex = 0;
 		nextLineData.rehurt = 0;
@@ -3041,7 +3041,7 @@ void NewSave::LoadFromCSVItemSave(std::vector<Item>& data, int record) {
 		Name__,
 		nextLineData.ExpofMagic,
 		nextLineData.SetNum,
-		nextLineData.BattleBattleEffect,
+		nextLineData.BattleEffect,
 		nextLineData.AddSign,
 		nextLineData.needSex,
 		nextLineData.rehurt,

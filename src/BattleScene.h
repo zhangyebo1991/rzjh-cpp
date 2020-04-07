@@ -153,6 +153,12 @@ public:
     virtual int calMagicHurt(Role* r1, Role* r2, Magic* magic);                         //计算武学对单人的伤害
     virtual int calMagiclHurtAllEnemies(Role* r, Magic* m, bool simulation = false);    //计算全部人物的伤害
 
+    virtual int getGongtiState(Role* r, int state_type);    //计算功体特效加成
+    virtual int getEquipeState(Role* r, int state_type);    //计算装备特效加成
+    virtual int getZhenfaState(Role* r, int state_type);    //计算阵法特效加成
+    virtual int getGuanghuanState(Role* r, int state_type);    //计算光环特效加成
+
+
     virtual int calHiddenWeaponHurt(Role* r1, Role* r2, Item* item);    //计算暗器伤害
 
     virtual void showMagicName(std::string name);    //显示武学名

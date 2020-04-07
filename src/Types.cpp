@@ -85,6 +85,17 @@ int Role::getMagicOfRoleIndex(Magic* magic)
     return -1;
 }
 
+//获取功体等级
+int Role::getGongtiLevel(Magic* magic) {
+    if (magic == nullptr)
+        return 0;
+    else
+        return std::min(magic->MaxLevel, getMagicLevelIndex(magic));
+
+}
+
+
+
 //限制人物的属性
 void Role::limit()
 {

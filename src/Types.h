@@ -258,6 +258,7 @@ public:
     int FightingFrame;
     int Moved, Acted;
     int ActTeam;    //选择行动阵营 0-我方，1-非我方，画效果层时有效
+	int zhenfa, zhenfaxishu, reborn, lianzhao, isLianzhao; // 戰場上發動的陣法ID和陣法強化倍數(多人疊加), 重生次數, 連招記錄, 是否用同样招式连击
 
 	int qf_, yg_, lh_, xq_, sf_, ff_, zy_, jz_, js_, sd_;
 
@@ -323,6 +324,8 @@ public:
     int getMagicLevelIndex(int magic_id);
     int getMagicOfRoleIndex(Magic* magic);
 
+	int getGongtiLevel(Magic* magic);      //获取功体等级
+
     void limit();
 
     int learnMagic(Magic* magic);
@@ -368,7 +371,7 @@ struct ItemSave
 	char Name[40]; // 物品名
 	int ExpofMagic; // 物品武功经验
 	int SetNum; // 套装号
-	int BattleBattleEffect; // 战斗特效
+	int BattleEffect; // 战斗特效
 	int AddSign; // 增加标签
 	int needSex; // 要求性别
 	int rehurt; // 恢复伤势
@@ -670,7 +673,7 @@ struct RSignSave
 	int effert; // 效果
 	int TypeNum; // 类别
 	char Introduction[90]; // 说明
-	int beiyong; // 备用
+	int beiyong; // 备用，貌似用于阵法加成类别，是否叠加
 	int isshow; // 是否隐藏
 	Ttexiao texiao[24]; //92
 };
