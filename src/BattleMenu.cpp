@@ -30,7 +30,7 @@ void BattleActionMenu::setRole(Role* r)
 
     //显示人物状态
 
-
+    //battle_scene_->calMoveStep(role_);
     //移动过则不可移动
     if (role_->Moved || role_->PhysicalPower < 10)
     {
@@ -139,6 +139,7 @@ int BattleActionMenu::autoSelect(Role* role)
         if (!friends.empty() && !enemies.empty())
         {
             //计算可以移动的位置
+            
             battle_scene_->calSelectLayer(role, 0, battle_scene_->calMoveStep(role));
 
             //考虑吃药
@@ -279,42 +280,56 @@ int BattleActionMenu::autoSelect(Role* role)
                 //遍历武学
                 for (int i = 0; i < ROLE_MAGIC_COUNT; i++)
                 {
-                    int max_hurt = -1;
                     auto magic = Save::getInstance()->getRoleLearnedMagic(role, i);
                     if (magic == nullptr)
                     {
                         continue;
                     }
-                    int level_index = role->getRoleMagicLevelIndex(i);
-
-                    battle_scene_->calSelectLayerByMagic(aa.MoveX, aa.MoveY, role->Team, magic, level_index);
-                    //对所有能选到的点测试，估算收益
-                    for (int ix = 0; ix < BATTLEMAP_COORD_COUNT; ix++)
+                    if (magic->MagicType < 0 || magic->MagicType > 4)
                     {
-                        for (int iy = 0; iy < BATTLEMAP_COORD_COUNT; iy++)
+                        continue;
+                    }
+                    //遍历招式
+                    for (int j = 0; j < 5; j++) {
+                        int max_hurt = -1;                      
+                        auto zhaoshi = Save::getInstance()->getRoleLearnedZhaoshi(role, magic, j);
+                        if (zhaoshi == nullptr)
                         {
-                            int total_hurt = 0;
-                            if (battle_scene_->canSelect(ix, iy))
+                            continue;
+                        }
+                        int level_index = role->getRoleMagicLevelIndex(i);
+
+                        battle_scene_->calSelectLayerByMagic(aa.MoveX, aa.MoveY, role->Team, magic, level_index);
+                        //对所有能选到的点测试，估算收益
+                        for (int ix = 0; ix < BATTLEMAP_COORD_COUNT; ix++)
+                        {
+                            for (int iy = 0; iy < BATTLEMAP_COORD_COUNT; iy++)
                             {
-                                battle_scene_->calEffectLayer(aa.MoveX, aa.MoveY, ix, iy, magic, level_index);
-                                total_hurt = battle_scene_->calMagiclHurtAllEnemies(role_temp, magic, true);
-                                if (total_hurt > max_hurt)
+                                int total_hurt = 0;
+                                if (battle_scene_->canSelect(ix, iy))
                                 {
-                                    max_hurt = total_hurt;
-                                    aa.magic = magic;
-                                    aa.ActionX = ix;
-                                    aa.ActionY = iy;
-                                }
-                                if (total_hurt > -1)
-                                {
-                                    //printf("AI %s %s (%d, %d): %d\n", PotConv::to_read(role->Name).c_str(), PotConv::to_read(magic->Name).c_str(), ix, iy, total_hurt);
+                                    battle_scene_->calEffectLayer(aa.MoveX, aa.MoveY, ix, iy, magic, level_index);
+                                    total_hurt = battle_scene_->calMagiclHurtAllEnemies(role_temp, magic, zhaoshi, true);
+                                    if (total_hurt > max_hurt)
+                                    {
+                                        max_hurt = total_hurt;
+                                        aa.magic = magic;
+                                        aa.zhaoshi = zhaoshi;
+                                        aa.ActionX = ix;
+                                        aa.ActionY = iy;
+                                    }
+                                    if (total_hurt > -1)
+                                    {
+                                        //printf("AI %s %s (%d, %d): %d\n", PotConv::to_read(role->Name).c_str(), PotConv::to_read(magic->Name).c_str(), ix, iy, total_hurt);
+                                    }
                                 }
                             }
                         }
+                        aa.point = max_hurt;
+                        //if (role->AttackTwice) { aa.point *= 2; }
+                        ai_action.push_back(aa);
                     }
-                    aa.point = max_hurt;
-                    //if (role->AttackTwice) { aa.point *= 2; }
-                    ai_action.push_back(aa);
+                    
                 }
             }
         }
@@ -325,6 +340,7 @@ int BattleActionMenu::autoSelect(Role* role)
             printf("AI %s: %s ", PotConv::to_read(role->Name).c_str(), PotConv::to_read(getStringFromResult(aa.Action)).c_str());
             if (aa.item) { printf("%s ", PotConv::to_read(aa.item->Name).c_str()); }
             if (aa.magic) { printf("%s ", PotConv::to_read(aa.magic->Name).c_str()); }
+            if (aa.zhaoshi) { printf("%s ", PotConv::to_read(aa.zhaoshi->Name).c_str()); }
             double r = rand.rand() * 10;    //用于同分的情况，可以随机选择
             printf("score %.2f(%.2f)\n", aa.point, r);
             //若评分仅有一个随机数的值，说明不在范围内，仅移动并结束
@@ -536,6 +552,79 @@ void BattleMagicMenu::onPressedOK()
     checkActiveToResult();
     magic_ = Save::getInstance()->getRoleLearnedMagic(role_, result_);
     if (magic_)
+    {
+        setExit(true);
+    }
+}
+
+void BattleZhaoshiMenu::onEntrance()
+{
+    if (role_ == nullptr)
+    {
+        return;
+    }
+    if (role_->isAuto())
+    {
+        zhaoshi_ = role_->AI_Zhaoshi;
+        setAllChildState(Normal);
+        setResult(0);
+        setExit(true);
+        setVisible(false);
+        return;
+    }
+    forceActiveChild();
+}
+
+void BattleZhaoshiMenu::setRole(Role* r)
+{
+    role_ = r;
+    result_ = -1;
+    zhaoshi_ = nullptr;
+    setVisible(true);
+    std::vector<std::string> zhaoshi_names;
+    int zs_state = r->LZhaoshi[r->getMagicOfRoleIndex(magic_)];
+    int zs_array[5];
+    for (int j = 0; j < 5; j++) {
+        if (((zs_state >> j) & 1) == 1) {
+            zs_array[j] = magic_->Zhaoshi[j];
+        }
+        else { zs_array[j] = 0; }
+    }
+    for (auto j : zs_array) {
+
+        if (j > 0)
+        {
+            auto m = Save::getInstance()->getZhaoshi(j);
+            zhaoshi_names.push_back(convert::formatString("%-12s  ", m->Name));
+        }
+        else
+        {
+            zhaoshi_names.push_back("");
+        }        
+    }       
+
+
+    setStrings(zhaoshi_names);
+    setPosition(160, 200);
+
+    //如果宽度为0的项隐藏
+    for (auto child : childs_)
+    {
+        int w, h;
+        child->getSize(w, h);
+        if (w <= 0)
+        {
+            child->setVisible(false);
+        }
+    }
+    arrange(0, 0, 0, 30);
+}
+
+void BattleZhaoshiMenu::onPressedOK()
+{
+    checkActiveToResult();
+    zhaoshi_ = Save::getInstance()->getRoleLearnedZhaoshi(role_, magic_, result_);
+    if (zhaoshi_)
     {
         setExit(true);
     }

@@ -71,6 +71,8 @@ struct Role;
 struct Item;
 struct Magic;
 struct SubMapInfo;
+struct Zhaoshi;
+struct RSign;
 struct Shop;
 class Save;
 
@@ -246,6 +248,10 @@ public:
 
 };
 
+struct BattleBuff {
+	int id, time, num;
+};
+
 //实际的角色数据，基类之外的通常是战斗属性
 struct Role : public RoleSave
 {
@@ -259,10 +265,17 @@ public:
     int Moved, Acted;
     int ActTeam;    //选择行动阵营 0-我方，1-非我方，画效果层时有效
 	int zhenfa, zhenfaxishu, reborn, lianzhao, isLianzhao; // 戰場上發動的陣法ID和陣法強化倍數(多人疊加), 重生次數, 連招記錄, 是否用同样招式连击
+	
+	//战场特效
+	int Wait, frozen, Knowledge, LifeAdd, isBang, IsShuaiJian, Zhuanzhu, pozhao, wanfang; //24
 
-	int qf_, yg_, lh_, xq_, sf_, ff_, zy_, jz_, js_, sd_;
+	int qf_, yg_, lh_, xq_, sf_, ff_, zy_, jz_, js_, sd_;	//战斗状态
+
+
+	BattleBuff buff[5]; // 玩家身上的buff和debuff记录
 
     int SelectedMagic;
+	int SelectedZhaoshi;
 
     int Progress;
 
@@ -341,6 +354,7 @@ public:
     int AI_MoveX, AI_MoveY;
     int AI_ActionX, AI_ActionY;
     Magic* AI_Magic = nullptr;
+	Zhaoshi* AI_Zhaoshi = nullptr;
     Item* AI_Item = nullptr;
 
 public:

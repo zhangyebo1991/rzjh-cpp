@@ -551,7 +551,7 @@ void BattleScene::setRoleInitState(Role* r)
     r->Show.BattleHurt = 0;
     r->Show.ProgressChange = 0;
     r->Progress = 0;
-
+    r->Step = 0;
 
     r->qf_ = 0; 
     r->yg_ = 0; 
@@ -569,6 +569,24 @@ void BattleScene::setRoleInitState(Role* r)
     r->reborn = 0;
     r->lianzhao = 0;
     r->isLianzhao = 0;
+
+    //初始化特效
+    r->Wait= 0;
+    r->frozen= 0;
+    r->Knowledge= 0;
+    r->LifeAdd= 0;  
+    r->isBang= 0;  
+    r->IsShuaiJian= 0;  
+    r->Zhuanzhu= 0;  
+    r->pozhao= 0;  
+    r->wanfang;
+
+    //初始化buff
+    for (auto i : r->buff) {
+        i.id = 0;
+        i.num = 0;
+        i.time = 0;
+    }
 
     GameUtil::limit2(r->HP, r->MaxHP / 10, r->MaxHP);
     GameUtil::limit2(r->MP, r->MaxMP / 10, r->MaxMP);
@@ -679,13 +697,9 @@ void BattleScene::resetRolesAct()
     }
 }
 
-int BattleScene::calMoveStep(Role* r)
-{
-    if (r->Moved)
-    {
-        return 0;
-    }
+int BattleScene::getBattleSpeed(Role* r){
     int speed = r->Speed;
+    //装备效果
     if (r->Equip[0] >= 0)
     {
         auto i = Save::getInstance()->getItem(r->Equip[0]);
@@ -696,8 +710,88 @@ int BattleScene::calMoveStep(Role* r)
         auto i = Save::getInstance()->getItem(r->Equip[1]);
         speed += i->AddSpeed;
     }
-    return speed / 15 + 1;
+    if (r->Equip[2] >= 0)
+    {
+        auto i = Save::getInstance()->getItem(r->Equip[2]);
+        speed += i->AddSpeed;
+    }
+    if (r->Equip[3] >= 0)
+    {
+        auto i = Save::getInstance()->getItem(r->Equip[3]);
+        speed += i->AddSpeed;
+    }
+    if (r->Equip[4] >= 0)
+    {
+        auto i = Save::getInstance()->getItem(r->Equip[4]);
+        speed += i->AddSpeed;
+    }
+
+    //内功和特技加成
+    if (r->Gongti > -1) {
+        speed += Save::getInstance()->getMagic(r->MagicID[r->Gongti])->AddSpeed[r->getRoleMagicLevelIndex(r->Gongti)];
+    }
+
+    if (r->zbtj > -1) {
+        speed += Save::getInstance()->getMagic(r->MagicID[r->zbtj])->AddSpeed[r->getRoleMagicLevelIndex(r->zbtj)];
+    }
+
+    //阵法特效107
+    speed += getZhenfaState(r, 107);
+    //如果瘋魔狀態,輕功+10%
+    if (checkRoleIsHaveBuff(r, 7) != 0)
+        speed += speed * 10 / 100;
+
+    return speed;
 }
+
+int BattleScene::calMoveStep(Role* r)
+{
+    
+    if (r->Acted)
+    {
+        return 0;
+    }
+    double speed = getBattleSpeed(r);
+
+    int step = speed / 15 + 1;
+
+    //移動距離增加
+    step += getGongtiState(r, 139);
+    step += getEquipState(r, 139);
+    step += getZhenfaState(r, 139);
+
+    if (r->Wait = 0) {
+        step += floor(pow((speed / 30), 0.7));//40 = 2, 100 = 3, 200 = 4, 300 = 5, 400 = 7 ，轻功随指数衰减，越大效果越差
+        if (checkRoleIsHaveBuff(r, 6) != 0) //斷筋狀態,移動減少一半
+            step = std::max(step / 2, 1);
+        if (checkRoleIsHaveBuff(r, 8) != 0) //橫練狀態,移動減少一半
+            step = std::max(step / 2, 1);
+    }
+    r->Step = step;
+    return step;
+}
+
+//判斷人物是否有指定的buff,返回buff具體數據
+//1, 冰凍
+//2, 流血
+//3, 眩暈
+//4, 目盲
+//5, 灼燒
+//6, 斷筋
+//7, 疯魔
+//8, 橫練
+//9, 截脈
+//10, 輕靈
+//11, 滲勁
+//12, 混亂
+int BattleScene::checkRoleIsHaveBuff(Role* r, int buffId) {
+    for (auto i : r->buff) {
+        if (i.id == buffId)
+            return i.num;
+    }
+    return 0;
+}
+
 
 int BattleScene::calRolePic(Role* r, int style, int frame)
 {
@@ -821,6 +915,57 @@ void BattleScene::calSelectLayer(int x, int y, int team, int mode, int step /*= 
 void BattleScene::calSelectLayer(Role* r, int mode, int step /*= 0*/)
 {
     calSelectLayer(r->X(), r->Y(), r->Team, mode, step);
+}
+
+int BattleScene::getMagicState(Magic* magic, int zhaoshi, int state_type) {
+
+     int result = 0;
+     int id = 0;
+     int num = 0;
+     if (magic->BattleState >= 0) {
+         id = magic->BattleState / 100; //计算特效ID
+         num = magic->BattleState % 100; //计算特效数值
+     }
+     if (id == state_type) {
+         result += num;
+     }
+
+     if (zhaoshi >= 0) {
+         for (auto i : Save::getInstance()->getZhaoshi(zhaoshi)->texiao) {
+             if (i.Type-200 == state_type) {
+                 result += i.Value;
+             }
+         }
+     }
+     return result;
+}
+
+int BattleScene::calAttackRange(Role* r, Magic* magic, int level_index, int zhaoshi)
+{
+    int range = magic->SelectDistance[level_index];
+    
+    //招式上增加攻击距离
+
+    range += getMagicState(magic, zhaoshi, 22);
+
+    //22 特效增加攻击距离
+    range += getEquipState(r, 22);
+    range += getGongtiState(r, 22);
+    range += getZhenfaState(r, 22); 
+    
+
+    //按照類型獲取該類型武功的增加距離
+    int magic_type = magic->MagicType;
+    if (magic->MagicType > 0 && magic->MagicType < 5) {
+        range += getEquipState(r, 161 + magic->MagicType);
+        range += getGongtiState(r, 161 + magic->MagicType);
+        range += getZhenfaState(r, 161 + magic->MagicType);
+        range += getMagicState(magic, zhaoshi, 161 + magic->MagicType);
+    }
+
+    return range;
+
+
 }
 
 void BattleScene::calSelectLayerByMagic(int x, int y, int team, Magic* magic, int level_index)
@@ -1115,6 +1260,18 @@ void BattleScene::actUseMagic(Role* r)
         {
             break;
         }    //可能是退出游戏，或者是没有选武功
+        auto zhaoshi_menu = std::make_shared<BattleZhaoshiMenu>();
+        //网络模块等三老师再说
+        Zhaoshi* zhaoshi = nullptr;
+        zhaoshi_menu->setStartItem(r->SelectedZhaoshi);
+        zhaoshi_menu->setMagic(magic);
+        zhaoshi_menu->runAsRole(r);
+        zhaoshi = zhaoshi_menu->getZhaoshi();
+        r->SelectedZhaoshi = zhaoshi_menu->getResult();
+        if (zhaoshi == nullptr)
+        {
+            break;
+        }    //可能是退出游戏，或者是没有选招式
         r->ActTeam = 1;
         //level_index表示从0到9，而level从0到999
         int level_index = r->getMagicLevelIndex(magic->ID);
@@ -1133,13 +1290,13 @@ void BattleScene::actUseMagic(Role* r)
             r->Network_ActionX = select_x_;
             r->Network_ActionY = select_y_;
             r->Network_Magic = magic;
-            actUseMagicSub(r, magic);
+            actUseMagicSub(r, magic, zhaoshi);
             break;
         }
     }
 }
 
-void BattleScene::actUseMagicSub(Role* r, Magic* magic)
+void BattleScene::actUseMagicSub(Role* r, Magic* magic, Zhaoshi* zhaoshi)
 {
     // 每次攻击，每个人的文字动画数据
     std::vector<std::vector<Role::ActionShowInfo>> multi_shows;
@@ -1150,7 +1307,7 @@ void BattleScene::actUseMagicSub(Role* r, Magic* magic)
         //计算伤害
         r->PhysicalPower = GameUtil::limit(r->PhysicalPower - 3, 0, Role::getMaxValue()->PhysicalPower);
         r->MP = GameUtil::limit(r->MP - magic->calNeedMP(level_index), 0, r->MaxMP);
-        calMagiclHurtAllEnemies(r, magic);
+        calMagiclHurtAllEnemies(r, magic, zhaoshi);
 
         // 做显示部分，由于多次攻击，并且数据动画分离，需要分开保存显示信息
         multi_shows.emplace_back();
@@ -1519,7 +1676,7 @@ int BattleScene::getGongtiState(Role* r, int state_type) {
 }
 
 //获取装备特效加成
-int BattleScene::getEquipeState(Role* r, int state_type) {
+int BattleScene::getEquipState(Role* r, int state_type) {
     int result = 0;
     for (auto i : r->Equip) {
         if (i > 0) {
@@ -1608,6 +1765,8 @@ int BattleScene::getGuanghuanState(Role* r, int state_type) {
     }
     return result;
 }
+
+
 
 
 //使用武学动画
@@ -1794,7 +1953,7 @@ int BattleScene::calMagicHurt(Role* r1, Role* r2, Magic* magic)
 }
 
 //计算全部人物的伤害
-int BattleScene::calMagiclHurtAllEnemies(Role* r, Magic* m, bool simulation)
+int BattleScene::calMagiclHurtAllEnemies(Role* r, Magic* m, Zhaoshi* zhaoshi, bool simulation)
 {
     int total = 0;
     for (auto r2 : battle_roles_)

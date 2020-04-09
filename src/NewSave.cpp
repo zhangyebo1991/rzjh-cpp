@@ -1555,7 +1555,7 @@ void NewSave::SaveToCSVTimeSave(TimeSave* data, int length, int record) {
 // 招式
 // 招式
 void NewSave::SaveToCSVZhaoshiSave(const std::vector<Zhaoshi>& data, int record) {
-	std::ofstream fout("../game/save/csv/" + std::to_string(record) + "_招式.csv");
+	std::ofstream fout("../game/save/csv/" + std::to_string(record) + "_zhaoshi.csv");
 	fout << "编号";
 	fout << ",";    fout << "从属";
 	fout << ",";    fout << "顺位";
@@ -3933,7 +3933,7 @@ void NewSave::LoadFromCSVTimeSave(TimeSave* data, int length, int record) {
 // 招式
 void NewSave::LoadFromCSVZhaoshiSave(std::vector<Zhaoshi>& data, int record) {
 	data.clear();
-	io::CSVReader<57, io::trim_chars<>, io::double_quote_escape<',', '\"'>> in("../game/save/csv/" + std::to_string(record) + "_招式.csv");
+	io::CSVReader<57, io::trim_chars<>, io::double_quote_escape<',', '\"'>> in("../game/save/csv/" + std::to_string(record) + "_zhaoshi.csv");
 	in.read_header(io::ignore_missing_column | io::ignore_extra_column,
 		"编号",
 		"从属",

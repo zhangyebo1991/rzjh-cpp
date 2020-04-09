@@ -42,6 +42,7 @@ public:
         int MoveX, MoveY;
         int ActionX, ActionY;
         Magic* magic = nullptr;
+        Zhaoshi* zhaoshi = nullptr;
         Item* item = nullptr;
     };
 
@@ -54,6 +55,7 @@ public:
         role->AI_ActionY = aa.ActionY;
         role->AI_Magic = aa.magic;
         role->AI_Item = aa.item;
+        role->AI_Zhaoshi = aa.zhaoshi;
     }
 
     void getFarthestToAll(Role* role, std::vector<Role*> roles, int& x, int& y);
@@ -87,6 +89,38 @@ public:
     virtual void onPressedCancel() override
     {
         magic_ = nullptr;
+        exitWithResult(-1);
+    }
+};
+
+class BattleZhaoshiMenu : public MenuText
+{
+public:
+    BattleZhaoshiMenu() {}
+    virtual ~BattleZhaoshiMenu() {}
+
+    //virtual void onEntrance() override;
+
+    Role* role_ = nullptr;
+    Magic* magic_ = nullptr;
+    Zhaoshi* zhaoshi_ = nullptr;
+
+    void setRole(Role* r);
+    int runAsRole(Role* r)
+    {
+        setRole(r);
+        return run();
+    }
+
+    void setMagic(Magic* magic) { magic_ = magic; }
+
+    Zhaoshi* getZhaoshi() { return zhaoshi_; }
+    void onEntrance() override;
+
+    virtual void onPressedOK() override;
+    virtual void onPressedCancel() override
+    {
+        zhaoshi_ = nullptr;
         exitWithResult(-1);
     }
 };

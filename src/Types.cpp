@@ -96,6 +96,7 @@ int Role::getGongtiLevel(Magic* magic) {
 
 
 
+
 //限制人物的属性
 void Role::limit()
 {

@@ -135,7 +135,7 @@ public:
 
     virtual void actMove(Role* r);                         //移动
     virtual void actUseMagic(Role* r);                     //武学
-    virtual void actUseMagicSub(Role* r, Magic* magic);    //选择武功后，使用
+    virtual void actUseMagicSub(Role* r, Magic* magic, Zhaoshi* zhaoshi);    //选择武功和招式后，使用
     virtual void actUsePoison(Role* r);                    //用毒
     virtual void actDetoxification(Role* r);               //解毒
     virtual void actMedicine(Role* r);                     //医疗
@@ -151,13 +151,19 @@ public:
     virtual void actionAnimation(Role* r, int style, int effect_id, int shake = 0);    //行动动画
 
     virtual int calMagicHurt(Role* r1, Role* r2, Magic* magic);                         //计算武学对单人的伤害
-    virtual int calMagiclHurtAllEnemies(Role* r, Magic* m, bool simulation = false);    //计算全部人物的伤害
+    virtual int calMagiclHurtAllEnemies(Role* r, Magic* m, Zhaoshi* zhaoshi, bool simulation = false);    //计算全部人物的伤害
 
     virtual int getGongtiState(Role* r, int state_type);    //计算功体特效加成
-    virtual int getEquipeState(Role* r, int state_type);    //计算装备特效加成
+    virtual int getEquipState(Role* r, int state_type);    //计算装备特效加成
     virtual int getZhenfaState(Role* r, int state_type);    //计算阵法特效加成
     virtual int getGuanghuanState(Role* r, int state_type);    //计算光环特效加成
+    
+    virtual int getBattleSpeed(Role* r);                      //计算战斗速度
+    virtual int getMagicState(Magic* magic, int zhaoshi, int state_type); //计算招式特效
+    
+    virtual int calAttackRange(Role* r, Magic* magic, int level_index, int zhaoshi); //计算攻击距离
 
+    virtual int checkRoleIsHaveBuff(Role* r, int buffId);   //检查是否存在buff
 
     virtual int calHiddenWeaponHurt(Role* r1, Role* r2, Item* item);    //计算暗器伤害
 

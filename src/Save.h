@@ -210,6 +210,8 @@ public:
     Magic* getRoleLearnedMagic(Role* r, int i);
     int getRoleLearnedMagicLevelIndex(Role* r, Magic* m);
 
+    Zhaoshi* getRoleLearnedZhaoshi(Role* r, Magic* magic, int i);
+
     const std::vector<Role*>& getRoles() { return roles_; }
     const std::vector<Magic*>& getMagics() { return magics_; }
     const std::vector<Item*>& getItems() { return items_; }
