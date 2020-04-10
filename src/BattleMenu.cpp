@@ -9,7 +9,7 @@
 
 BattleActionMenu::BattleActionMenu(BattleScene* b)
 {
-    setStrings({ "移動", "武學", "毒术", "抗毒", "醫療", "暗器", "藥品", "等待", "狀態", "自動", "結束" });
+    setStrings({ "移動", "武學", "毒术", "专注", "醫療", "暗器", "藥品", "等待", "狀態", "自動", "休息" });
     distance_layer_.resize(BATTLEMAP_COORD_COUNT);
     battle_scene_ = b;
 }
@@ -46,7 +46,7 @@ void BattleActionMenu::setRole(Role* r)
     }
     if (role_->AntiPoison <= 0 || role_->PhysicalPower < 30)
     {
-        childs_text_["抗毒"]->setVisible(false);
+        childs_text_["专注"]->setVisible(false);
     }
     if (role_->Medicine <= 0 || role_->PhysicalPower < 10)
     {
@@ -98,7 +98,7 @@ void BattleActionMenu::dealEvent(BP_Event& e)
     Menu::dealEvent(e);
 }
 
-//"0移動", "1武學", "2用毒", "3解毒", "4醫療", "5暗器", "6藥品", "7等待", "8狀態", "9自動", "10結束"
+//"0移動", "1武學", "2用毒", "3解毒", "4醫療", "5暗器", "6藥品", "7等待", "8狀態", "9自動", "10休息"
 int BattleActionMenu::autoSelect(Role* role)
 {
     std::vector<Role*> friends, enemies;
@@ -127,7 +127,7 @@ int BattleActionMenu::autoSelect(Role* role)
         auto role_temp = &_role_temp;    //临时人物指针，用于一些含有距离衰减的计算
 
         //开始计算本轮的策略
-        role->AI_Action = getResultFromString("結束");
+        role->AI_Action = getResultFromString("休息");
         role->AI_MoveX = role->X();
         role->AI_MoveY = role->Y();
         role->AI_ActionX = role->X();
@@ -176,10 +176,10 @@ int BattleActionMenu::autoSelect(Role* role)
                 }
             }
 
-            //解毒，医疗，用毒的行为与道德相关
-            if (role->Morality > 50)
+            //专注，增加各种状态，满值后不再显示
+            if (role->Zhuanzhu < 5)
             {
-                action_text = "抗毒";
+                action_text = "专注";
                 //会解毒的，检查队友中有无中毒较深者，接近并解毒
                 if (childs_text_[action_text]->getVisible())
                 {
@@ -346,7 +346,7 @@ int BattleActionMenu::autoSelect(Role* role)
             //若评分仅有一个随机数的值，说明不在范围内，仅移动并结束
             if (aa.point == 0)
             {
-                aa.Action = getResultFromString("結束");
+                aa.Action = getResultFromString("休息");
             }
             double p = aa.point + r;
             if (p > max_point)
@@ -701,14 +701,28 @@ BattleStateMenu::BattleStateMenu()
     setTexture("menu", 68);
     //setHaveBox(true);
     int x = 20;
-    int y = 25;
+    int y = 45;
     int x_bias = 70;
     int y_bias = 30;
 
     //显示名字
     txt_name_ = std::make_shared<TextBox>();
     txt_name_->setText("");
-    addChild(txt_name_, x+90, y-30);
+    addChild(txt_name_, x+90, y-50);
+
+    //显示专注标志
+    zz_name_ = std::make_shared<TextBox>();
+    zz_name_->setText("专注：");
+    addChild(zz_name_, x, y - 30);
+    for (int i = 0; i < 5; i++) {
+        zz_value_[i] = std::make_shared<TextBox>();
+        zz_value_[i]->setTexture("menu", 20);
+        zz_value_[i]->setSize(20, 20);
+        zz_value_[i]->setVisible(false);
+        addChild(zz_value_[i], x + 80 + i * 30, y - 27);
+    }
+
+
     //显示战斗属性
     txt_qf_ = std::make_shared<TextBox>();
     txt_qf_->setText("气防");
@@ -790,9 +804,19 @@ void BattleStateMenu::setRole(Role* r)
     role_ = r;
     if (role_ == nullptr) {return;}
 
+    BP_Color c_red = { 255, 0, 0 };
+
     txt_name_->setText(convert::formatString("%s", role_->Name));
 
-    BP_Color c_red = { 255, 0, 0 };
+    for (int i = 0; i < 5; i++) {
+        if (i < role_->Zhuanzhu) {
+            zz_value_[i]->setTexture("menu",19);
+        }
+        else {
+            zz_value_[i]->setTexture("menu", 20);
+        }
+    }
+
     txt_qf_value_->setText(convert::formatString("%d", role_->qf_));
     txt_yg_value_->setText(convert::formatString("%d", role_->yg_));
     txt_lh_value_->setText(convert::formatString("%d", role_->lh_));

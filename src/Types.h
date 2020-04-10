@@ -269,7 +269,10 @@ public:
 	//战场特效
 	int Wait, frozen, Knowledge, LifeAdd, isBang, IsShuaiJian, Zhuanzhu, pozhao, wanfang; //24
 
-	int qf_, yg_, lh_, xq_, sf_, ff_, zy_, jz_, js_, sd_;	//战斗状态
+	int qf_, yg_, lh_, xq_, sf_, ff_, zy_, jz_, js_, sd_;	//战斗状态：气防，硬功，灵活，行气，身法，奋发，战意，精准，急速，闪躲
+	int lqf_, lyg_, llh_, lxq_, lsf_, lff_, lzy_, ljz_, ljs_, lsd_;	//战斗状态底线（最小值）：气防，硬功，灵活，行气，身法，奋发，战意，精准，急速，闪躲
+
+	int battleSpeed, battleAttack, battleDefence;	//战斗属性
 
 
 	BattleBuff buff[5]; // 玩家身上的buff和debuff记录

@@ -94,7 +94,7 @@ void BattleScene::draw()
         Engine::getInstance()->renderCopy(earth_texture_, &rect0, &rect1, 1);
     }
 
-#ifndef _DEBUG
+//#ifndef _DEBUG
     for (int sum = -view_sum_region_; sum <= view_sum_region_ + 15; sum++)
     {
         for (int i = -view_width_region_; i <= view_width_region_; i++)
@@ -146,7 +146,7 @@ void BattleScene::draw()
             }
         }
     }
-#endif
+//#endif
     for (int sum = -view_sum_region_; sum <= view_sum_region_ + 15; sum++)
     {
         for (int i = -view_width_region_; i <= view_width_region_; i++)
@@ -275,6 +275,20 @@ void BattleScene::dealEvent(BP_Event& e)
 
     acting_role_ = role;
 
+    //每轮开始初始化一些状态
+    //每轮计算新的战场属性
+    calBattleSpeed(role);
+    calBattleAttack(role);
+    calBattleDefence(role);
+    calDixian(role);
+
+    //初始化行动力
+    calMoveStep(role);
+
+    //连招初始化
+    role->lianzhao = 0;
+    role->isLianzhao = 0;
+
     //定位
     man_x_ = role->X();
     man_y_ = role->Y();
@@ -343,7 +357,7 @@ void BattleScene::onEntrance()
     //注意此时才能得到窗口的大小，用来设置头像的位置
     head_self_->setPosition(10, 20);
     battle_state_menu_->setPosition(720, 20);
-    battle_state_menu_->setSize(280, 180);
+    battle_state_menu_->setSize(280, 220);
 
     //RunElement::addOnRootTop(MainScene::getInstance()->getWeather());
     addChild(MainScene::getInstance()->getWeather());
@@ -697,7 +711,7 @@ void BattleScene::resetRolesAct()
     }
 }
 
-int BattleScene::getBattleSpeed(Role* r){
+int BattleScene::calBattleSpeed(Role* r){
     int speed = r->Speed;
     //装备效果
     if (r->Equip[0] >= 0)
@@ -740,8 +754,97 @@ int BattleScene::getBattleSpeed(Role* r){
     //如果瘋魔狀態,輕功+10%
     if (checkRoleIsHaveBuff(r, 7) != 0)
         speed += speed * 10 / 100;
-
+    r->BattleSpeed = speed;
     return speed;
+}
+
+
+int BattleScene::calBattleAttack(Role* r) {
+    int attack = r->Attack;
+    //装备效果
+    if (r->Equip[0] >= 0)
+    {
+        auto i = Save::getInstance()->getItem(r->Equip[0]);
+        attack += i->AddAttack;
+    }
+    if (r->Equip[1] >= 0)
+    {
+        auto i = Save::getInstance()->getItem(r->Equip[1]);
+        attack += i->AddAttack;
+    }
+    if (r->Equip[2] >= 0)
+    {
+        auto i = Save::getInstance()->getItem(r->Equip[2]);
+        attack += i->AddAttack;
+    }
+    if (r->Equip[3] >= 0)
+    {
+        auto i = Save::getInstance()->getItem(r->Equip[3]);
+        attack += i->AddAttack;
+    }
+    if (r->Equip[4] >= 0)
+    {
+        auto i = Save::getInstance()->getItem(r->Equip[4]);
+        attack += i->AddAttack;
+    }
+
+    //内功和特技加成
+    if (r->Gongti > -1) {
+        attack += Save::getInstance()->getMagic(r->MagicID[r->Gongti])->AddAttack[r->getRoleMagicLevelIndex(r->Gongti)];
+    }
+
+    if (r->zbtj > -1) {
+        attack += Save::getInstance()->getMagic(r->MagicID[r->zbtj])->AddAttack[r->getRoleMagicLevelIndex(r->zbtj)];
+    }
+
+    //攻击收内伤和中毒影响
+    attack *= 100 / (100 + r->Hurt + r->Poison);
+    r->battleAttack = attack;
+    return attack;
+}
+
+int BattleScene::calBattleDefence(Role* r) {
+    int defence = r->Defence;
+    //装备效果
+    if (r->Equip[0] >= 0)
+    {
+        auto i = Save::getInstance()->getItem(r->Equip[0]);
+        defence += i->AddDefence;
+    }
+    if (r->Equip[1] >= 0)
+    {
+        auto i = Save::getInstance()->getItem(r->Equip[1]);
+        defence += i->AddDefence;
+    }
+    if (r->Equip[2] >= 0)
+    {
+        auto i = Save::getInstance()->getItem(r->Equip[2]);
+        defence += i->AddDefence;
+    }
+    if (r->Equip[3] >= 0)
+    {
+        auto i = Save::getInstance()->getItem(r->Equip[3]);
+        defence += i->AddDefence;
+    }
+    if (r->Equip[4] >= 0)
+    {
+        auto i = Save::getInstance()->getItem(r->Equip[4]);
+        defence += i->AddDefence;
+    }
+
+    //内功和特技加成
+    if (r->Gongti > -1) {
+        defence += Save::getInstance()->getMagic(r->MagicID[r->Gongti])->AddDefence[r->getRoleMagicLevelIndex(r->Gongti)];
+    }
+
+    if (r->zbtj > -1) {
+        defence += Save::getInstance()->getMagic(r->MagicID[r->zbtj])->AddDefence[r->getRoleMagicLevelIndex(r->zbtj)];
+    }
+
+    //攻击收内伤和中毒影响
+    defence *= 100 / (100 + r->Hurt + r->Poison);
+    r->battleDefence = defence;
+    return defence;
 }
 
 int BattleScene::calMoveStep(Role* r)
@@ -751,7 +854,7 @@ int BattleScene::calMoveStep(Role* r)
     {
         return 0;
     }
-    double speed = getBattleSpeed(r);
+    double speed = r->BattleSpeed;
 
     int step = speed / 15 + 1;
 
@@ -938,6 +1041,29 @@ int BattleScene::getMagicState(Magic* magic, int zhaoshi, int state_type) {
          }
      }
      return result;
+}
+
+int BattleScene::getMagicState(Magic* magic, Zhaoshi* zhaoshi, int state_type) {
+
+    int result = 0;
+    int id = 0;
+    int num = 0;
+    if (magic->BattleState >= 0) {
+        id = magic->BattleState / 100; //计算特效ID
+        num = magic->BattleState % 100; //计算特效数值
+    }
+    if (id == state_type) {
+        result += num;
+    }
+
+    if (zhaoshi >= 0) {
+        for (auto i: zhaoshi->texiao) {
+            if (i.Type - 200 == state_type) {
+                result += i.Value;
+            }
+        }
+    }
+    return result;
 }
 
 int BattleScene::calAttackRange(Role* r, Magic* magic, int level_index, int zhaoshi)
@@ -1144,6 +1270,7 @@ void BattleScene::action(Role* r)
     r->Network_Action = battle_menu_->getResult();
     std::string str = battle_menu_->getResultString();
 
+    
     //这里如果用整型表示返回，添加新项就太复杂了
     if (str == "移動")
     {
@@ -1157,9 +1284,10 @@ void BattleScene::action(Role* r)
     {
         actUsePoison(r);
     }
-    else if (str == "抗毒")
+    else if (str == "专注")
     {
-        actDetoxification(r);
+        actZhuanzhu(r);
+        //actDetoxification(r);
     }
     else if (str == "醫療")
     {
@@ -1187,7 +1315,7 @@ void BattleScene::action(Role* r)
         // 定为废操作 不然对面也自动了
         r->Network_Action = -1;
     }
-    else if (str == "結束")
+    else if (str == "休息")
     {
         actRest(r);
     }
@@ -1220,7 +1348,7 @@ void BattleScene::action(Role* r)
 
 void BattleScene::actMove(Role* r)
 {
-    int step = calMoveStep(r);
+    int step = r->Step;
     calSelectLayer(r, 0, step);
     battle_cursor_->setRoleAndMagic(r);
     battle_cursor_->setMode(BattleCursor::Move);
@@ -1293,53 +1421,140 @@ void BattleScene::actUseMagic(Role* r)
             actUseMagicSub(r, magic, zhaoshi);
             break;
         }
+
     }
 }
+
+
+int BattleScene::calLianji(Role* r, Magic* magic, Zhaoshi* zhaoshi) {
+    //获取战意增加连击
+    int temp = r->zy_;
+    if (checkRoleIsHaveBuff(r, 1) != 0) { // 冰凍期間戰意發揮一半
+        temp /= 2;
+    }
+    //增加连击几率
+    temp += getEquipState(r, 144);
+    temp += getGongtiState(r, 144);
+    temp += getZhenfaState(r, 144);
+    temp += getMagicState(magic, zhaoshi, 144);
+    
+    while(temp > rng_.rand_int(100)) {
+        r->lianzhao++;
+        temp = temp * 2 / 3;
+    }
+    return r->lianzhao;
+}
+
+void BattleScene::calZhuanzhu(Role* r) {
+    for (int i = 0; i < r->Zhuanzhu; i++)
+    {
+        r->ff_ = std::max(r->lff_, r->ff_ - rng_.rand_int(i + 2));
+        r->zy_ = std::max(r->lzy_, r->zy_ - rng_.rand_int((i + 2) / 3 * 10));
+        r->jz_ = std::max(r->ljz_, r->jz_ - rng_.rand_int((i + 2) / 3 * 10));
+        r->js_ = std::max(r->ljs_, r->js_ - rng_.rand_int((i + 2) / 3 * 10));
+        r->sd_ = std::max(r->lsd_, r->sd_ - rng_.rand_int((i + 2) / 3 * 5));
+    }
+    r->Zhuanzhu = 0;
+}
+
+//计算状态底线
+void BattleScene::calDixian(Role* r) {
+
+    r->lqf_= 0; 
+    r->lyg_= 0; 
+    r->llh_= 0; 
+    r->lxq_= 0; 
+    r->lsf_= 0; 
+    r->lff_= 0; 
+    r->lzy_= 0; 
+    r->ljz_= 0; 
+    r->ljs_= 0; 
+    r->lsd_= 0;	
+
+    //8 躲闪
+    r->lsd_ += getEquipState(r, 8);
+    r->lsd_ += getGongtiState(r, 8);
+    r->lsd_ += getZhenfaState(r, 8);
+    r->sd_ = std::max(r->lsd_, r->sd_);
+
+    //159 战意
+    
+    r->lzy_ += getEquipState(r, 159);
+    r->lzy_ += getGongtiState(r, 159);
+    r->lzy_ += getZhenfaState(r, 159);
+    r->zy_ = std::max(r->lzy_, r->zy_);
+
+    //160 奋发
+    r->lff_ += getEquipState(r, 160);
+    r->lff_ += getGongtiState(r, 160);
+    r->lff_ += getZhenfaState(r, 160);
+    r->ff_ = std::max(r->lff_, r->ff_);
+    
+    //35 精准
+    r->ljz_ += getEquipState(r, 35);
+    r->ljz_ += getGongtiState(r, 35);
+    r->ljz_ += getZhenfaState(r, 35);
+    r->jz_ = std::max(r->ljz_, r->jz_);
+
+}                    
 
 void BattleScene::actUseMagicSub(Role* r, Magic* magic, Zhaoshi* zhaoshi)
 {
     // 每次攻击，每个人的文字动画数据
     std::vector<std::vector<Role::ActionShowInfo>> multi_shows;
 
-    for (int i = 0; i <= GameUtil::sign(r->AttackTwice); i++)
+    calLianji(r, magic, zhaoshi);
+
+    for (int j = 0; j <= r->lianzhao; j++)
     {
-        int level_index = r->getMagicLevelIndex(magic->ID);
-        //计算伤害
-        r->PhysicalPower = GameUtil::limit(r->PhysicalPower - 3, 0, Role::getMaxValue()->PhysicalPower);
-        r->MP = GameUtil::limit(r->MP - magic->calNeedMP(level_index), 0, r->MaxMP);
-        calMagiclHurtAllEnemies(r, magic, zhaoshi);
-
-        // 做显示部分，由于多次攻击，并且数据动画分离，需要分开保存显示信息
-        multi_shows.emplace_back();
-        for (auto r : battle_roles_)
+        for (int i = 0; i <= GameUtil::sign(r->AttackTwice); i++)
         {
-            if (r->Show.BattleHurt != 0)
+            int level_index = r->getMagicLevelIndex(magic->ID);
+            //计算伤害
+            r->PhysicalPower = GameUtil::limit(r->PhysicalPower - 3, 0, Role::getMaxValue()->PhysicalPower);
+            r->MP = GameUtil::limit(r->MP - magic->calNeedMP(level_index), 0, r->MaxMP);
+            calMagiclHurtAllEnemies(r, magic, zhaoshi);
+
+            // 做显示部分，由于多次攻击，并且数据动画分离，需要分开保存显示信息
+            multi_shows.emplace_back();
+            for (auto r : battle_roles_)
             {
-                if (magic->HurtType == 0)
+                if (r->Show.BattleHurt != 0)
                 {
+                    //if (magic->HurtType == 0)
+                    //{
+                    if (i > 0) {
+                        r->addShowString(convert::formatString("%s", "左右互搏！"), { 20, 20, 220, 255 });
+                    }else if (j > 0) {
+                        r->addShowString(convert::formatString("%s%d%s", "第", j, "次连击！"), { 20, 220, 20, 255 });
+                    }
                     r->addShowString(convert::formatString("-%d", r->Show.BattleHurt), { 255, 20, 20, 255 });
+                    //}
+                    /*
+                    else if (magic->HurtType == 1)
+                    {
+                        r->addShowString(convert::formatString("-%d", r->Show.BattleHurt), { 160, 32, 240, 255 });
+                        // 吸内力不做渐变显示，麻烦
+                        r->Show.BattleHurt = 0;
+                    }
+                    */
                 }
-                else if (magic->HurtType == 1)
-                {
-                    r->addShowString(convert::formatString("-%d", r->Show.BattleHurt), { 160, 32, 240, 255 });
-                    // 吸内力不做渐变显示，麻烦
-                    r->Show.BattleHurt = 0;
-                }
+                multi_shows.back().push_back(r->Show);
+                r->Show.clear();
             }
-            multi_shows.back().push_back(r->Show);
-            r->Show.clear();
-        }
 
-        //武学等级增加
-        auto index = r->getMagicOfRoleIndex(magic);
-        if (index >= 0)
-        {
-            r->MagicLevel[index] += 1 + rng_.rand_int(2);
-            GameUtil::limit2(r->MagicLevel[index], 0, MAX_MAGIC_LEVEL);
+            //武学等级增加
+            auto index = r->getMagicOfRoleIndex(magic);
+            if (index >= 0)
+            {
+                r->MagicLevel[index] += 1 + rng_.rand_int(2);
+                GameUtil::limit2(r->MagicLevel[index], 0, MAX_MAGIC_LEVEL);
+            }
+            printf("%s %s level is %d\n", PotConv::to_read(r->Name).c_str(), PotConv::to_read(magic->Name).c_str(), r->MagicLevel[index]);
         }
-        printf("%s %s level is %d\n", PotConv::to_read(r->Name).c_str(), PotConv::to_read(magic->Name).c_str(), r->MagicLevel[index]);
     }
     r->Acted = 1;
+    calZhuanzhu(r); //清空专注
 
     // multi_shows需要复制，因为已经离开此栈
     actionAnimation_ = [this, r, magic, multi_shows]() mutable
@@ -1419,6 +1634,25 @@ void BattleScene::actDetoxification(Role* r)
             showNumberAnimation();
         };
     }
+}
+
+void BattleScene::actZhuanzhu(Role* r)
+{
+    r->PhysicalPower = GameUtil::limit(r->PhysicalPower - 5, 0, Role::getMaxValue()->PhysicalPower);
+
+    r->ff_ += rng_.rand_int(r->Zhuanzhu + 2);
+    r->zy_ += rng_.rand_int((r->Zhuanzhu + 2) / 3 * 10);
+    r->jz_ += rng_.rand_int((r->Zhuanzhu + 2) / 3 * 10);
+    r->js_ += rng_.rand_int((r->Zhuanzhu + 2) / 3 * 10);
+    r->sd_ += rng_.rand_int((r->Zhuanzhu + 2) / 3 * 5);
+
+    r->Zhuanzhu++;
+    //actionAnimation_ = [this, r]()
+    //{
+       // actionAnimation(r, 0, 0);
+        //showNumberAnimation();
+    //};
+    r->Acted = 1;
 }
 
 void BattleScene::actMedicine(Role* r)
@@ -1569,6 +1803,7 @@ void BattleScene::actRest(Role* r)
         r->HP = GameUtil::limit(r->HP + 0.05 * r->MaxHP, 0, r->MaxHP);
         r->MP = GameUtil::limit(r->MP + 0.05 * r->MaxMP, 0, r->MaxMP);
     }
+    calZhuanzhu(r);
     r->Acted = 1;
 }
 
@@ -1965,8 +2200,8 @@ int BattleScene::calMagiclHurtAllEnemies(Role* r, Magic* m, Zhaoshi* zhaoshi, bo
             if (!simulation)
             {
                 r2->Show.BattleHurt = hurt;
-                if (m->HurtType == 0)
-                {
+                //if (m->HurtType == 0)
+                //{
                     r2->Show.BattleHurt = GameUtil::limit(r2->Show.BattleHurt, -(r2->MaxHP - r2->HP), r2->HP);
                     r->ExpGot += r2->Show.BattleHurt;
                     if (r2->HP == r2->Show.BattleHurt)
@@ -1974,7 +2209,8 @@ int BattleScene::calMagiclHurtAllEnemies(Role* r, Magic* m, Zhaoshi* zhaoshi, bo
                         r->ExpGot += r2->Show.BattleHurt / 2;
                     }
                     r2->Show.ProgressChange = -hurt / 5;
-                }
+                //}
+                /*
                 else if (m->HurtType == 1)
                 {
                     int prevMP = r2->MP;
@@ -1983,6 +2219,7 @@ int BattleScene::calMagiclHurtAllEnemies(Role* r, Magic* m, Zhaoshi* zhaoshi, bo
                     int hurt1 = prevMP - r2->MP;
                     r->ExpGot += hurt1 / 2;
                 }
+                */
             }
             else
             {

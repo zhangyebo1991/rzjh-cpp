@@ -153,11 +153,12 @@ public:
     virtual ~BattleStateMenu() {}
 
 private:
-
-    std::shared_ptr<TextBox> txt_name_, txt_qf_, txt_yg_, txt_lh_, txt_xq_, txt_sf_, 
+    
+    std::shared_ptr<TextBox> txt_name_, zz_name_, txt_qf_, txt_yg_, txt_lh_, txt_xq_, txt_sf_,
         txt_ff_, txt_zy_, txt_jz_, txt_js_, txt_sd_;
     std::shared_ptr<TextBox> txt_qf_value_, txt_yg_value_, txt_lh_value_, txt_xq_value_, txt_sf_value_, 
         txt_ff_value_, txt_zy_value_, txt_jz_value_, txt_js_value_, txt_sd_value_;
+    std::shared_ptr<TextBox> zz_value_[5];
     std::shared_ptr<Menu> state_menu_;
 
     Role* role_ = nullptr;

@@ -88,7 +88,7 @@ void NewSave::SaveToCSVItemList(ItemList* data, int length, int record) {
 }
 // 人物
 void NewSave::SaveToCSVRoleSave(const std::vector<Role>& data, int record) {
-	std::ofstream fout("../game/save/csv/" + std::to_string(record) + "_人物.csv");
+	std::ofstream fout("../game/save/csv/" + std::to_string(record) + "_renwu.csv");
 	fout << "编号";
 	fout << ",";    fout << "头像/战斗代号";
 	fout << ",";    fout << "生命增长";
@@ -1873,7 +1873,7 @@ void NewSave::SaveToCSVMenpaiSave(const std::vector<Menpai>& data, int record) {
 }
 // 标签
 void NewSave::SaveToCSVRSignSave(const std::vector<RSign>& data, int record) {
-	std::ofstream fout("../game/save/csv/" + std::to_string(record) + "_标签.csv");
+	std::ofstream fout("../game/save/csv/" + std::to_string(record) + "_biaoqian.csv");
 	fout << "编号";
 	fout << ",";    fout << "名称";
 	fout << ",";    fout << "效果";
@@ -2069,7 +2069,7 @@ void NewSave::LoadFromCSVItemList(ItemList* data, int length, int record) {
 void NewSave::LoadFromCSVRoleSave(std::vector<Role>& data, int record) {
 	data.clear();
 	data.shrink_to_fit();
-	io::CSVReader<307, io::trim_chars<>, io::double_quote_escape<',', '\"'>> in("../game/save/csv/" + std::to_string(record) + "_人物.csv");
+	io::CSVReader<307, io::trim_chars<>, io::double_quote_escape<',', '\"'>> in("../game/save/csv/" + std::to_string(record) + "_renwu.csv");
 	in.read_header(io::ignore_missing_column | io::ignore_extra_column,
 		"编号",
 		"头像/战斗代号",
@@ -4390,7 +4390,7 @@ void NewSave::LoadFromCSVMenpaiSave(std::vector<Menpai>& data, int record) {
 // 标签
 void NewSave::LoadFromCSVRSignSave(std::vector<RSign>& data, int record) {
 	data.clear();
-	io::CSVReader<55, io::trim_chars<>, io::double_quote_escape<',', '\"'>> in("../game/save/csv/" + std::to_string(record) + "_标签.csv");
+	io::CSVReader<55, io::trim_chars<>, io::double_quote_escape<',', '\"'>> in("../game/save/csv/" + std::to_string(record) + "_biaoqian.csv");
 	in.read_header(io::ignore_missing_column | io::ignore_extra_column,
 		"编号",
 		"名称",

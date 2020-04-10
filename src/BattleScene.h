@@ -137,7 +137,8 @@ public:
     virtual void actUseMagic(Role* r);                     //武学
     virtual void actUseMagicSub(Role* r, Magic* magic, Zhaoshi* zhaoshi);    //选择武功和招式后，使用
     virtual void actUsePoison(Role* r);                    //用毒
-    virtual void actDetoxification(Role* r);               //解毒
+    virtual void actDetoxification(Role* r);               //解毒，人在江湖取消
+    virtual void actZhuanzhu(Role* r);                     //专注
     virtual void actMedicine(Role* r);                     //医疗
     virtual void actUseHiddenWeapon(Role* r);              //暗器
     virtual void actUseDrug(Role* r);                      //吃药
@@ -158,16 +159,26 @@ public:
     virtual int getZhenfaState(Role* r, int state_type);    //计算阵法特效加成
     virtual int getGuanghuanState(Role* r, int state_type);    //计算光环特效加成
     
-    virtual int getBattleSpeed(Role* r);                      //计算战斗速度
+    virtual int calBattleSpeed(Role* r);                      //计算战斗速度
+    virtual int calBattleAttack(Role* r);                      //计算战斗攻击
+    virtual int calBattleDefence(Role* r);                      //计算战斗防御
+
     virtual int getMagicState(Magic* magic, int zhaoshi, int state_type); //计算招式特效
+    virtual int getMagicState(Magic* magic, Zhaoshi* zhaoshi, int state_type); 
     
     virtual int calAttackRange(Role* r, Magic* magic, int level_index, int zhaoshi); //计算攻击距离
+
+    virtual int calLianji(Role* r, Magic* magic, Zhaoshi* zhaoshi);//计算连击几率
 
     virtual int checkRoleIsHaveBuff(Role* r, int buffId);   //检查是否存在buff
 
     virtual int calHiddenWeaponHurt(Role* r1, Role* r2, Item* item);    //计算暗器伤害
 
+    virtual void calDixian(Role* r);                      //计算状态底线
+    virtual void calZhuanzhu(Role* r);                      //每次攻击专注换算状态
     virtual void showMagicName(std::string name);    //显示武学名
+
+
 
     //显示数字
     virtual void showNumberAnimation(

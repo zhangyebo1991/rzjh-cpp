@@ -110,7 +110,7 @@ void BattleCursor::onEntrance()
     Engine::getInstance()->getWindowSize(w, h);
     head_selected_->setPosition(w - 400, h - 150);
     state_menu_selected_->setPosition(50, h - 220);
-    state_menu_selected_->setSize(280, 180);
+    state_menu_selected_->setSize(280, 220);
     battle_scene_->towards_ = role_->FaceTowards;
 
     if (role_->isAuto() || role_->Networked)
