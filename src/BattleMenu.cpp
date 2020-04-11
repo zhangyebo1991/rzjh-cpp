@@ -519,12 +519,12 @@ void BattleMagicMenu::setRole(Role* r)
     magic_ = nullptr;
     setVisible(true);
     std::vector<std::string> magic_names;
-    for (int i = 0; i < ROLE_MAGIC_COUNT; i++)
+    for (int i = 0; i < ROLE_ACTIVE_MAGIC_COUNT; i++)
     {
-        auto m = Save::getInstance()->getRoleLearnedMagic(role_, i);
-        if (m)
+        auto m = Save::getInstance()->getRoleActiveMagic(role_,i);
+        if (m!=nullptr&& m->MagicType<5 )
         {
-            magic_names.push_back(convert::formatString("%-12s%4d  ", m->Name, role_->getRoleShowLearnedMagicLevel(i)));
+            magic_names.push_back(convert::formatString("%-12s%4d  ", m->Name, role_->getRoleShowLearnedMagicLevel(role_->JhMagic[i])));
         }
         else
         {
@@ -550,7 +550,7 @@ void BattleMagicMenu::setRole(Role* r)
 void BattleMagicMenu::onPressedOK()
 {
     checkActiveToResult();
-    magic_ = Save::getInstance()->getRoleLearnedMagic(role_, result_);
+    magic_ = Save::getInstance()->getRoleActiveMagic(role_, result_);
     if (magic_)
     {
         setExit(true);
@@ -572,7 +572,20 @@ void BattleZhaoshiMenu::onEntrance()
         setVisible(false);
         return;
     }
+    zhaoshi_state_ = std::make_shared<ZhaoshiStateMenu>();
+    addChild(zhaoshi_state_);
     forceActiveChild();
+}
+
+void BattleZhaoshiMenu::draw() {
+    int i = getActiveChildIndex();
+    if (i != current_ac_id) {
+        if (role_ != nullptr && i >= 0 && i < zhaoshis_.size()) {
+            //auto zhaoshi = Save::getInstance()->getRoleLearnedZhaoshi(role_, magic_, i);;
+            zhaoshi_state_->setZhaoshi(zhaoshis_[i]);
+        }
+    }  
+    TextBox::draw();
 }
 
 void BattleZhaoshiMenu::setRole(Role* r)
@@ -582,6 +595,7 @@ void BattleZhaoshiMenu::setRole(Role* r)
     zhaoshi_ = nullptr;
     setVisible(true);
     std::vector<std::string> zhaoshi_names;
+    std::vector<Zhaoshi*> zhaoshis;
     int zs_state = r->LZhaoshi[r->getMagicOfRoleIndex(magic_)];
     int zs_array[5];
     for (int j = 0; j < 5; j++) {
@@ -595,7 +609,10 @@ void BattleZhaoshiMenu::setRole(Role* r)
         if (j > 0)
         {
             auto m = Save::getInstance()->getZhaoshi(j);
-            zhaoshi_names.push_back(convert::formatString("%-12s  ", m->Name));
+            if (m->ygongji) {
+                zhaoshi_names.push_back(convert::formatString("%-12s  ", m->Name));
+                zhaoshis.push_back(m);
+            }
         }
         else
         {
@@ -603,7 +620,7 @@ void BattleZhaoshiMenu::setRole(Role* r)
         }        
     }       
 
-
+    zhaoshis_ = zhaoshis;
     setStrings(zhaoshi_names);
     setPosition(160, 200);
 
@@ -862,3 +879,129 @@ void BattleStateMenu::setRole(Role* r)
 }
 
 
+ZhaoshiStateMenu::ZhaoshiStateMenu()
+{
+
+    setTexture("menu", 68);
+    //setHaveBox(true);
+    setText("招式效果");
+    setTextPosition(20, 5);
+    setHaveBox(false);
+    setFontSize(30);
+
+    setPosition(300, 300);
+    setSize(400, 220);
+    setVisible(true);
+
+}
+
+
+void ZhaoshiStateMenu::setZhaoshi(Zhaoshi* zhaoshi) {
+    zhaoshi_ = zhaoshi;
+    if (zhaoshi_ == nullptr) {
+        return;
+    }
+    clearChilds();
+    setVisible(true);
+
+    std::string strs[69] = {""};
+    strs[0] = "削气";
+    strs[1] = "削硬";
+    strs[2] = "削灵";
+    strs[3] = "削行";
+    strs[4] = "削身";
+    strs[10] = "奋发";
+    strs[11] = "战意";
+    strs[12] = "精准";
+    strs[13] = "急速";
+    strs[14] = "躲闪";
+    strs[15] = "愤力";
+    strs[16] = "免疫";
+    strs[17] = "储力";
+    strs[18] = "机敏";
+    strs[20] = "御气";
+    strs[21] = "御硬";
+    strs[22] = "御灵";
+    strs[23] = "御行";
+    strs[24] = "御身";
+    strs[25] = " ";
+    strs[30] = "加气";
+    strs[31] = "加硬";
+    strs[32] = "加灵";
+    strs[33] = "加行";
+    strs[34] = "加身";
+    strs[40] = "回气";
+    strs[41] = "回硬";
+    strs[42] = "回灵";
+    strs[43] = "回行";
+    strs[44] = "回身";
+    strs[45] = "回命";
+    strs[46] = "回内";
+    strs[50] = "耗气";
+    strs[51] = "耗硬";
+    strs[52] = "耗灵";
+    strs[53] = "耗行";
+    strs[54] = "耗身";
+    strs[60] = "气防";
+    strs[61] = "硬功";
+    strs[62] = "灵活";
+    strs[63] = "行气";
+    strs[64] = "身法";
+    strs[65] = "奋发";
+    strs[66] = "战意";
+    strs[67] = "精准";
+    strs[68] = "急速";
+
+
+    int x = 20;
+    int y = 45;
+    int x_bias = 50;
+    int y_bias = 30;
+
+    //显示招式属性
+    if (zhaoshi->gongji) {
+        auto jiagong = std::make_shared<TextBox>();
+        jiagong->setHaveBox(false);
+        jiagong->setText(convert::formatString("%s", "攻击加成"));
+        addChild(jiagong, x, y);
+        auto jiagong_value = std::make_shared<TextBox>();
+        jiagong_value->setHaveBox(false);
+        jiagong_value->setText(convert::formatString("%d", zhaoshi->gongji));
+        addChild(jiagong_value, x + 2*x_bias, y);
+        x = x + 4*x_bias;
+    }
+    if (zhaoshi->fangyu) {
+        auto fangyu = std::make_shared<TextBox>();
+        fangyu->setHaveBox(false);
+        fangyu->setText(convert::formatString("%s", "防御加成"));
+        addChild(fangyu, x, y);
+        auto fangyu_value = std::make_shared<TextBox>();
+        fangyu_value->setHaveBox(false);
+        fangyu_value->setText(convert::formatString("%d", zhaoshi->fangyu));
+        addChild(fangyu_value, x + 2 * x_bias, y);
+    }
+    
+    x = 20;
+    y = 75;
+    int j = 0;
+    for (auto i : zhaoshi_->texiao) {
+        if (i.Type > 0 && i.Type < 69) {
+            auto texiao = std::make_shared<TextBox>();
+            texiao->setHaveBox(false);
+            texiao->setText(strs[i.Type]);
+            addChild(texiao, x, y);
+            auto texiao_value = std::make_shared<TextBox>();
+            texiao_value->setHaveBox(false);
+            texiao_value->setText(convert::formatString("%d", i.Value));
+            addChild(texiao_value, x + x_bias, y);
+            j++;
+            if (j % 3==0) {
+                y = y + y_bias;
+            }
+            else {
+                x = x + 2*x_bias;
+            }
+        }
+    }
+
+}

@@ -307,6 +307,30 @@ Magic* Save::getRoleLearnedMagic(Role* r, int i)
     return getMagic(r->MagicID[i]);
 }
 
+Magic* Save::getRoleActiveMagic(Role* r, int i)
+{
+    if (i < 0 || i >= ROLE_ACTIVE_MAGIC_COUNT)
+    {
+        return nullptr;
+    }
+    return getRoleLearnedMagic(r, r->JhMagic[i]);
+}
+
+int Save::getRoleActiveMagicLevel(Role* r, int i)
+{
+    if (i < 0 || i >= ROLE_ACTIVE_MAGIC_COUNT)
+    {
+        return -1;
+    }
+    return r->getRoleShowLearnedMagicLevel(r->JhMagic[i]);
+}
+
+int Save::getActiveMagicIndex(Role* r, int j)
+{
+    return r->JhMagic[j];
+}
+
+
 Zhaoshi* Save::getRoleLearnedZhaoshi(Role* r, Magic* magic, int i)
 {
     if (i < 0 || i >= 6)

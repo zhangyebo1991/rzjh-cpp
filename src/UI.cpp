@@ -9,10 +9,14 @@ UI::UI()
     ui_status_ = std::make_shared<UIStatus>();
     ui_item_ = std::make_shared<UIItem>();
     ui_system_ = std::make_shared<UISystem>();
+    ui_magic_ = std::make_shared<UIMagic>();
     ui_status_->setPosition(300, 0);
     ui_item_->setPosition(300, 0);
     ui_system_->setPosition(300, 0);
+    ui_magic_->setPosition(300, 0);
     addChild(ui_status_);
+    addChild(ui_magic_);
+
 
     //貌似这里不能直接调用其他单例，静态量的创建顺序不确定
     button_status_ = std::make_shared<Button>();
@@ -21,9 +25,13 @@ UI::UI()
     button_item_->setTexture("title", 124);
     button_system_ = std::make_shared<Button>();
     button_system_->setTexture("title", 125);
+    button_magic_ = std::make_shared<Button>();
+    button_magic_->setText("武学");
+    //button_magic_->setTexture("title", 125);
     addChild(button_status_, 10, 10);
-    addChild(button_item_, 90, 10);
-    addChild(button_system_, 170, 10);
+    addChild(button_magic_, 90, 10);
+    addChild(button_item_, 170, 10);
+    addChild(button_system_, 250, 10);
     heads_ = std::make_shared<Menu>();
     addChild(heads_);
     for (int i = 0; i < TEAMMATE_COUNT; i++)
@@ -62,6 +70,7 @@ void UI::dealEvent(BP_Event& e)
         if (head->getState() == Pass)
         {
             ui_status_->setRole(role);
+            ui_magic_->setRole(role);
             current_head_ = i;
         }
         head->setText("");
@@ -71,7 +80,8 @@ void UI::dealEvent(BP_Event& e)
             Item* item = ui_item_->getCurrentItem();
             if (item)
             {
-                if (role->Equip[0] == item->ID || role->Equip[1] == item->ID || role->PracticeItem == item->ID)
+                if (role->Equip[0] == item->ID || role->Equip[1] == item->ID || role->Equip[2] == item->ID 
+                    || role->Equip[3] == item->ID || role->Equip[4] == item->ID || role->PracticeItem == item->ID)
                 {
                     head->setText("使用中");
                     //Font::getInstance()->draw("使用中", 25, x + 5, y + 60, { 255,255,255,255 });
@@ -103,24 +113,29 @@ void UI::dealEvent(BP_Event& e)
             current_button_ = 0;
             break;
         case BPK_2:
+            childs_[0] = ui_magic_;
+            setAllChildState(Normal);
+            button_magic_->setState(Press);
+            current_button_ = 1;
+        case BPK_3:
             childs_[0] = ui_item_;
             setAllChildState(Normal);
             button_item_->setState(Press);
-            current_button_ = 1;
+            current_button_ = 2;
             break;
-        case BPK_3:
+        case BPK_4:
             childs_[0] = ui_system_;
             setAllChildState(Normal);
             button_system_->setState(Press);
-            current_button_ = 2;
+            current_button_ = 3;
             break;
         default:
             break;
         }
     }
 
-    //仅在状态部分，左侧头像才接收事件
-    if (childs_[0] == ui_status_)
+    //仅在状态部分，左侧头像才接收事件 ,在武学部分也会接收事件
+    if (childs_[0] == ui_status_ || childs_[0] == ui_magic_)
     {
         heads_->setDealEvent(1);
     }
@@ -155,6 +170,11 @@ void UI::onPressedOK()
     {
         childs_[0] = ui_status_;
         current_button_ = button_status_->getTag();
+    }
+    if (button_item_->getState() == Press)
+    {
+        childs_[0] = ui_magic_;
+        current_button_ = button_magic_->getTag();
     }
     if (button_item_->getState() == Press)
     {

@@ -210,6 +210,10 @@ public:
     Magic* getRoleLearnedMagic(Role* r, int i);
     int getRoleLearnedMagicLevelIndex(Role* r, Magic* m);
 
+    Magic* getRoleActiveMagic(Role* r, int i);   //获取激活武功
+    int getRoleActiveMagicLevel(Role* r, int i);   //获取激活武功
+    int getActiveMagicIndex(Role* r, int j);    //获取激活武功栏位的具体编号
+
     Zhaoshi* getRoleLearnedZhaoshi(Role* r, Magic* magic, int i);
 
     const std::vector<Role*>& getRoles() { return roles_; }
@@ -222,27 +226,27 @@ public:
 	const std::vector<RSign*>& getRSigns() { return rsigns_; }
 
 public:
-    int MaxLevel = 30;
-    int MaxHP = 999;
-    int MaxMP = 999;
+    int MaxLevel = 40;
+    int MaxHP = 5000;
+    int MaxMP = 10000;
     int MaxPhysicalPower = 100;
 
     int MaxPosion = 100;
 
-    int MaxAttack = 100;
-    int MaxDefence = 100;
-    int MaxSpeed = 100;
+    int MaxAttack = 200;
+    int MaxDefence = 200;
+    int MaxSpeed = 200;
 
     int MaxMedicine = 100;
     int MaxUsePoison = 100;
     int MaxDetoxification = 100;
     int MaxAntiPoison = 100;
 
-    int MaxFist = 100;
-    int MaxSword = 100;
-    int MaxKnife = 100;
-    int MaxUnusual = 100;
-    int MaxHiddenWeapon = 100;
+    int MaxFist = 200;
+    int MaxSword = 200;
+    int MaxKnife = 200;
+    int MaxUnusual = 200;
+    int MaxHiddenWeapon = 200;
 
     int MaxKnowledge = 100;
     int MaxMorality = 100;

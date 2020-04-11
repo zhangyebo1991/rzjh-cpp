@@ -5,6 +5,8 @@
 
 class BattleScene;
 
+class ZhaoshiStateMenu;
+
 //注意，AI选择行动的行为也在这里面
 class BattleActionMenu : public MenuText
 {
@@ -105,6 +107,12 @@ public:
     Magic* magic_ = nullptr;
     Zhaoshi* zhaoshi_ = nullptr;
 
+    std::vector<Zhaoshi*> zhaoshis_;
+
+    int current_ac_id = -1;
+
+    std::shared_ptr<ZhaoshiStateMenu> zhaoshi_state_ = nullptr;
+
     void setRole(Role* r);
     int runAsRole(Role* r)
     {
@@ -112,10 +120,13 @@ public:
         return run();
     }
 
+    //void setZhaoshis(std::vector<Zhaoshi> zhaoshis, std::vector<std::string> items);
+
     void setMagic(Magic* magic) { magic_ = magic; }
 
     Zhaoshi* getZhaoshi() { return zhaoshi_; }
     void onEntrance() override;
+    void draw() override;
 
     virtual void onPressedOK() override;
     virtual void onPressedCancel() override
@@ -167,6 +178,34 @@ public:
 
     virtual void draw() override;
     void setRole(Role* r);
+    Role* getRole() { return role_; }
+
+};
+
+
+class ZhaoshiStateMenu : public Menu
+{
+public:
+    ZhaoshiStateMenu();
+    virtual ~ZhaoshiStateMenu() {}
+
+private:
+
+
+    std::shared_ptr<Menu> state_menu_;
+
+    std::shared_ptr<TextBox> txt_name_;
+
+    Role* role_ = nullptr;
+    Magic* magic_ = nullptr;
+    Zhaoshi* zhaoshi_ = nullptr;
+
+public:
+
+    void setRole(Role* r) { role_ = r; }
+    void setMagic(Magic* magic) { magic_ = magic; }
+    void setZhaoshi(Zhaoshi* zhaoshi);
+
     Role* getRole() { return role_; }
 
 };

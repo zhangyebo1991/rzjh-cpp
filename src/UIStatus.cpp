@@ -192,10 +192,10 @@ void UIStatus::draw()
 
     x = x_ + 220;
     y = y_ + 270;
-    font->draw("武學", 25, x - 10, y, color_name);
-    for (int i = 0; i < 10; i++)
+    font->draw("激活武学", 25, x - 10, y, color_name);
+    for (int i = 0; i < ROLE_ACTIVE_MAGIC_COUNT; i++)
     {
-        auto magic = Save::getInstance()->getRoleLearnedMagic(role_, i);
+        auto magic = Save::getInstance()->getRoleActiveMagic(role_, i);
         std::string str = "__________";
         if (magic)
         {
@@ -203,8 +203,8 @@ void UIStatus::draw()
             int y1 = y + 30 + i / 2 * 25;
             str = convert::formatString("%s", magic->Name);
             font->draw(str, font_size, x1, y1, color_ability1);
-            str = convert::formatString("%3d", role_->getRoleShowLearnedMagicLevel(i));
-            font->draw(str, font_size, x1 + 100, y1, role_->getRoleShowLearnedMagicLevel(i) > 9 ? color_red : color_purple);
+            str = convert::formatString("%3d", Save::getInstance()->getRoleActiveMagicLevel(role_,i));
+            font->draw(str, font_size, x1 + 100, y1, Save::getInstance()->getRoleActiveMagicLevel(role_, i) ? color_red : color_purple);
         }
         else
         {

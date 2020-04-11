@@ -5,6 +5,7 @@
 #include "UIItem.h"
 #include "UIStatus.h"
 #include "UISystem.h"
+#include "UIMagic.h"
 
 class UI : public RunNode
 {
@@ -29,10 +30,11 @@ public:
 
     std::shared_ptr<Menu> heads_;
 
-    std::shared_ptr<Button> button_status_, button_item_, button_system_;
+    std::shared_ptr<Button> button_status_, button_item_, button_system_, button_magic_;
     std::shared_ptr<UIStatus> ui_status_;
     std::shared_ptr<UIItem> ui_item_;
     std::shared_ptr<UISystem> ui_system_;
+    std::shared_ptr<UIMagic> ui_magic_;
     int item_id_ = -1;
 
     virtual void onPressedOK() override;

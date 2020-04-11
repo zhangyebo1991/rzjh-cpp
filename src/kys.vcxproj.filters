@@ -169,6 +169,9 @@
     <ClCompile Include="..\others\zip.c">
       <Filter>zip</Filter>
     </ClCompile>
+    <ClCompile Include="UIMagic.cpp">
+      <Filter>ui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BattleCursor.h">
@@ -354,14 +357,13 @@
     <ClInclude Include="resource.h">
       <Filter>_Resources</Filter>
     </ClInclude>
+    <ClInclude Include="UIMagic.h">
+      <Filter>ui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="_Resources">
       <UniqueIdentifier>{7ab4a26b-b9ce-4c3e-84a0-221cbbc561bf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="headers">
-      <UniqueIdentifier>{b73723e8-c4d0-44c3-98c8-bbbe7cf111ca}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
     <Filter Include="common">
       <UniqueIdentifier>{52c8cf7c-440e-4bd0-ad8e-5f6f1a23576a}</UniqueIdentifier>
