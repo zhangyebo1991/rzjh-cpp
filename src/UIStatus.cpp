@@ -169,11 +169,15 @@ void UIStatus::draw()
     font->draw(convert::formatString("%5d", role_->AttackWithPoison), font_size, x + 444, y + 25, select_color1(role_->AttackWithPoison, Role::getMaxValue()->AttackWithPoison));
 
 	font->draw("门派", font_size, x, y + 50, color_ability1);
-	font->draw(convert::formatString("%s", Save::getInstance()->getMenpai(role_->MenPai)->Name), font_size, x + 44, y + 50, select_color1(role_->Medicine, Role::getMaxValue()->Medicine));
+    if (role_->MenPai>=0) {
+        font->draw(convert::formatString("%s", Save::getInstance()->getMenpai(role_->MenPai)->Name), font_size, x + 44, y + 50, select_color1(role_->Medicine, Role::getMaxValue()->Medicine));
+    }
 	font->draw("等级", font_size, x + 200, y + 50, color_ability1);
 	font->draw(convert::formatString("%5d", role_->Level), font_size, x + 244, y + 50, select_color1(role_->AntiPoison, Role::getMaxValue()->AntiPoison));
 	font->draw("师傅", font_size, x + 400, y + 50, color_ability1);
-	font->draw(convert::formatString("%s", Save::getInstance()->getRole(role_->shifu)->Name), font_size, x + 444, y + 50, select_color1(role_->AttackWithPoison, Role::getMaxValue()->AttackWithPoison));
+    if (role_->shifu>=0) {
+        font->draw(convert::formatString("%s", Save::getInstance()->getRole(role_->shifu)->Name), font_size, x + 444, y + 50, select_color1(role_->AttackWithPoison, Role::getMaxValue()->AttackWithPoison));
+    }
 
     x = x_ + 20;
     y = y_ + 270;

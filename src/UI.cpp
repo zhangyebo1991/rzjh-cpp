@@ -15,7 +15,7 @@ UI::UI()
     ui_system_->setPosition(300, 0);
     ui_magic_->setPosition(300, 0);
     addChild(ui_status_);
-    addChild(ui_magic_);
+    //addChild(ui_magic_);
 
 
     //貌似这里不能直接调用其他单例，静态量的创建顺序不确定
@@ -95,7 +95,7 @@ void UI::dealEvent(BP_Event& e)
     }
 
     //这里设定当前头像为Pass，令其不变暗，因为检测事件是先检测子节点，所以这里可以生效
-    if (childs_[0] == ui_status_)
+    if (childs_[0] == ui_status_ || childs_[0] == ui_magic_)
     {
         heads_->getChild(current_head_)->setState(Pass);
     }
@@ -171,7 +171,7 @@ void UI::onPressedOK()
         childs_[0] = ui_status_;
         current_button_ = button_status_->getTag();
     }
-    if (button_item_->getState() == Press)
+    if (button_magic_->getState() == Press)
     {
         childs_[0] = ui_magic_;
         current_button_ = button_magic_->getTag();

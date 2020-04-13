@@ -35,5 +35,28 @@ public:
     int getResultFromString(std::string str);
 };
 
+class MultiMenu : public Menu
+{
+public:
+    MultiMenu() {}
+    virtual ~MultiMenu() {}
+    //void setMagics(std::vector<int> active_nums) { active_nums_ = active_nums; };
+    //virtual void dealEvent(BP_Event& e) override;
+    //void draw() override;
 
+private:
+
+    //int max_magic_;
+
+    int max_options_ = 1;
+
+public:
+    //void setMaxMagic(int max) { max_magic_ = max; }
+    void setMaxOptions(int max) { max_options_ = max; }
+
+    void setOptionActive(int num = -1, int postive = 0);
+    std::vector<int> active_nums_;
+    virtual void onPressedOK() override;
+
+};
 

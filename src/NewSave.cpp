@@ -1960,7 +1960,7 @@ void NewSave::SaveToCSVRSignSave(const std::vector<RSign>& data, int record) {
 }
 // 基本
 void NewSave::LoadFromCSVBaseInfo(Save::BaseInfo* data, int length, int record) {
-	io::CSVReader<22, io::trim_chars<>, io::double_quote_escape<',', '\"'>> in("../game/save/csv/" + std::to_string(record) + "_基本.csv");
+	io::CSVReader<22, io::trim_chars<>, io::double_quote_escape<',', '\"'>> in("../game/save/csv/" + std::to_string(record) + "_jiben.csv");
 	in.read_header(io::ignore_missing_column | io::ignore_extra_column,
 		"乘船",
 		"场景",

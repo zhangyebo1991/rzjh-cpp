@@ -180,3 +180,66 @@ int MenuText::getResultFromString(std::string str)
     }
     return -1;
 }
+
+
+
+
+
+
+void MultiMenu::onPressedOK()
+{
+    if (checkAllNormal())
+    {
+        result_ = -1;
+        return;
+    }
+    checkActiveToResult();
+    if (result_ >= 0)
+    {
+        setOptionActive(result_);
+    }
+}
+
+void MultiMenu :: setOptionActive(int num , int positive) {
+
+    while (active_nums_.size() <= num) {
+        active_nums_.push_back(0);
+    }
+    if (childs_.size() < active_nums_.size()) {
+        active_nums_.resize(childs_.size());
+    }
+    //检查是否超过可选范围
+    int j = 0;
+    for (int i = 0; i < active_nums_.size(); i++) {
+        if (active_nums_[i]) {
+            j++;
+        }
+        if (j >= max_options_) {
+            if (active_nums_[num] < 1) {
+                num = -2;
+                return;
+            }
+        }
+    }
+    //设置激活与否
+    active_nums_[num] = !active_nums_[num];
+    if (positive > 0) {
+        active_nums_[num] = 1;
+    }
+    else if (positive < 0) {
+        active_nums_[num] = 0;
+    }
+    j = 0;
+
+    //对所有子节点根据激活与否设置显示区别
+    for (int i = 0; i < active_nums_.size(); i++) {
+        auto child = dynamic_cast<TextBox*>(childs_[i].get());
+        if (active_nums_[i]) {
+            child->setTexture("background", 34);
+            j++;
+        }
+        else {
+            child->setTexture("", -1);
+        }
+    }
+}

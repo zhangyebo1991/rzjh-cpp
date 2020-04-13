@@ -341,6 +341,8 @@ public:
     int getMagicLevelIndex(int magic_id);
     int getMagicOfRoleIndex(Magic* magic);
 
+	bool checkIsMagicActive(int i);
+
 	int getGongtiLevel(Magic* magic);      //获取功体等级
 
     void limit();

@@ -85,6 +85,19 @@ int Role::getMagicOfRoleIndex(Magic* magic)
     return -1;
 }
 
+//判断该武功是否已激活
+bool Role::checkIsMagicActive(int magic)
+{
+    for (auto i : JhMagic)
+    {
+        if (i == magic)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
 //获取功体等级
 int Role::getGongtiLevel(Magic* magic) {
     if (magic == nullptr)
