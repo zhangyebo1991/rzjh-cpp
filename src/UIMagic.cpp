@@ -4,6 +4,7 @@
 #include "Save.h"
 #include "Event.h"
 
+
 BP_Color color_white = { 255, 255, 255, 255 };
 BP_Color color_name = { 255, 215, 0, 255 };
 BP_Color color_ability1 = { 255, 250, 205, 255 };
@@ -14,6 +15,7 @@ BP_Color color_magic_level1 = { 253, 101, 101, 255 };
 BP_Color color_purple = { 208, 152, 208, 255 };
 BP_Color color_magic_empty = { 236, 200, 40, 255 };
 BP_Color color_equip = { 165, 28, 218, 255 };
+BP_Color color_seagreen = { 84, 255, 159, 255 };
 
 UIMagic::UIMagic()
 {
@@ -275,38 +277,49 @@ void UIMagic::draw()
     y = y_ + 20;
 
     font->draw("资质", font_size, x, y + 50, color_ability1);
-    font->draw(convert::formatString("%5d", role_->IQ), font_size, x + 44, y + 50, select_color1(role_->Attack, Role::getMaxValue()->Attack));
+    font->draw(convert::formatString("%5d", role_->IQ), font_size, x + 44, y + 50, select_color1(role_->IQ, Role::getMaxValue()->IQ));
     font->draw("富源", font_size, x, y + 75, color_ability1);
-    font->draw(convert::formatString("%5d", role_->Fuyuan), font_size, x + 44, y + 75, select_color1(role_->Defence, Role::getMaxValue()->Defence));
+    font->draw(convert::formatString("%5d", role_->Fuyuan), font_size, x + 44, y + 75, select_color1(role_->Fuyuan, Role::getMaxValue()->Fuyuan));
 
     x = x_ + 20;
     y = y_ + 180;
 
     font->draw("攻击", font_size, x, y, color_ability1);
     font->draw(convert::formatString("%5d", role_->Attack), font_size, x + 44, y, select_color1(role_->Attack, Role::getMaxValue()->Attack));
+    font->draw(convert::formatString("+%d", Event::getInstance()->getAddAttack(role_)), font_size, x + 104, y, color_seagreen);
     font->draw("防御", font_size, x + 200, y, color_ability1);
     font->draw(convert::formatString("%5d", role_->Defence), font_size, x + 244, y, select_color1(role_->Defence, Role::getMaxValue()->Defence));
+    font->draw(convert::formatString("+%d", Event::getInstance()->getAddDefence(role_)), font_size, x + 304, y, color_seagreen);
     font->draw("轻功", font_size, x + 400, y, color_ability1);
     font->draw(convert::formatString("%5d", role_->Speed), font_size, x + 444, y, select_color1(role_->Speed, Role::getMaxValue()->Speed));
+    font->draw(convert::formatString("+%d", Event::getInstance()->getAddSpeed(role_)), font_size, x + 504, y, color_seagreen);
 
 
     font->draw("醫療", font_size, x, y + 25, color_ability1);
     font->draw(convert::formatString("%5d", role_->Medicine), font_size, x + 44, y + 25, select_color1(role_->Medicine, Role::getMaxValue()->Medicine));
+    font->draw(convert::formatString("+%d", Event::getInstance()->getAddMedicine(role_)), font_size, x + 104, y+25, color_seagreen);
     font->draw("抗毒", font_size, x + 200, y + 25, color_ability1);
     font->draw(convert::formatString("%5d", role_->AntiPoison), font_size, x + 244, y + 25, select_color1(role_->AntiPoison, Role::getMaxValue()->AntiPoison));
+    font->draw(convert::formatString("+%d", Event::getInstance()->getAddAntiPoison(role_)), font_size, x + 304, y+25, color_seagreen);
     font->draw("用毒", font_size, x + 400, y + 25, color_ability1);
     font->draw(convert::formatString("%5d", role_->AttackWithPoison), font_size, x + 444, y + 25, select_color1(role_->AttackWithPoison, Role::getMaxValue()->AttackWithPoison));
+    font->draw(convert::formatString("+%d", Event::getInstance()->getAddAWP(role_)), font_size, x + 504, y+25, color_seagreen);
 
     font->draw("拳掌", font_size, x, y + 50, color_ability1);
-    font->draw(convert::formatString("%5d", role_->Fist), font_size, x + 44, y + 50, select_color1(role_->Fist, Role::getMaxValue()->Fist));
-    font->draw("御劍", font_size, x + 120, y + 50, color_ability1);
-    font->draw(convert::formatString("%5d", role_->Sword), font_size, x + 120 + 44, y + 50, select_color1(role_->Sword, Role::getMaxValue()->Sword));
-    font->draw("耍刀", font_size, x + 240, y + 50, color_ability1);
-    font->draw(convert::formatString("%5d", role_->Knife), font_size, x + 240 + 44, y + 50, select_color1(role_->Knife, Role::getMaxValue()->Knife));
-    font->draw("特殊", font_size, x + 360, y + 50, color_ability1);
-    font->draw(convert::formatString("%5d", role_->Unusual), font_size, x + 360 + 44, y + 50, select_color1(role_->Unusual, Role::getMaxValue()->Unusual));
-    font->draw("暗器", font_size, x + 480, y + 50, color_ability1);
-    font->draw(convert::formatString("%5d", role_->HiddenWeapon), font_size, x + 480 + 44, y + 50, select_color1(role_->HiddenWeapon, Role::getMaxValue()->HiddenWeapon));
+    font->draw(convert::formatString("%5d", role_->Fist), font_size, x + 34, y + 50, select_color1(role_->Fist, Role::getMaxValue()->Fist));
+    font->draw(convert::formatString("+%d", Event::getInstance()->getAddFist(role_)), font_size, x + 60+34, y+50, color_seagreen);
+    font->draw("御劍", font_size, x + 140, y + 50, color_ability1);
+    font->draw(convert::formatString("%5d", role_->Sword), font_size, x + 140 + 34, y + 50, select_color1(role_->Sword, Role::getMaxValue()->Sword));
+    font->draw(convert::formatString("+%d", Event::getInstance()->getAddSword(role_)), font_size, x + 140 + 60+34, y + 50, color_seagreen);
+    font->draw("耍刀", font_size, x + 280, y + 50, color_ability1);
+    font->draw(convert::formatString("%5d", role_->Knife), font_size, x + 280 + 34, y + 50, select_color1(role_->Knife, Role::getMaxValue()->Knife));
+    font->draw(convert::formatString("+%d", Event::getInstance()->getAddKnife(role_)), font_size, x + 280 + 60 + 34, y + 50, color_seagreen);
+    font->draw("特殊", font_size, x + 420, y + 50, color_ability1);
+    font->draw(convert::formatString("%5d", role_->Unusual), font_size, x + 420 + 34, y + 50, select_color1(role_->Unusual, Role::getMaxValue()->Unusual));
+    font->draw(convert::formatString("+%d", Event::getInstance()->getAddUnusual(role_)), font_size, x + 420 + 60 + 34, y + 50, color_seagreen);
+    font->draw("暗器", font_size, x + 560, y + 50, color_ability1);
+    font->draw(convert::formatString("%5d", role_->HiddenWeapon), font_size, x + 560 + 34, y + 50, select_color1(role_->HiddenWeapon, Role::getMaxValue()->HiddenWeapon));
+    font->draw(convert::formatString("+%d", Event::getInstance()->getAddHiddenWeapon(role_)), font_size, x + 560 + 60+ 34, y + 50, color_seagreen);
 
 
 

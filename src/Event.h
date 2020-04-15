@@ -153,6 +153,23 @@ public:
     int getHp(Role* role);							//获取当前生命，包括内功装备等
     int getMp(Role* role);							//获取当前内力，包括内功装备等
 
+    //装备和内功增加的三围
+    int getAddAttack(Role* role);			
+    int getAddDefence(Role* role);
+    int getAddSpeed(Role* role);
+
+    //装备和内功增加的医疗，抗毒，用毒
+    int getAddMedicine(Role* role);
+    int getAddAntiPoison(Role* role);
+    int getAddAWP(Role* role);
+
+    //装备和内功增加的五系
+    int getAddFist(Role* role);
+    int getAddSword(Role* role);
+    int getAddKnife(Role* role);
+    int getAddUnusual(Role* role);
+    int getAddHiddenWeapon(Role* role);
+
 
 public:
     int e_GetValue(int bit, int t, int x)

@@ -1528,3 +1528,182 @@ int Event::getMp(Role* role) {
     maxmp += Save::getInstance()->getMagic(role->MagicID[role->zbtj])->AddMP[role->getTejiLevel()];
     return maxmp;
 }
+
+//获取增加的攻击，包括内功装备等
+int Event::getAddAttack(Role* role) {
+    int temp = 0;
+    for (auto i : role->Equip) {
+        if (i > 0)
+            temp += Save::getInstance()->getItem(i)->AddAttack;
+    }
+    if (role->Gongti >= 0)
+        temp += Save::getInstance()->getMagic(role->MagicID[role->Gongti])->AddAttack[role->getGongtiLevel()];
+    if (role->zbtj >= 0)
+        temp += Save::getInstance()->getMagic(role->MagicID[role->zbtj])->AddAttack[role->getTejiLevel()];
+    return temp;
+}
+
+//获取增加的防御，包括内功装备等
+int Event::getAddDefence(Role* role) {
+    int temp = 0;
+    for (auto i : role->Equip) {
+        if (i > 0)
+            temp += Save::getInstance()->getItem(i)->AddDefence;
+    }
+    if (role->Gongti >= 0)
+        temp += Save::getInstance()->getMagic(role->MagicID[role->Gongti])->AddDefence[role->getGongtiLevel()];
+    if (role->zbtj >= 0)
+        temp += Save::getInstance()->getMagic(role->MagicID[role->zbtj])->AddDefence[role->getTejiLevel()];
+    return temp;
+}
+
+//获取增加的轻功，包括内功装备等
+int Event::getAddSpeed(Role* role) {
+    int temp = 0;
+    for (auto i : role->Equip) {
+        if (i > 0)
+            temp += Save::getInstance()->getItem(i)->AddSpeed;
+    }
+    if (role->Gongti >= 0)
+        temp += Save::getInstance()->getMagic(role->MagicID[role->Gongti])->AddSpeed[role->getGongtiLevel()];
+    if (role->zbtj >= 0)
+        temp += Save::getInstance()->getMagic(role->MagicID[role->zbtj])->AddSpeed[role->getTejiLevel()];
+    return temp;
+}
+
+//获取增加的医术，包括内功装备等
+int Event::getAddMedicine(Role* role) {
+    int temp = 0;
+    for (auto i : role->Equip) {
+        if (i > 0)
+            temp += Save::getInstance()->getItem(i)->AddMedicine;
+    }
+    if (role->Gongti >= 0) {
+        if (role->getGongtiLevel() > 1)
+            temp += Save::getInstance()->getMagic(role->MagicID[role->Gongti])->AddMedcine;
+    }
+    if (role->zbtj >= 0) {
+        if (role->getTejiLevel() > 1)
+            temp += Save::getInstance()->getMagic(role->MagicID[role->zbtj])->AddMedcine;
+    }
+    return temp;
+}
+
+//获取增加的抗毒，包括内功装备等
+int Event::getAddAntiPoison(Role* role) {
+    int temp = 0;
+    for (auto i : role->Equip) {
+        if (i > 0)
+            temp += Save::getInstance()->getItem(i)->AddAntiPoison;
+    }
+    if (role->Gongti >= 0) {
+        if (role->getGongtiLevel() > 1)
+            temp += Save::getInstance()->getMagic(role->MagicID[role->Gongti])->AddDefPoi;
+    }
+    if (role->zbtj >= 0) {
+        if (role->getTejiLevel() > 1)
+            temp += Save::getInstance()->getMagic(role->MagicID[role->zbtj])->AddDefPoi;
+    }
+    return temp;
+}
+
+//获取增加的用毒，主要是装备
+int Event::getAddAWP(Role* role) {
+    int temp = 0;
+    for (auto i : role->Equip) {
+        if (i > 0)
+            temp += Save::getInstance()->getItem(i)->AddAttackWithPoison;
+    }
+    return temp;
+}
+
+
+//获取增加的拳掌，包括内功装备等
+int Event::getAddFist(Role* role) {
+    int temp = 0;
+    for (auto i : role->Equip) {
+        if (i > 0)
+            temp += Save::getInstance()->getItem(i)->AddFist;
+    }
+    if (role->Gongti >= 0){
+        if(role->getGongtiLevel()>1)
+        temp += Save::getInstance()->getMagic(role->MagicID[role->Gongti])->AddFist;
+    }
+    if (role->zbtj >= 0){  
+        if(role->getTejiLevel()>1)
+        temp += Save::getInstance()->getMagic(role->MagicID[role->zbtj])->AddFist;
+    }
+    return temp;
+}
+
+//获取增加的剑法，包括内功装备等
+int Event::getAddSword(Role* role) {
+    int temp = 0;
+    for (auto i : role->Equip) {
+        if (i > 0)
+            temp += Save::getInstance()->getItem(i)->AddSword;
+    }
+    if (role->Gongti >= 0) {
+        if (role->getGongtiLevel() > 1)
+            temp += Save::getInstance()->getMagic(role->MagicID[role->Gongti])->AddSword;
+    }
+    if (role->zbtj >= 0) {
+        if (role->getTejiLevel() > 1)
+            temp += Save::getInstance()->getMagic(role->MagicID[role->zbtj])->AddSword;
+    }
+    return temp;
+}
+
+//获取增加的刀法，包括内功装备等
+int Event::getAddKnife(Role* role) {
+    int temp = 0;
+    for (auto i : role->Equip) {
+        if (i > 0)
+            temp += Save::getInstance()->getItem(i)->AddKnife;
+    }
+    if (role->Gongti >= 0) {
+        if (role->getGongtiLevel() > 1)
+            temp += Save::getInstance()->getMagic(role->MagicID[role->Gongti])->AddKnife;
+    }
+    if (role->zbtj >= 0) {
+        if (role->getTejiLevel() > 1)
+            temp += Save::getInstance()->getMagic(role->MagicID[role->zbtj])->AddKnife;
+    }
+    return temp;
+}
+
+//获取增加的奇门，包括内功装备等
+int Event::getAddUnusual(Role* role) {
+    int temp = 0;
+    for (auto i : role->Equip) {
+        if (i > 0)
+            temp += Save::getInstance()->getItem(i)->AddUnusual;
+    }
+    if (role->Gongti >= 0) {
+        if (role->getGongtiLevel() > 1)
+            temp += Save::getInstance()->getMagic(role->MagicID[role->Gongti])->AddUnusual;
+    }
+    if (role->zbtj >= 0) {
+        if (role->getTejiLevel() > 1)
+            temp += Save::getInstance()->getMagic(role->MagicID[role->zbtj])->AddUnusual;
+    }
+    return temp;
+}
+
+//获取增加的按期，包括内功装备等
+int Event::getAddHiddenWeapon(Role* role) {
+    int temp = 0;
+    for (auto i : role->Equip) {
+        if (i > 0)
+            temp += Save::getInstance()->getItem(i)->AddHiddenWeapon;
+    }
+    if (role->Gongti >= 0) {
+        if (role->getGongtiLevel() > 1)
+            temp += Save::getInstance()->getMagic(role->MagicID[role->Gongti])->AddHidWeapon;
+    }
+    if (role->zbtj >= 0) {
+        if (role->getTejiLevel() > 1)
+            temp += Save::getInstance()->getMagic(role->MagicID[role->zbtj])->AddHidWeapon;
+    }
+    return temp;
+}

@@ -7,6 +7,8 @@
 #include "TeamMenu.h"
 #include "convert.h"
 
+
+
 UIStatus::UIStatus()
 {
     menu_ = std::make_shared<Menu>();
@@ -52,6 +54,7 @@ void UIStatus::draw()
     TextureManager::getInstance()->renderTexture("head", role_->HeadID, x_ + 10, y_ + 20);
 
     auto font = Font::getInstance();
+
     BP_Color color_white = { 255, 255, 255, 255 };
     BP_Color color_name = { 255, 215, 0, 255 };
     BP_Color color_ability1 = { 255, 250, 205, 255 };
@@ -62,6 +65,7 @@ void UIStatus::draw()
     BP_Color color_purple = { 208, 152, 208, 255 };
     BP_Color color_magic_empty = { 236, 200, 40, 255 };
     BP_Color color_equip = { 165, 28, 218, 255 };
+    BP_Color color_seagreen = { 84, 255, 159, 255 };
 
     auto select_color1 = [&](int v, int max_v) -> BP_Color
     {
@@ -154,19 +158,26 @@ void UIStatus::draw()
     x = x_ + 20;
     y = y_ + 190;
 
-    font->draw("攻擊", font_size, x, y, color_ability1);
+    font->draw("攻击", font_size, x, y, color_ability1);
     font->draw(convert::formatString("%5d", role_->Attack), font_size, x + 44, y, select_color1(role_->Attack, Role::getMaxValue()->Attack));
-    font->draw("防禦", font_size, x + 200, y, color_ability1);
+    font->draw(convert::formatString("+%d", Event::getInstance()->getAddAttack(role_)), font_size, x + 104, y, color_seagreen);
+    font->draw("防御", font_size, x + 200, y, color_ability1);
     font->draw(convert::formatString("%5d", role_->Defence), font_size, x + 244, y, select_color1(role_->Defence, Role::getMaxValue()->Defence));
-    font->draw("輕功", font_size, x + 400, y, color_ability1);
+    font->draw(convert::formatString("+%d", Event::getInstance()->getAddDefence(role_)), font_size, x + 304, y, color_seagreen);
+    font->draw("轻功", font_size, x + 400, y, color_ability1);
     font->draw(convert::formatString("%5d", role_->Speed), font_size, x + 444, y, select_color1(role_->Speed, Role::getMaxValue()->Speed));
+    font->draw(convert::formatString("+%d", Event::getInstance()->getAddSpeed(role_)), font_size, x + 504, y, color_seagreen);
+
 
     font->draw("醫療", font_size, x, y + 25, color_ability1);
     font->draw(convert::formatString("%5d", role_->Medicine), font_size, x + 44, y + 25, select_color1(role_->Medicine, Role::getMaxValue()->Medicine));
+    font->draw(convert::formatString("+%d", Event::getInstance()->getAddMedicine(role_)), font_size, x + 104, y + 25, color_seagreen);
     font->draw("抗毒", font_size, x + 200, y + 25, color_ability1);
     font->draw(convert::formatString("%5d", role_->AntiPoison), font_size, x + 244, y + 25, select_color1(role_->AntiPoison, Role::getMaxValue()->AntiPoison));
+    font->draw(convert::formatString("+%d", Event::getInstance()->getAddAntiPoison(role_)), font_size, x + 304, y + 25, color_seagreen);
     font->draw("用毒", font_size, x + 400, y + 25, color_ability1);
     font->draw(convert::formatString("%5d", role_->AttackWithPoison), font_size, x + 444, y + 25, select_color1(role_->AttackWithPoison, Role::getMaxValue()->AttackWithPoison));
+    font->draw(convert::formatString("+%d", Event::getInstance()->getAddAWP(role_)), font_size, x + 504, y + 25, color_seagreen);
 
 	font->draw("门派", font_size, x, y + 50, color_ability1);
     if (role_->MenPai>=0) {
@@ -194,6 +205,7 @@ void UIStatus::draw()
     font->draw("暗器", font_size, x, y + 130, color_ability1);
     font->draw(convert::formatString("%5d", role_->HiddenWeapon), font_size, x + 44, y + 130, select_color1(role_->HiddenWeapon, Role::getMaxValue()->HiddenWeapon));
 
+    /*
     x = x_ + 220;
     y = y_ + 270;
     font->draw("激活武学", 25, x - 10, y, color_name);
@@ -217,7 +229,7 @@ void UIStatus::draw()
             font->draw("__________", font_size, x1, y1, color_ability1);
         }
     }
-
+    */
 
     x = x_ + 20;
     y = y_ + 405;

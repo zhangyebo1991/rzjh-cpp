@@ -387,33 +387,34 @@ void GameUtil::setRoleMaxValue(Role* role)
 
     printf("Max values of roles: \n");
 
-    GET_VALUE_INT(Level, 30);
-    GET_VALUE_INT(HP, 999);
-    GET_VALUE_INT(MP, 999);
+    GET_VALUE_INT(Level, 40);
+    GET_VALUE_INT(HP, 2000);
+    GET_VALUE_INT(MP, 5000);
     GET_VALUE_INT(PhysicalPower, 100);
 
     GET_VALUE_INT(Poison, 100);
 
-    GET_VALUE_INT(Attack, 100);
-    GET_VALUE_INT(Defence, 100);
-    GET_VALUE_INT(Speed, 100);
+    GET_VALUE_INT(Attack, 200);
+    GET_VALUE_INT(Defence, 200);
+    GET_VALUE_INT(Speed, 200);
 
     GET_VALUE_INT(Medicine, 100);
     GET_VALUE_INT(AttackWithPoison, 100);
     GET_VALUE_INT(Art, 100);
     GET_VALUE_INT(AntiPoison, 100);
 
-    GET_VALUE_INT(Fist, 100);
-    GET_VALUE_INT(Sword, 100);
-    GET_VALUE_INT(Knife, 100);
-    GET_VALUE_INT(Unusual, 100);
-    GET_VALUE_INT(HiddenWeapon, 100);
+    GET_VALUE_INT(Fist, 200);
+    GET_VALUE_INT(Sword, 200);
+    GET_VALUE_INT(Knife, 200);
+    GET_VALUE_INT(Unusual, 200);
+    GET_VALUE_INT(HiddenWeapon, 200);
 
     GET_VALUE_INT(Knowledge, 100);
     GET_VALUE_INT(Morality, 100);
     GET_VALUE_INT(AttackWithPoison, 100);
     GET_VALUE_INT(Fame, 999);
     GET_VALUE_INT(IQ, 100);
+    GET_VALUE_INT(Fuyuan, 100);
 
     GET_VALUE_INT(Exp, 99999);
 
