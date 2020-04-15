@@ -344,6 +344,8 @@ public:
 	bool checkIsMagicActive(int i);
 
 	int getGongtiLevel(Magic* magic);      //获取功体等级
+	int getGongtiLevel();      //获取功体等级
+	int getTejiLevel();      //获取特技等级
 
     void limit();
 

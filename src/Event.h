@@ -145,6 +145,15 @@ public:
 private:
     int x50[0x10000];
 
+
+public:
+
+    int getMaxHp(Role* role);							//获取最大生命，包括内功装备等
+    int getMaxMp(Role* role);							//获取最大内力，包括内功装备等
+    int getHp(Role* role);							//获取当前生命，包括内功装备等
+    int getMp(Role* role);							//获取当前内力，包括内功装备等
+
+
 public:
     int e_GetValue(int bit, int t, int x)
     {

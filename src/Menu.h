@@ -53,6 +53,7 @@ private:
 public:
     //void setMaxMagic(int max) { max_magic_ = max; }
     void setMaxOptions(int max) { max_options_ = max; }
+    void cleanOptions();
 
     void setOptionActive(int num = -1, int postive = 0);
     std::vector<int> active_nums_;

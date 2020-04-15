@@ -2,6 +2,7 @@
 #include "Font.h"
 #include "Convert.h"
 #include "Save.h"
+#include "Event.h"
 
 BP_Color color_white = { 255, 255, 255, 255 };
 BP_Color color_name = { 255, 215, 0, 255 };
@@ -196,21 +197,14 @@ UIMagic::UIMagic()
 
 void UIMagic::draw()
 {
-    if (role_ == nullptr || !show_button_)
+    if (role_ == nullptr)
     {
         //button_medicine_->setVisible(false);
         //button_detoxification_->setVisible(false);
         //button_leave_->setVisible(false);
-    }
-
-    if (role_)
-    {
-
-    }
-    else
-    {
         return;
     }
+
     TextureManager::getInstance()->renderTexture("head", role_->HeadID, x_ + 10, y_ + 20);
 
     auto font = Font::getInstance();
@@ -257,8 +251,8 @@ void UIMagic::draw()
     y = y_ + 20;
 
     font->draw("生命", font_size, x + 175, y + 50, color_ability1);
-    font->draw(convert::formatString("%5d/", role_->HP), font_size, x + 219, y + 50, color_white);
-    font->draw(convert::formatString("%5d", role_->MaxHP), font_size, x + 285, y + 50, color_white);
+    font->draw(convert::formatString("%5d/", Event::getInstance()->getHp(role_)), font_size, x + 219, y + 50, color_white);
+    font->draw(convert::formatString("%5d", Event::getInstance()->getMaxHp(role_)), font_size, x + 285, y + 50, color_white);
     font->draw("內力", font_size, x + 175, y + 75, color_ability1);
 
     BP_Color c = color_white;
@@ -271,8 +265,8 @@ void UIMagic::draw()
         c = color_magic;
     }
 
-    font->draw(convert::formatString("%5d/", role_->MP), font_size, x + 219, y + 75, c);
-    font->draw(convert::formatString("%5d", role_->MaxMP), font_size, x + 285, y + 75, c);
+    font->draw(convert::formatString("%5d/", Event::getInstance()->getMaxMp(role_)), font_size, x + 219, y + 75, c);
+    font->draw(convert::formatString("%5d", Event::getInstance()->getMaxMp(role_)), font_size, x + 285, y + 75, c);
     font->draw("體力", font_size, x + 175, y + 100, color_ability1);
     font->draw(convert::formatString("%5d/", role_->PhysicalPower), font_size, x + 219, y + 100, color_white);
     font->draw(convert::formatString("%5d", 100), font_size, x + 285, y + 100, color_white);
@@ -336,14 +330,18 @@ void UIMagic::draw()
     jhwg_title_->setVisible(true);
     jhwg_title2_->setVisible(true);
 
-    //neigong_menu_->setAllChildVisible(false);
-    //teji_menu_->setAllChildVisible(false);
-    //waigong_menu_->setAllChildVisible(false);
     all_value_menu_->setAllChildVisible(false);
 
     neigongs_.clear();
     tejis_.clear();
     waigongs_.clear();
+
+    if (just_loaded_) {
+        neigong_menu_->cleanOptions();
+        teji_menu_->cleanOptions();
+        waigong_menu_->cleanOptions();
+    }
+
     int neigong_itr = 0;
     int teji_itr = 0;
     int waigong_itr = 0;
@@ -354,15 +352,15 @@ void UIMagic::draw()
         auto magic = Save::getInstance()->getMagic(i);
         std::string str = "__________";
         if (magic == nullptr) {
-            if (neigong_itr < 10) {
+            if (neigong_itr < 10 && just_loaded_) {
                 neigong_btn_[neigong_itr]->setVisible(false);
                 neigong_menu_->setOptionActive(neigong_itr, -1);
                 neigong_itr++;
-            }else if(teji_itr<10){
+            }else if(teji_itr<10 && just_loaded_){
                 teji_btn_[teji_itr]->setVisible(false);
                 teji_menu_->setOptionActive(teji_itr, -1);
                 teji_itr++;
-            }else{
+            }else if(just_loaded_){
                 waigong_btn_[waigong_itr]->setVisible(false);
                 waigong_menu_->setOptionActive(waigong_itr, -1);
                 waigong_itr++;
@@ -373,6 +371,9 @@ void UIMagic::draw()
         {
             if (role_->Gongti == k && just_loaded_) {
                 neigong_menu_->setOptionActive(neigong_itr, 1);
+            }
+            else if (just_loaded_) {
+                neigong_menu_->setOptionActive(neigong_itr, -1);
             }
             auto magic_r = std::make_shared<magic_record>();
             magic_r->magic = magic;
@@ -391,6 +392,9 @@ void UIMagic::draw()
             if (role_->zbtj == k && just_loaded_) {
                 teji_menu_->setOptionActive(teji_itr, 1);
             }
+            else if(just_loaded_){
+                teji_menu_->setOptionActive(teji_itr, -1);
+            }
             auto magic_r = std::make_shared<magic_record>();
             magic_r->magic = magic;
             magic_r->index = k;
@@ -406,7 +410,10 @@ void UIMagic::draw()
         }
         else{
             if (role_->checkIsMagicActive(k) && just_loaded_) {
-                waigong_menu_->setOptionActive(waigong_itr, true);
+                waigong_menu_->setOptionActive(waigong_itr, 1);
+            }
+            else if (just_loaded_) {
+                waigong_menu_->setOptionActive(waigong_itr, -1);
             }
             auto magic_r = std::make_shared<magic_record>();
             magic_r->magic = magic;
@@ -424,7 +431,7 @@ void UIMagic::draw()
         k++;
     }
     if (neigong_menu_->getResult() == -2) {
-
+        
     }
     else {
         int gongti = -1;

@@ -1470,3 +1470,61 @@ void Event::instruct_50e(int code, int e1, int e2, int e3, int e4, int e5, int e
     default: break;
     }
 }
+
+//获取最大生命，包括内功装备等
+int Event::getMaxHp(Role* role) {
+    int maxhp = role->MaxHP;
+    for (auto i : role->Equip) {
+        if (i > 0)
+        maxhp += Save::getInstance()->getItem(i)->AddHP;
+    }
+
+    if (role->Gongti >= 0) {
+        maxhp += Save::getInstance()->getMagic(role->MagicID[role->Gongti])->AddHP[role->getGongtiLevel()];
+    }
+    if (role->zbtj >= 0)
+    maxhp += Save::getInstance()->getMagic(role->MagicID[role->zbtj])->AddHP[role->getTejiLevel()];
+    return maxhp;
+}	
+
+//获取当前生命，包括内功装备等
+int Event::getHp(Role* role) {
+    int maxhp = role->HP;
+    for (auto i : role->Equip) {
+        if (i > 0) 
+        maxhp += Save::getInstance()->getItem(i)->AddHP;
+    }
+    if(role->Gongti>=0)
+    maxhp += Save::getInstance()->getMagic(role->MagicID[role->Gongti])->AddHP[role->getGongtiLevel()];
+    if (role->zbtj >= 0)
+    maxhp += Save::getInstance()->getMagic(role->MagicID[role->zbtj])->AddHP[role->getTejiLevel()];
+    return maxhp;
+}
+
+//获取最大内力，包括内功装备等
+int Event::getMaxMp(Role* role) {
+    int maxmp = role->MaxMP;
+    for (auto i : role->Equip) {
+        if (i > 0)
+        maxmp += Save::getInstance()->getItem(i)->AddMP;
+    }
+    if (role->Gongti >= 0)
+    maxmp += Save::getInstance()->getMagic(role->MagicID[role->Gongti])->AddMP[role->getGongtiLevel()];
+    if (role->zbtj >= 0)
+    maxmp += Save::getInstance()->getMagic(role->MagicID[role->zbtj])->AddMP[role->getTejiLevel()];
+    return maxmp;
+}
+
+//获取当前内力，包括内功装备等
+int Event::getMp(Role* role) {
+    int maxmp = role->MP;
+    for (auto i : role->Equip) {
+        if (i > 0)
+        maxmp += Save::getInstance()->getItem(i)->AddMP;
+    }
+    if (role->Gongti >= 0)
+    maxmp += Save::getInstance()->getMagic(role->MagicID[role->Gongti])->AddMP[role->getGongtiLevel()];
+    if (role->zbtj >= 0)
+    maxmp += Save::getInstance()->getMagic(role->MagicID[role->zbtj])->AddMP[role->getTejiLevel()];
+    return maxmp;
+}

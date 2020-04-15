@@ -98,7 +98,7 @@ bool Role::checkIsMagicActive(int magic)
     return false;
 }
 
-//获取功体等级
+//获取武功等级
 int Role::getGongtiLevel(Magic* magic) {
     if (magic == nullptr)
         return 0;
@@ -107,7 +107,29 @@ int Role::getGongtiLevel(Magic* magic) {
 
 }
 
+//获取功体等级
+int Role::getGongtiLevel() {
 
+    if (Gongti >= 0) {
+        return getRoleMagicLevelIndex(Gongti);
+    }
+    else {
+        return -1;
+    }
+
+}
+
+//获取功体等级
+int Role::getTejiLevel() {
+
+    if (zbtj >= 0) {
+        return getRoleMagicLevelIndex(zbtj);
+    }
+    else {
+        return -1;
+    }
+
+}
 
 
 //限制人物的属性

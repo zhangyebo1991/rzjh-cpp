@@ -37,6 +37,8 @@ public:
     std::shared_ptr<UIMagic> ui_magic_;
     int item_id_ = -1;
 
+    Role* role_;
+
     virtual void onPressedOK() override;
     DEFAULT_CANCEL_EXIT;
     Item* getUsedItem() { return ui_item_->getCurrentItem(); }

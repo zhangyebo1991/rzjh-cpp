@@ -243,3 +243,11 @@ void MultiMenu :: setOptionActive(int num , int positive) {
         }
     }
 }
+
+void MultiMenu:: cleanOptions() {
+
+    active_nums_.clear();
+    //for(auto i :active_nums_) {
+    //    i = 0;
+    //}
+}

@@ -61,16 +61,20 @@ void UI::dealEvent(BP_Event& e)
     for (int i = 0; i < TEAMMATE_COUNT; i++)
     {
         std::shared_ptr<Head> head = std::dynamic_pointer_cast<Head>(heads_->getChild(i));
-        auto role = Save::getInstance()->getTeamMate(i);
-        head->setRole(role);
-        if (role == nullptr)
+        role_ = Save::getInstance()->getTeamMate(i);
+        head->setRole(role_);
+        if (role_ == nullptr)
         {
             continue;
         }
         if (head->getState() == Pass)
         {
-            ui_status_->setRole(role);
-            ui_magic_->setRole(role);
+            if (childs_[0] == ui_status_) {
+                ui_status_->setRole(role_);
+            }
+            else if (childs_[0 == ui_magic_]) {
+                ui_magic_->setRole(role_);
+            }
             current_head_ = i;
         }
         head->setText("");
@@ -80,13 +84,13 @@ void UI::dealEvent(BP_Event& e)
             Item* item = ui_item_->getCurrentItem();
             if (item)
             {
-                if (role->Equip[0] == item->ID || role->Equip[1] == item->ID || role->Equip[2] == item->ID 
-                    || role->Equip[3] == item->ID || role->Equip[4] == item->ID || role->PracticeItem == item->ID)
+                if (role_->Equip[0] == item->ID || role_->Equip[1] == item->ID || role_->Equip[2] == item->ID 
+                    || role_->Equip[3] == item->ID || role_->Equip[4] == item->ID || role_->PracticeItem == item->ID)
                 {
                     head->setText("使用中");
                     //Font::getInstance()->draw("使用中", 25, x + 5, y + 60, { 255,255,255,255 });
                 }
-                if (GameUtil::canUseItem(role, item))
+                if (GameUtil::canUseItem(role_, item))
                 {
                     head->setState(Pass);
                 }
@@ -159,6 +163,7 @@ void UI::onPressedOK()
 
     if (childs_[0] == ui_system_)
     {
+
         if (ui_system_->getResult() == 0)
         {
             setExit(true);
@@ -168,11 +173,13 @@ void UI::onPressedOK()
     //四个按钮的响应
     if (button_status_->getState() == Press)
     {
+        ui_status_->setRole(nullptr);
         childs_[0] = ui_status_;
         current_button_ = button_status_->getTag();
     }
     if (button_magic_->getState() == Press)
     {
+        ui_magic_->setRole(nullptr);
         childs_[0] = ui_magic_;
         current_button_ = button_magic_->getTag();
     }
@@ -183,6 +190,7 @@ void UI::onPressedOK()
     }
     if (button_system_->getState() == Press)
     {
+        role_ = nullptr;
         childs_[0] = ui_system_;
         current_button_ = button_system_->getTag();
     }
