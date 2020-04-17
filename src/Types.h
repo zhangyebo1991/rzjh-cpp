@@ -810,3 +810,9 @@ struct Menpai : MenpaiSave
 struct RSign : RSignSave
 {
 };
+
+//记录武功和对应在人物的武功栏位号
+struct magic_record {
+	Magic* magic;
+	int index;
+};

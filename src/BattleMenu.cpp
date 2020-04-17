@@ -881,9 +881,7 @@ void BattleStateMenu::setRole(Role* r)
 
 ZhaoshiStateMenu::ZhaoshiStateMenu()
 {
-
     setTexture("menu", 68);
-    //setHaveBox(true);
     setText("招式效果");
     setTextPosition(20, 5);
     setHaveBox(false);
@@ -1003,5 +1001,379 @@ void ZhaoshiStateMenu::setZhaoshi(Zhaoshi* zhaoshi) {
             }
         }
     }
+}
+
+MagicStateMenu::MagicStateMenu()
+{
+    setTexture("menu", 68);
+    setText("武功属性");
+    setTextPosition(20, 5);
+    setHaveBox(false);
+    setFontSize(30);
+
+    setPosition(300, 300);
+    setSize(380, 240);
+    setVisible(true);
 
 }
+
+void MagicStateMenu::setMagic(Magic* magic) {
+    magic_ = magic;
+    if (magic_ == nullptr || role_ == nullptr) {
+        setVisible(false);
+        return;
+    }    
+    clearChilds();
+    setVisible(true);   
+
+    std::string strs[166] = { "" };
+    strs[1] = "體力不減";
+    strs[2] = "女性加成";
+    strs[3] = "飲酒加倍";
+    strs[4] = "乾坤大挪移";
+    strs[5] = "斗轉星移";
+    strs[6] = "內傷免疫";
+    strs[7] = "殺體";
+    strs[8] = "增加閃躲";
+    strs[9] = "每級傷害+";
+    strs[10] = "耗內減少";
+    strs[11] = "恢復生命";
+    strs[12] = "全負免疫";
+    strs[13] = "全武加成";
+    strs[14] = "左右互搏";
+    strs[15] = "拳掌加成";
+    strs[16] = "劍術加成";
+    strs[17] = "刀法加成";
+    strs[18] = "奇門加成";
+    strs[19] = "內傷加成";
+    strs[20] = "封穴加成";
+    strs[21] = "吸血";
+    strs[22] = "攻擊增距";
+    strs[23] = "恢復內力";
+    strs[24] = "暗器增距";
+    strs[25] = "吸內";
+    strs[26] = "弱點";
+    strs[27] = "殺內";
+    strs[28] = "抵消傷害";
+    strs[29] = "反彈傷害";
+    strs[30] = "真傷";
+    strs[31] = "傷害減免";
+    strs[32] = "吸內反噬";
+    strs[33] = "劇毒反噬";
+    strs[34] = "復活";
+    strs[35] = "精準";
+    strs[36] = "免傷";
+    strs[37] = "怒氣";
+    strs[38] = "冰凍";
+    strs[39] = "流血";
+    strs[40] = "回气";
+    strs[41] = "回硬";
+    strs[42] = "回灵";
+    strs[43] = "回行";
+    strs[44] = "回身";
+    strs[45] = "回命";
+    strs[46] = "回内";
+    strs[50] = "耗气";
+    strs[51] = "耗硬";
+    strs[52] = "耗灵";
+    strs[53] = "耗行";
+    strs[54] = "耗身";
+    strs[60] = "气防";
+    strs[61] = "硬功";
+    strs[62] = "灵活";
+    strs[63] = "行气";
+    strs[64] = "身法";
+    strs[65] = "奋发";
+    strs[66] = "战意";
+    strs[67] = "精准";
+    strs[68] = "急速";
+    strs[100] = "眩暈";
+    strs[101] = "目盲";
+    strs[102] = "灼燒";
+    strs[103] = "斷筋";
+    strs[104] = "暴擊";
+    strs[105] = "攻擊";
+    strs[106] = "防禦";
+    strs[107] = "輕功";
+    strs[108] = "拳掌";
+    strs[109] = "御劍";
+    strs[110] = "耍刀";
+    strs[111] = "奇門";
+    strs[112] = "暗器";
+    strs[113] = "經驗";
+    strs[114] = "瘋魔";
+    strs[115] = "封穴免疫";
+    strs[116] = "冰凍免疫";
+    strs[117] = "流血免疫";
+    strs[118] = "眩晕免疫";
+    strs[119] = "目盲免疫";
+    strs[120] = "灼燒免疫";
+    strs[121] = "断筋免疫";
+    strs[122] = "商店折扣";
+    strs[123] = "商店卖价";
+    strs[124] = "天資過人";
+    strs[125] = "血量過人";
+    strs[126] = "連擊抵抗";
+    strs[127] = "暴擊免疫";
+    strs[128] = "羈絆";
+    strs[129] = "橫練";
+    strs[130] = "截脈";
+    strs[131] = "破行";
+    strs[132] = "輕靈";
+    strs[133] = "滲勁";
+    strs[134] = "奮勇";
+    strs[135] = "清心";
+    strs[136] = "氣療";
+    strs[137] = "調息";
+    strs[138] = "回體";
+    strs[139] = "移動距離";
+    strs[140] = "破行免疫";
+    strs[141] = "七傷";
+    strs[142] = "混亂";
+    strs[143] = "混亂免疫";
+    strs[144] = "連擊";
+    strs[145] = "军阵";
+    strs[146] = "攻击潜力";
+    strs[147] = "防御潜力";
+    strs[148] = "轻功潜力";
+    strs[149] = "拳掌潜力";
+    strs[150] = "御剑潜力";
+    strs[151] = "耍刀潜力";
+    strs[152] = "奇门潜力";
+    strs[153] = "暗器潜力";
+    strs[154] = "生命回复";
+    strs[155] = "内力回复";
+    strs[156] = "爆发";
+    strs[157] = "气劲";
+    strs[158] = "暴击伤害";
+    strs[159] = "战意";
+    strs[160] = "奋发";
+    strs[161] = "格挡";
+    strs[162] = "拳法距离";
+    strs[163] = "剑法距离";
+    strs[164] = "刀法距离";
+    strs[165] = "奇门距离";
+
+
+    BP_Color color_gray = { 130, 130, 130, 255 };
+    BP_Color color_red = { 255, 90, 60, 255 };
+    BP_Color color_gold = { 205, 149, 12, 255 };
+
+
+    //自动调节界面的位置
+    auto engine = Engine::getInstance();
+
+    while (x_ + w_ > engine->getWindowWidth()) {
+        x_ -= w_;
+    }
+    while (y_ + h_ > engine->getWindowHeight()) {
+        y_ -= h_;
+    }
+
+    int x, y;
+    int x_t = 20;
+    int y_t = 40;
+    int x_bias = 80;
+    int y_bias = 25;
+
+    //判断武功类型
+    if (magic->MagicType > 4) {
+        int i = 0;
+        int level = Save::getInstance()->getRoleLearnedMagicLevelIndex(role_, magic);
+        if (magic->AddHP[level]) {
+            y = y_t + (i / 3) * y_bias;
+            x = x_t + (i % 3) * 3 * x_bias / 2;
+            i++;
+            auto hp = std::make_shared<TextBox>();
+            hp->setHaveBox(false);
+            hp->setText(convert::formatString("%4s", "生命"));
+            addChild(hp, x, y);
+            auto hp_value = std::make_shared<TextBox>();
+            hp_value->setHaveBox(false);
+            hp_value->setText(convert::formatString("%d", magic->AddHP[level]));
+            addChild(hp_value, x + x_bias, y);
+
+        }
+        if (magic->AddMP[level]) {
+            y = y_t + (i / 3) * y_bias;
+            x = x_t + (i % 3) * 3 * x_bias / 2;
+            i++;
+            auto mp = std::make_shared<TextBox>();
+            mp->setHaveBox(false);
+            mp->setText(convert::formatString("%4s", "内力"));
+            addChild(mp, x, y);
+            auto mp_value = std::make_shared<TextBox>();
+            mp_value->setHaveBox(false);
+            mp_value->setText(convert::formatString("%d", magic->AddMP[level]));
+            addChild(mp_value, x + x_bias, y);
+
+        }
+        if (magic->AddAttack[level]) {
+            y = y_t + (i / 3) * y_bias;
+            x = x_t + (i % 3) * 3 * x_bias / 2;
+            i++;
+            auto jiagong = std::make_shared<TextBox>();
+            jiagong->setHaveBox(false);
+            jiagong->setText(convert::formatString("%4s", "攻击"));
+            addChild(jiagong, x, y);
+            auto jiagong_value = std::make_shared<TextBox>();
+            jiagong_value->setHaveBox(false);
+            jiagong_value->setText(convert::formatString("%d", magic->AddAttack[level]));
+            addChild(jiagong_value, x + x_bias, y);
+
+        }
+        if (magic->AddDefence[level]) {
+            y = y_t + (i / 3) * y_bias;
+            x = x_t + (i % 3) * 3 * x_bias/2;
+            i++;
+            auto fangyu = std::make_shared<TextBox>();
+            fangyu->setHaveBox(false);
+            fangyu->setText(convert::formatString("%4s", "防御"));
+            addChild(fangyu, x, y);
+            auto fangyu_value = std::make_shared<TextBox>();
+            fangyu_value->setHaveBox(false);
+            fangyu_value->setText(convert::formatString("%d", magic->AddDefence[level]));
+            addChild(fangyu_value, x + x_bias, y);
+        }
+        if (magic->AddSpeed[level]) {
+            y = y_t + (i / 3) * y_bias;
+            x = x_t + (i % 3) * 3 * x_bias / 2;
+            i++;
+            auto qinggong = std::make_shared<TextBox>();
+            qinggong->setHaveBox(false);
+            qinggong->setText(convert::formatString("%4s", "轻功"));
+            addChild(qinggong, x, y);
+            auto qinggong_value = std::make_shared<TextBox>();
+            qinggong_value->setHaveBox(false);
+            qinggong_value->setText(convert::formatString("%d", magic->AddSpeed[level]));
+            addChild(qinggong_value, x + x_bias, y);
+        }
+
+        x = 20;
+        y_t = y + y_bias;
+        int k = 0;
+        for (int j = 0; j < 10; j++) {
+            if (magic_->SelectDistance[j] > 0 && magic_->AttackDistance[j]!=0) {
+                y = y_t + (k / 3) * y_bias;
+                x = x_t + (k % 3) * 3 * x_bias / 2;
+                k++;
+                auto texiao = std::make_shared<TextBox>();
+                texiao->setHaveBox(false);
+                texiao->setText(strs[magic_->SelectDistance[j]].c_str());
+                texiao->setTextColor(color_gold);
+                addChild(texiao, x, y);
+                auto texiao_value = std::make_shared<TextBox>();
+                texiao_value->setHaveBox(false);
+                texiao_value->setText(convert::formatString("%d", magic_->AttackDistance[j]));
+                texiao_value->setTextColor(color_gold);
+                addChild(texiao_value, x + x_bias, y);
+
+            }
+        }
+    }else {
+        int i = 0;
+        if (magic->NeedMP) {
+            y = y_t + (i / 3) * y_bias;
+            x = x_t + (i % 3) * 3 * x_bias / 2;
+            i++;
+            auto needmp = std::make_shared<TextBox>();
+            needmp->setHaveBox(false);
+            needmp->setText(convert::formatString("%4s", "消耗内力"));
+            addChild(needmp, x, y);
+            auto needmp_value = std::make_shared<TextBox>();
+            needmp_value->setHaveBox(false);
+            needmp_value->setText(convert::formatString("%d", magic->NeedMP));
+            addChild(needmp_value, x + x_bias, y);
+
+        }
+        if (magic->MaxHurt) {
+            y = y_t + (i / 3) * y_bias;
+            x = x_t + (i % 3) * 3 * x_bias / 2;
+            i++;
+            auto maxhurt = std::make_shared<TextBox>();
+            maxhurt->setHaveBox(false);
+            maxhurt->setText(convert::formatString("%4s", "最大伤害"));
+            addChild(maxhurt, x, y);
+            auto maxhurt_value = std::make_shared<TextBox>();
+            maxhurt_value->setHaveBox(false);
+            maxhurt_value->setText(convert::formatString("%d", magic->MaxHurt));
+            addChild(maxhurt_value, x + x_bias, y);
+
+        }
+        if (magic->BattleState) {
+            y = y_t + (i / 3) * y_bias;
+            x = x_t + (i % 3) * 3 * x_bias / 2;
+            i++;
+            auto bs = std::make_shared<TextBox>();
+            bs->setHaveBox(false);
+            bs->setText(strs[magic->BattleState/100]);
+            addChild(bs, x, y);
+            auto bs_value = std::make_shared<TextBox>();
+            bs_value->setHaveBox(false);
+            bs_value->setText(convert::formatString("%d", magic->BattleState % 100));
+            addChild(bs_value, x + 2 * x_bias, y);
+        }
+
+    }
+
+    x = 20;
+    y += y_bias;
+
+    setText(convert::formatString("%s", magic->Name));
+    setTextColor(color_red);
+
+    auto devide = std::make_shared<TextBox>();
+    devide->setHaveBox(false);
+    devide->setText("--------------------------------");
+    devide->setTextColor(color_gray);
+    addChild(devide, x, y);
+
+    y += y_bias;
+
+    auto str = convert::formatString("%s", magic->Introduction);
+
+    int i = 0;
+    int k = 0;
+    while(i < str.size()) {
+        int line_length = 51;
+        if (i + line_length >= str.size()) {
+            line_length = str.size() - i; 
+        }
+        //计算英文个数
+        int eng_count = 0;
+        auto line = str.substr(i, line_length);
+        for (int j = 0; j < line.size();)
+        {
+            if (uint8_t(line.at(j)) > 128)
+            {
+                j += 3;
+            }
+            else
+            {
+                eng_count++;
+                j++;
+            }
+        }
+        //若英文字符为奇数个，且最后一个字为中文，则多算一个字符
+        if (eng_count % 2 == 1 && line_length == 51 && uint8_t(str.at(i + line_length)) >= 128)
+        {
+            line_length++;
+            line = str.substr(i, line_length);
+        }
+        auto intro = std::make_shared<TextBox>();
+        intro->setHaveBox(false);
+        intro->setText(line);
+        addChild(intro, x, y + k * 25);
+        i += line_length;
+        k++;
+    }
+
+    //自动调节界面的大小
+    h_ = y + k * 25 + 20;
+}
+
+
+
+
+
+

@@ -1180,7 +1180,7 @@ void NewSave::SaveToCSVSubMapInfoSave(const std::vector<SubMapInfo>& data, int r
 }
 // 武功
 void NewSave::SaveToCSVMagicSave(const std::vector<Magic>& data, int record) {
-	std::ofstream fout("../game/save/csv/" + std::to_string(record) + "_武功.csv");
+	std::ofstream fout("../game/save/csv/" + std::to_string(record) + "_wugong.csv");
 	fout << "编号";
 	fout << ",";    fout << "名称";
 	fout << ",";    fout << "无用";
@@ -3406,7 +3406,7 @@ void NewSave::LoadFromCSVSubMapInfoSave(std::vector<SubMapInfo>& data, int recor
 // 武功
 void NewSave::LoadFromCSVMagicSave(std::vector<Magic>& data, int record) {
 	data.clear();
-	io::CSVReader<114, io::trim_chars<>, io::double_quote_escape<',', '\"'>> in("../game/save/csv/" + std::to_string(record) + "_武功.csv");
+	io::CSVReader<114, io::trim_chars<>, io::double_quote_escape<',', '\"'>> in("../game/save/csv/" + std::to_string(record) + "_wugong.csv");
 	in.read_header(io::ignore_missing_column | io::ignore_extra_column,
 		"编号",
 		"名称",

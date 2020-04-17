@@ -19,9 +19,9 @@ BP_Color color_seagreen = { 84, 255, 159, 255 };
 
 UIMagic::UIMagic()
 {
-    neigong_menu_ = std::make_shared<MultiMenu>();
-    teji_menu_ = std::make_shared<MultiMenu>();
-    waigong_menu_ = std::make_shared<MultiMenu>();
+    neigong_menu_ = std::make_shared<MagicMenu>(this);
+    teji_menu_ = std::make_shared<MagicMenu>(this);
+    waigong_menu_ = std::make_shared<MagicMenu>(this);
     waigong_menu_->setMaxOptions(10);
 
     all_value_menu_ = std::make_shared<Menu>();
@@ -443,6 +443,14 @@ void UIMagic::draw()
         }
         k++;
     }
+
+    neigong_menu_->setMagicRecords(neigongs_);
+    teji_menu_->setMagicRecords(tejis_);
+    waigong_menu_->setMagicRecords(waigongs_);
+    neigong_menu_->setRole(role_);
+    teji_menu_->setRole(role_);
+    waigong_menu_->setRole(role_);
+
     if (neigong_menu_->getResult() == -2) {
         
     }
@@ -539,4 +547,31 @@ void UIMagic::setRole(Role* r) {
         just_loaded_ = true;
     }
     role_ = r; 
+}
+
+
+MagicMenu::MagicMenu(RunNode* baseNode) {
+
+    base_node_ = baseNode;
+    magic_state_ = std::make_shared<MagicStateMenu>();
+    magic_state_->setVisible(false);
+    //base_node_->addChild(magic_state_);
+}
+
+void MagicMenu::draw() {
+    int i = getActiveChildIndex();
+    
+    if (i >= 0 && magics_.size()>i) {
+        if (magics_[i]) {
+            int x, y;
+            childs_[i]->getPosition(x, y);
+            magic_state_->setPosition(x, y + 10);
+            magic_state_->setRole(role_);
+            magic_state_->setMagic(magics_[i]->magic);
+            addIntoDrawTop(magic_state_);
+        }
+    }
+    else {
+        magic_state_->setVisible(false);
+    }
 }

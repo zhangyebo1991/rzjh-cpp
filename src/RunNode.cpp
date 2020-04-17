@@ -264,6 +264,7 @@ void RunNode::checkStateSelfChilds(BP_Event& e, bool check_event)
         if (check_event)
         {
             checkSelfState(e);
+            active_child_ = -1;     //此处设定鼠标移除范围，不再激活节点
             int r = checkChildState();
             if (r >= 0)
             {

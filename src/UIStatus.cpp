@@ -205,22 +205,23 @@ void UIStatus::draw()
     font->draw("暗器", font_size, x, y + 130, color_ability1);
     font->draw(convert::formatString("%5d", role_->HiddenWeapon), font_size, x + 44, y + 130, select_color1(role_->HiddenWeapon, Role::getMaxValue()->HiddenWeapon));
 
-    /*
+    
     x = x_ + 220;
     y = y_ + 270;
-    font->draw("激活武学", 25, x - 10, y, color_name);
-    for (int i = 0; i < ROLE_ACTIVE_MAGIC_COUNT; i++)
+    font->draw("个人特性", 25, x - 10, y, color_name);
+    int i = 0;
+    for (auto j : role_->texing)
     {
-        auto magic = Save::getInstance()->getRoleActiveMagic(role_, i);
+        auto rsign = Save::getInstance()->getRSign(j);
         std::string str = "__________";
-        if (magic)
+        if (rsign)
         {
             int x1 = x + i % 2 * 200;
             int y1 = y + 30 + i / 2 * 25;
-            str = convert::formatString("%s", magic->Name);
+            str = convert::formatString("%s", rsign->Name);
             font->draw(str, font_size, x1, y1, color_ability1);
-            str = convert::formatString("%3d", Save::getInstance()->getRoleActiveMagicLevel(role_,i));
-            font->draw(str, font_size, x1 + 100, y1, Save::getInstance()->getRoleActiveMagicLevel(role_, i) ? color_red : color_purple);
+            //str = convert::formatString("%3d", Save::getInstance()->getRoleActiveMagicLevel(role_,i));
+            //font->draw(str, font_size, x1 + 100, y1, Save::getInstance()->getRoleActiveMagicLevel(role_, i) ? color_red : color_purple);
         }
         else
         {
@@ -228,8 +229,9 @@ void UIStatus::draw()
             int y1 = y + 30 + i / 2 * 25;
             font->draw("__________", font_size, x1, y1, color_ability1);
         }
+        i++;
     }
-    */
+    
 
     x = x_ + 20;
     y = y_ + 405;

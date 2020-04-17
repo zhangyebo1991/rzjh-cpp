@@ -209,3 +209,29 @@ public:
     Role* getRole() { return role_; }
 
 };
+
+class MagicStateMenu : public Menu
+{
+public:
+    MagicStateMenu();
+    virtual ~MagicStateMenu() {}
+
+private:
+
+
+    std::shared_ptr<Menu> state_menu_;
+
+    std::shared_ptr<TextBox> txt_name_;
+
+    Role* role_ = nullptr;
+    Magic* magic_ = nullptr;
+
+public:
+
+    void setRole(Role* r) { role_ = r; }
+    void setMagic(Magic* magic);
+    void setZhaoshi(Zhaoshi* zhaoshi);
+
+    Role* getRole() { return role_; }
+
+};
