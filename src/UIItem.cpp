@@ -116,6 +116,9 @@ void UIItem::checkCurrentItem()
         title_->forceActiveChild(force_item_type_);
     }
     int active = title_->getActiveChildIndex();
+    if (active < 0) {
+        return;
+    }
     title_->getChild(active)->setState(Pass);
     geItemsByType(active);
     int type_item_count = available_items_.size();

@@ -259,7 +259,7 @@ struct Role : public RoleSave
 public:
     int Team;
     int FaceTowards, Dead, Step;
-    int Pic, BattleSpeed;
+	int Pic;
     int ExpGot, Auto;
     int FightFrame[5] = { -1 };
     int FightingFrame;
@@ -273,7 +273,9 @@ public:
 	int qf_, yg_, lh_, xq_, sf_, ff_, zy_, jz_, js_, sd_;	//战斗状态：气防，硬功，灵活，行气，身法，奋发，战意，精准，急速，闪躲
 	int lqf_, lyg_, llh_, lxq_, lsf_, lff_, lzy_, ljz_, ljs_, lsd_;	//战斗状态底线（最小值）：气防，硬功，灵活，行气，身法，奋发，战意，精准，急速，闪躲
 
-	int battleSpeed, battleAttack, battleDefence;	//战斗属性
+	int battleHp, battleMp, battleMaxHp, battleMaxMp, battleSpeed, battleAttack, battleDefence;	//战斗属性
+
+	int battleFist, battleSword, battleKnife, battleUnusual;
 
 
 	BattleBuff buff[5]; // 玩家身上的buff和debuff记录
@@ -531,6 +533,7 @@ struct Magic : MagicSave
 {
     int calNeedMP(int level_index) { return NeedMP * ((level_index + 2) / 2); }
     int calMaxLevelIndexByMP(int mp, int max_level);
+	int calHertbyLevel(int level);
 };
 
 //存档中的子场景数据

@@ -162,6 +162,14 @@ public:
     virtual int calBattleSpeed(Role* r);                      //计算战斗速度
     virtual int calBattleAttack(Role* r);                      //计算战斗攻击
     virtual int calBattleDefence(Role* r);                      //计算战斗防御
+    virtual void calBattleHP(Role* r);                      //计算战斗生命
+    virtual void calBattleMP(Role* r);                      //计算战斗内力
+
+    //计算战斗系数
+    virtual void calBattleFist(Role* r);                      
+    virtual void calBattleSword(Role* r);                     
+    virtual void calBattleKnife(Role* r);                      
+    virtual void calBattleUnusual(Role* r);                      
 
     virtual int getMagicState(Magic* magic, int zhaoshi, int state_type); //计算招式特效
     virtual int getMagicState(Magic* magic, Zhaoshi* zhaoshi, int state_type); 

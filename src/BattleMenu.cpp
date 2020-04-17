@@ -67,10 +67,12 @@ void BattleActionMenu::setRole(Role* r)
 
     setFontSize(20);
     arrange(0, 0, 0, 28);
-    if (start_ == 0 || !getChild(active_child_)->getVisible())
-    {
-        active_child_ = findFristVisibleChild();
-        forceActiveChild();
+    if (active_child_ >= 0) {
+        if (start_ == 0 || !getChild(active_child_)->getVisible())
+        {
+            active_child_ = findFristVisibleChild();
+            forceActiveChild();
+        }
     }
     if (!role_->Moved)
     {

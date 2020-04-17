@@ -282,6 +282,23 @@ int Magic::calMaxLevelIndexByMP(int mp, int max_level)
     return level;
 }
 
+//计算武功随等级变化的伤害
+int Magic::calHertbyLevel(int level)
+{
+    int hurt_modulus;
+    if (HurtModulus <= 0) {
+        hurt_modulus = 100;
+    }
+    else {
+        hurt_modulus = HurtModulus;
+    }
+    double p = hurt_modulus / 1000;
+    double n = pow((MaxHurt - MinHurt), 1 / p) / 9;
+    return ceil(pow((level * n), p)) + MinHurt;
+}
+
+
+
 int Item::MoneyItemID = 174;
 int Item::CompassItemID = 182;
 

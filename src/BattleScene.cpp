@@ -751,10 +751,11 @@ int BattleScene::calBattleSpeed(Role* r){
 
     //阵法特效107
     speed += getZhenfaState(r, 107);
+    
     //如果瘋魔狀態,輕功+10%
     if (checkRoleIsHaveBuff(r, 7) != 0)
         speed += speed * 10 / 100;
-    r->BattleSpeed = speed;
+    r->battleSpeed = speed;
     return speed;
 }
 
@@ -796,6 +797,9 @@ int BattleScene::calBattleAttack(Role* r) {
     if (r->zbtj > -1) {
         attack += Save::getInstance()->getMagic(r->MagicID[r->zbtj])->AddAttack[r->getRoleMagicLevelIndex(r->zbtj)];
     }
+
+    //阵法效果加成
+    attack += getZhenfaState(r, 106);
 
     //攻击收内伤和中毒影响
     attack *= 100 / (100 + r->Hurt + r->Poison);
@@ -841,11 +845,52 @@ int BattleScene::calBattleDefence(Role* r) {
         defence += Save::getInstance()->getMagic(r->MagicID[r->zbtj])->AddDefence[r->getRoleMagicLevelIndex(r->zbtj)];
     }
 
+    //阵法效果加成
+    defence += getZhenfaState(r, 106);
+
     //攻击收内伤和中毒影响
     defence *= 100 / (100 + r->Hurt + r->Poison);
     r->battleDefence = defence;
     return defence;
 }
+
+void BattleScene::calBattleHP(Role* r) {
+
+    r->battleMaxHp = Event::getInstance()->getMaxHp(r);
+    r->battleHp = Event::getInstance()->getHp(r);
+
+}
+
+void BattleScene::calBattleMP(Role* r) {
+
+    r->battleMaxMp = Event::getInstance()->getMaxMp(r);
+    r->battleMp = Event::getInstance()->getMp(r);
+}
+
+void BattleScene::calBattleFist(Role* r) {
+
+    r->battleFist = r->Fist+ Event::getInstance()->getAddFist(r);
+
+}
+
+void BattleScene::calBattleSword(Role* r) {
+
+    r->battleSword = r->Sword + Event::getInstance()->getAddSword(r);
+
+}
+
+void BattleScene::calBattleKnife(Role* r) {
+
+    r->battleKnife = r->Knife + Event::getInstance()->getAddKnife(r);
+
+}
+
+void BattleScene::calBattleUnusual(Role* r) {
+
+    r->battleUnusual = r->Unusual + Event::getInstance()->getAddUnusual(r);
+}
+
+
 
 int BattleScene::calMoveStep(Role* r)
 {
@@ -854,9 +899,9 @@ int BattleScene::calMoveStep(Role* r)
     {
         return 0;
     }
-    double speed = r->BattleSpeed;
+    double speed = r->battleSpeed;
 
-    int step = speed / 15 + 1;
+    int step = speed / 30 + 1;
 
     //移動距離增加
     step += getGongtiState(r, 139);
@@ -1496,6 +1541,18 @@ void BattleScene::calDixian(Role* r) {
     r->ljz_ += getZhenfaState(r, 35);
     r->jz_ = std::max(r->ljz_, r->jz_);
 
+    //更新战斗血内和系数
+    calBattleSpeed(r);
+    calBattleAttack(r);
+    calBattleDefence(r);
+    calBattleHP(r);
+    calBattleMP(r);
+    calBattleFist(r);
+    calBattleSword(r);
+    calBattleKnife(r);
+    calBattleUnusual(r);
+
+
 }                    
 
 void BattleScene::actUseMagicSub(Role* r, Magic* magic, Zhaoshi* zhaoshi)
@@ -2094,97 +2151,86 @@ void BattleScene::actionAnimation(Role* r, int style, int effect_id, int shake /
     y_ = 0;
 }
 
+
 //r1使用武功magic攻击r2的伤害，结果为一正数
 int BattleScene::calMagicHurt(Role* r1, Role* r2, Magic* magic)
 {
+    auto event = Event::getInstance();
     int level_index = Save::getInstance()->getRoleLearnedMagicLevelIndex(r1, magic);
-    level_index = magic->calMaxLevelIndexByMP(r1->MP, level_index);
-    if (magic->HurtType < 3)
+    level_index = magic->calMaxLevelIndexByMP(r1->battleMp, level_index);
+
+    if (r1->battleMp <= 10)
     {
-        if (r1->MP <= 10)
-        {
-            return 1 + rng_.rand_int(10);
-        }
-        int attack = r1->Attack + magic->MaxInjury*(level_index/10) / 3;
-        int defence = r2->Defence;
-
-        //装备的效果
-        if (r1->Equip[0] >= 0)
-        {
-            auto i = Save::getInstance()->getItem(r1->Equip[0]);
-            attack += i->AddAttack;
-        }
-        if (r1->Equip[1] >= 0)
-        {
-            auto i = Save::getInstance()->getItem(r1->Equip[1]);
-            attack += i->AddAttack;
-        }
-        if (r1->Equip[2] >= 0)
-        {
-            auto i = Save::getInstance()->getItem(r1->Equip[2]);
-            attack += i->AddAttack;
-        }
-        if (r1->Equip[3] >= 0)
-        {
-            auto i = Save::getInstance()->getItem(r1->Equip[3]);
-            attack += i->AddAttack;
-        }
-        if (r1->Equip[4] >= 0)
-        {
-            auto i = Save::getInstance()->getItem(r1->Equip[4]);
-            attack += i->AddAttack;
-        }
-
-        if (r2->Equip[0] >= 0)
-        {
-            auto i = Save::getInstance()->getItem(r2->Equip[0]);
-            defence += i->AddDefence;
-        }
-        if (r2->Equip[1] >= 0)
-        {
-            auto i = Save::getInstance()->getItem(r2->Equip[1]);
-            defence += i->AddDefence;
-        }
-        if (r2->Equip[2] >= 0)
-        {
-            auto i = Save::getInstance()->getItem(r2->Equip[2]);
-            defence += i->AddDefence;
-        }
-        if (r2->Equip[3] >= 0)
-        {
-            auto i = Save::getInstance()->getItem(r2->Equip[3]);
-            defence += i->AddDefence;
-        }
-        if (r2->Equip[4] >= 0)
-        {
-            auto i = Save::getInstance()->getItem(r2->Equip[4]);
-            defence += i->AddDefence;
-        }
-
-        int v = attack - defence;
-        //距离衰减
-        int dis = calRoleDistance(r1, r2);
-        v = v / exp((dis - 1) / 10);
-
-        v += rng_.rand_int(10) - rng_.rand_int(10);
-        if (v < 10)
-        {
-            v = 1 + rng_.rand_int(10);
-        }
-        //v = 999;  //测试用
-        return v;
+        return 1;
     }
-    else if (magic->HurtType < 5)
+        
+
+    //根据武功类型，取出对应武功系数
+    int wpn1, wpn2;
+    switch (magic->MagicType) 
     {
-        int v = magic->MaxInjury*(level_index / 10);
-        v += rng_.rand_int(10) - rng_.rand_int(10);
-        if (v < 10)
-        {
-            v = 1 + rng_.rand_int(10);
-        }
-        return v;
+        case 1:
+            wpn1 = r1->Fist + event->getAddFist(r1) + getZhenfaState(r1, 108);
+            wpn2 = r2->Fist + event->getAddFist(r2) + getZhenfaState(r2, 108); 
+            break;
+        case 2:
+            wpn1 = r1->Sword + event->getAddSword(r1) + getZhenfaState(r1, 109);
+            wpn2 = r2->Sword + event->getAddSword(r2) + getZhenfaState(r2, 109);
+            break;
+        case 3:
+            wpn1 = r1->Knife + event->getAddKnife(r1) + getZhenfaState(r1, 110);
+            wpn2 = r2->Knife + event->getAddKnife(r2) + getZhenfaState(r2, 110);
+            break;
+        case 4:
+            wpn1 = r1->Unusual + event->getAddUnusual(r1) + getZhenfaState(r1, 111);
+            wpn2 = r2->Unusual + event->getAddUnusual(r2) + getZhenfaState(r2, 111);
+        default:            
+            break;
     }
-    return 0;
+
+    ////防御者系数为最大系数的0.4倍加上对应系数的0.6倍
+    int max_temp2 = std::max(std::max(r2->battleFist, r2->battleSword),std::max(r2->battleKnife, r2->battleUnusual));
+    wpn2 = ((wpn2 * 6) + (max_temp2 * 4)) / 10;     
+
+
+    double base = 1.0;
+    //武功的攻击比重
+    int attModulus = magic->AttackModulus + 2;// 默认都有至少2点攻击比重
+    int hurt_modulus = attModulus * 3 + magic->MPModulus + magic->SpeedModulus * 2 + magic->WeaponModulus * 2 + 5;
+
+    //根据武功的攻击比重计算数据差距系数，最大为0.1,最小为0;    
+    double att_bias = std::max(0.1, std::min(double(r1->battleAttack - r2->battleDefence)/ (5+r1->battleAttack),base));   //攻防差距系数
+    base -= att_bias * attModulus * 3 / hurt_modulus;
+    double wpn_bias = std::max(0.1, std::min(double(wpn1 - wpn2) / (7 + wpn1), base));                             //系数差距系数
+    base -= wpn_bias * magic->WeaponModulus * 2 / hurt_modulus;
+    double spd_bias = std::max(0.1, std::min(double(r1->battleSpeed - r2->battleSpeed) / (5 + r1->battleSpeed), base));       //速度差距系数
+    base -= spd_bias * magic->SpeedModulus * 2 / hurt_modulus;
+    double mp_bias = std::max(0.1, std::min(double(r1->battleMp - r2->battleMp) / 5 + r1->battleMp, base));    //内力差距系数
+
+    //差距比例系数
+    double att_b = (att_bias * 10 + r1->battleAttack / 400) / 11;
+    double wpn_b = (wpn_bias * 10 + wpn1 / 400) / 11;
+    double spd_b = (spd_bias * 10 + r1->battleSpeed / 400) / 11;
+    double mp_b = (mp_bias * 10 + r1->battleMp / 4000) / 11;
+
+    //计算武功随等级变化的伤害
+    int magic_hurt = magic->calHertbyLevel(level_index);
+    int v = magic_hurt * (attModulus * 3 * att_b + magic->SpeedModulus * 2 * spd_b + magic->WeaponModulus * 2 * wpn_b + magic->MPModulus * mp_b) / hurt_modulus;
+    
+    //伤害受体力影响
+    v = v * (r1->PhysicalPower + 500) / 600;
+
+    //距离衰减
+    int dis = calRoleDistance(r1, r2);
+    v = v / exp((dis - 1) / 10);
+    v += rng_.rand_int(10) - rng_.rand_int(10);
+    if (v < 1)
+    {
+        v = 1;
+    }
+    //v = 999;  //测试用
+    return v;
+
 }
 
 //计算全部人物的伤害

@@ -188,6 +188,8 @@ void TeamMenu::dealEvent(BP_Event& e)
                 h->setText("");
             }
         }
-        getChild(active_child_)->setState(Press);
+        if (active_child_ >= 0) {
+            getChild(active_child_)->setState(Press);
+        }
     }
 }
